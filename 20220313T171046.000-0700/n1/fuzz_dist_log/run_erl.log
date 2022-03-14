@@ -1,0 +1,8 @@
+run_erl [19897] Mon Mar 14 00:11:05 2022
+Args before exec of shell:
+run_erl [19897] Mon Mar 14 00:11:05 2022
+argv[0] = sh
+run_erl [19897] Mon Mar 14 00:11:05 2022
+argv[1] = -c
+run_erl [19897] Mon Mar 14 00:11:05 2022
+argv[2] =  /root/fuzz_dist/releases/0\.0\.1\-scrappy/\.\./\.\./erts\-12\.2\.1/bin/erl \-noshell \-s elixir start_cli \-mode embedded \-setcookie fuzz_dist \-sname fuzz_dist \-config /root/fuzz_dist/releases/0\.0\.1\-scrappy/sys \-boot /root/fuzz_dist/releases/0\.0\.1\-scrappy/start \-boot_var RELEASE_LIB /root/fuzz_dist/lib \-args_file /root/fuzz_dist/releases/0\.0\.1\-scrappy/vm\.args \-extra \-\-no\-halt

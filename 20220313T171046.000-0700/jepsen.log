@@ -1,0 +1,1116 @@
+2022-03-13 17:10:46,526{GMT}	INFO	[jepsen test runner] jepsen.core: Test version a47ecd630d5b3f0ef8df75148adf86adfb11a896 (plus uncommitted changes)
+2022-03-13 17:10:46,527{GMT}	INFO	[jepsen test runner] jepsen.core: Command line:
+lein run test --time-limit 60
+2022-03-13 17:10:46,587{GMT}	INFO	[jepsen test runner] jepsen.core: Running test:
+{:remote
+ #jepsen.control.retry.Remote{:remote #jepsen.control.scp.Remote{:cmd-remote #jepsen.control.clj_ssh.Remote{:concurrency-limit 8,
+                                                                                                            :conn-spec nil,
+                                                                                                            :session nil,
+                                                                                                            :semaphore nil},
+                                                                 :conn-spec nil},
+                              :conn nil}
+ :concurrency 5
+ :db
+ #object[jepsen.fuzz_dist$db$reify__2871
+         "0x5a919251"
+         "jepsen.fuzz_dist$db$reify__2871@5a919251"]
+ :leave-db-running? false
+ :name "fuzz-dist"
+ :logging-json? false
+ :start-time
+ #object[org.joda.time.DateTime "0x5eb89000" "2022-03-13T17:10:46.000-07:00"]
+ :net
+ #object[jepsen.net$reify__10155
+         "0x16b1b213"
+         "jepsen.net$reify__10155@16b1b213"]
+ :client #jepsen.fuzz_dist.Client{:conn nil}
+ :barrier
+ #object[java.util.concurrent.CyclicBarrier
+         "0x77f1026e"
+         "java.util.concurrent.CyclicBarrier@77f1026e"]
+ :ssh
+ {:dummy? false,
+  :username "root",
+  :password "root",
+  :strict-host-key-checking false,
+  :private-key-path nil}
+ :checker
+ #object[jepsen.checker$compose$reify__9656
+         "0x1df8c7f4"
+         "jepsen.checker$compose$reify__9656@1df8c7f4"]
+ :argv ("test" "--time-limit" "60")
+ :nemesis #unprintable "jepsen.nemesis$partitioner$reify__10308@75a6cdb"
+ :nodes ["n1" "n2" "n3" "n4" "n5"]
+ :test-count 1
+ :generator
+ ((jepsen.generator.Synchronize
+   {:gen (jepsen.generator.TimeLimit
+          {:limit 30000000000,
+           :cutoff nil,
+           :gen (jepsen.generator.Any
+                 {:gens [(jepsen.generator.OnThreads
+                          {:f #{:nemesis},
+                           :gen ({:type :sleep, :value 5}
+                                 {:type :info, :f :start}
+                                 {:type :sleep, :value 5}
+                                 {:type :info, :f :stop}
+                                 {:type :sleep, :value 5}
+                                 {:type :info, :f :start}
+                                 {:type :sleep, :value 5}
+                                 {:type :info, :f :stop}
+                                 ...)})
+                         (jepsen.generator.OnThreads
+                          {:f #object[clojure.core$complement$fn__5654
+                                      "0x5d72dd86"
+                                      "clojure.core$complement$fn__5654@5d72dd86"],
+                           :gen (jepsen.generator.Stagger
+                                 {:dt 200000000,
+                                  :next-time nil,
+                                  :gen (jepsen.generator.Mix
+                                        {:i 0,
+                                         :gens [#object[jepsen.fuzz_dist$g_set_read
+                                                        "0x70e560ef"
+                                                        "jepsen.fuzz_dist$g_set_read@70e560ef"]
+                                                #object[jepsen.fuzz_dist$g_set_add
+                                                        "0x77228160"
+                                                        "jepsen.fuzz_dist$g_set_add@77228160"]]})})})]})})})
+  (jepsen.generator.Synchronize
+   {:gen (jepsen.generator.OnThreads
+          {:f #{:nemesis}, :gen {:type :info, :f :stop}})})
+  (jepsen.generator.Synchronize
+   {:gen {:type :log, :value "Let database quiesce..."}})
+  (jepsen.generator.Synchronize {:gen {:type :sleep, :value 5}})
+  (jepsen.generator.Synchronize
+   {:gen (jepsen.generator.OnThreads
+          {:f #object[clojure.core$complement$fn__5654
+                      "0x19faa9dc"
+                      "clojure.core$complement$fn__5654@19faa9dc"],
+           :gen (jepsen.generator.EachThread
+                 {:fresh-gen {:type :invoke, :f :read, :value nil}, :gens {}})})}))
+ :os
+ #object[jepsen.os.debian.Debian
+         "0x522fc988"
+         "jepsen.os.debian.Debian@522fc988"]
+ :time-limit 60}
+
+2022-03-13 17:10:52,590{GMT}	INFO	[jepsen node n4] jepsen.os.debian: n4 setting up debian
+2022-03-13 17:10:52,590{GMT}	INFO	[jepsen node n1] jepsen.os.debian: n1 setting up debian
+2022-03-13 17:10:52,590{GMT}	INFO	[jepsen node n5] jepsen.os.debian: n5 setting up debian
+2022-03-13 17:10:52,590{GMT}	INFO	[jepsen node n2] jepsen.os.debian: n2 setting up debian
+2022-03-13 17:10:52,591{GMT}	INFO	[jepsen node n3] jepsen.os.debian: n3 setting up debian
+2022-03-13 17:10:53,448{GMT}	INFO	[jepsen test runner] jepsen.db: Tearing down DB
+2022-03-13 17:10:59,078{GMT}	INFO	[jepsen test runner] jepsen.db: Setting up DB
+2022-03-13 17:11:21,260{GMT}	INFO	[jepsen test runner] jepsen.db: Setting up primary n1
+2022-03-13 17:11:41,272{GMT}	INFO	[jepsen node n1] jepsen.fuzz-dist: :db :setup_primary return: {:type ok}
+2022-03-13 17:11:41,275{GMT}	INFO	[jepsen test runner] jepsen.core: Relative time begins now
+2022-03-13 17:11:41,278{GMT}	INFO	[jepsen node n1] jepsen.fuzz-dist: n1 Client/open ws://n1:8080/fuzz_dist/jep_ws
+2022-03-13 17:11:41,278{GMT}	INFO	[jepsen node n4] jepsen.fuzz-dist: n4 Client/open ws://n4:8080/fuzz_dist/jep_ws
+2022-03-13 17:11:41,278{GMT}	INFO	[jepsen node n5] jepsen.fuzz-dist: n5 Client/open ws://n5:8080/fuzz_dist/jep_ws
+2022-03-13 17:11:41,278{GMT}	INFO	[jepsen node n3] jepsen.fuzz-dist: n3 Client/open ws://n3:8080/fuzz_dist/jep_ws
+2022-03-13 17:11:41,278{GMT}	INFO	[jepsen node n2] jepsen.fuzz-dist: n2 Client/open ws://n2:8080/fuzz_dist/jep_ws
+2022-03-13 17:11:41,551{GMT}	INFO	[jepsen worker 3] jepsen.util: 3	:invoke	:read	nil
+2022-03-13 17:11:41,554{GMT}	INFO	[jepsen worker 3] jepsen.fuzz-dist: n4 Client/open ws://n4:8080/fuzz_dist/jep_ws
+2022-03-13 17:11:41,583{GMT}	INFO	[jepsen worker 3] jepsen.util: 3	:ok	:read	[]
+2022-03-13 17:11:41,615{GMT}	INFO	[jepsen worker 1] jepsen.util: 1	:invoke	:add	"404010"
+2022-03-13 17:11:41,616{GMT}	INFO	[jepsen worker 1] jepsen.fuzz-dist: n2 Client/open ws://n2:8080/fuzz_dist/jep_ws
+2022-03-13 17:11:41,662{GMT}	INFO	[jepsen worker 1] jepsen.util: 1	:ok	:add	"404010"
+2022-03-13 17:11:41,675{GMT}	INFO	[jepsen worker 2] jepsen.util: 2	:invoke	:add	"546951"
+2022-03-13 17:11:41,677{GMT}	INFO	[jepsen worker 2] jepsen.fuzz-dist: n3 Client/open ws://n3:8080/fuzz_dist/jep_ws
+2022-03-13 17:11:41,716{GMT}	INFO	[jepsen worker 2] jepsen.util: 2	:ok	:add	"546951"
+2022-03-13 17:11:41,791{GMT}	INFO	[jepsen worker 3] jepsen.util: 3	:invoke	:add	"428466"
+2022-03-13 17:11:41,796{GMT}	INFO	[jepsen worker 3] jepsen.util: 3	:ok	:add	"428466"
+2022-03-13 17:11:41,897{GMT}	INFO	[jepsen worker 4] jepsen.util: 4	:invoke	:add	"744560"
+2022-03-13 17:11:41,897{GMT}	INFO	[jepsen worker 4] jepsen.fuzz-dist: n5 Client/open ws://n5:8080/fuzz_dist/jep_ws
+2022-03-13 17:11:41,911{GMT}	INFO	[jepsen worker 4] jepsen.util: 4	:ok	:add	"744560"
+2022-03-13 17:11:42,016{GMT}	INFO	[jepsen worker 1] jepsen.util: 1	:invoke	:add	"30028"
+2022-03-13 17:11:42,021{GMT}	INFO	[jepsen worker 1] jepsen.util: 1	:ok	:add	"30028"
+2022-03-13 17:11:42,200{GMT}	INFO	[jepsen worker 1] jepsen.util: 1	:invoke	:add	"247734"
+2022-03-13 17:11:42,209{GMT}	INFO	[jepsen worker 1] jepsen.util: 1	:ok	:add	"247734"
+2022-03-13 17:11:42,316{GMT}	INFO	[jepsen worker 4] jepsen.util: 4	:invoke	:read	nil
+2022-03-13 17:11:42,319{GMT}	INFO	[jepsen worker 4] jepsen.util: 4	:ok	:read	["744560"]
+2022-03-13 17:11:42,392{GMT}	INFO	[jepsen worker 0] jepsen.util: 0	:invoke	:read	nil
+2022-03-13 17:11:42,393{GMT}	INFO	[jepsen worker 0] jepsen.fuzz-dist: n1 Client/open ws://n1:8080/fuzz_dist/jep_ws
+2022-03-13 17:11:42,433{GMT}	INFO	[jepsen worker 0] jepsen.util: 0	:ok	:read	[]
+2022-03-13 17:11:42,568{GMT}	INFO	[jepsen worker 4] jepsen.util: 4	:invoke	:add	"630701"
+2022-03-13 17:11:42,579{GMT}	INFO	[jepsen worker 4] jepsen.util: 4	:ok	:add	"630701"
+2022-03-13 17:11:42,754{GMT}	INFO	[jepsen worker 3] jepsen.util: 3	:invoke	:add	"13746"
+2022-03-13 17:11:42,764{GMT}	INFO	[jepsen worker 3] jepsen.util: 3	:ok	:add	"13746"
+2022-03-13 17:11:42,876{GMT}	INFO	[jepsen worker 2] jepsen.util: 2	:invoke	:add	"539408"
+2022-03-13 17:11:42,879{GMT}	INFO	[jepsen worker 2] jepsen.util: 2	:ok	:add	"539408"
+2022-03-13 17:11:42,915{GMT}	INFO	[jepsen worker 1] jepsen.util: 1	:invoke	:read	nil
+2022-03-13 17:11:42,917{GMT}	INFO	[jepsen worker 1] jepsen.util: 1	:ok	:read	["30028" "404010" "247734"]
+2022-03-13 17:11:43,106{GMT}	INFO	[jepsen worker 2] jepsen.util: 2	:invoke	:read	nil
+2022-03-13 17:11:43,110{GMT}	INFO	[jepsen worker 2] jepsen.util: 2	:ok	:read	["539408" "546951"]
+2022-03-13 17:11:43,173{GMT}	INFO	[jepsen worker 2] jepsen.util: 2	:invoke	:read	nil
+2022-03-13 17:11:43,178{GMT}	INFO	[jepsen worker 2] jepsen.util: 2	:ok	:read	["428466" "30028" "539408" "546951" "404010" "630701" "744560"]
+2022-03-13 17:11:43,215{GMT}	INFO	[jepsen worker 4] jepsen.util: 4	:invoke	:add	"67895"
+2022-03-13 17:11:43,220{GMT}	INFO	[jepsen worker 4] jepsen.util: 4	:ok	:add	"67895"
+2022-03-13 17:11:43,314{GMT}	INFO	[jepsen worker 2] jepsen.util: 2	:invoke	:add	"754311"
+2022-03-13 17:11:43,318{GMT}	INFO	[jepsen worker 2] jepsen.util: 2	:ok	:add	"754311"
+2022-03-13 17:11:43,510{GMT}	INFO	[jepsen worker 4] jepsen.util: 4	:invoke	:read	nil
+2022-03-13 17:11:43,517{GMT}	INFO	[jepsen worker 4] jepsen.util: 4	:ok	:read	["428466" "30028" "546951" "67895" "404010" "630701" "744560"]
+2022-03-13 17:11:43,518{GMT}	INFO	[jepsen worker 2] jepsen.util: 2	:invoke	:add	"417553"
+2022-03-13 17:11:43,527{GMT}	INFO	[jepsen worker 2] jepsen.util: 2	:ok	:add	"417553"
+2022-03-13 17:11:43,583{GMT}	INFO	[jepsen worker 3] jepsen.util: 3	:invoke	:read	nil
+2022-03-13 17:11:43,591{GMT}	INFO	[jepsen worker 3] jepsen.util: 3	:ok	:read	["428466" "30028" "546951" "404010" "630701" "744560" "13746"]
+2022-03-13 17:11:43,705{GMT}	INFO	[jepsen worker 3] jepsen.util: 3	:invoke	:read	nil
+2022-03-13 17:11:43,721{GMT}	INFO	[jepsen worker 3] jepsen.util: 3	:ok	:read	["428466" "30028" "546951" "404010" "630701" "744560" "13746"]
+2022-03-13 17:11:43,850{GMT}	INFO	[jepsen worker 0] jepsen.util: 0	:invoke	:add	"24397"
+2022-03-13 17:11:43,859{GMT}	INFO	[jepsen worker 0] jepsen.util: 0	:ok	:add	"24397"
+2022-03-13 17:11:44,042{GMT}	INFO	[jepsen worker 2] jepsen.util: 2	:invoke	:read	nil
+2022-03-13 17:11:44,054{GMT}	INFO	[jepsen worker 2] jepsen.util: 2	:ok	:read	["428466" "30028" "539408" "546951" "404010" "630701" "754311" "744560" "417553"]
+2022-03-13 17:11:44,155{GMT}	INFO	[jepsen worker 0] jepsen.util: 0	:invoke	:add	"661606"
+2022-03-13 17:11:44,159{GMT}	INFO	[jepsen worker 0] jepsen.util: 0	:ok	:add	"661606"
+2022-03-13 17:11:44,309{GMT}	INFO	[jepsen worker 2] jepsen.util: 2	:invoke	:add	"202263"
+2022-03-13 17:11:44,313{GMT}	INFO	[jepsen worker 2] jepsen.util: 2	:ok	:add	"202263"
+2022-03-13 17:11:44,427{GMT}	INFO	[jepsen worker 2] jepsen.util: 2	:invoke	:add	"317603"
+2022-03-13 17:11:44,438{GMT}	INFO	[jepsen worker 2] jepsen.util: 2	:ok	:add	"317603"
+2022-03-13 17:11:44,575{GMT}	INFO	[jepsen worker 2] jepsen.util: 2	:invoke	:add	"626184"
+2022-03-13 17:11:44,585{GMT}	INFO	[jepsen worker 2] jepsen.util: 2	:ok	:add	"626184"
+2022-03-13 17:11:44,669{GMT}	INFO	[jepsen worker 0] jepsen.util: 0	:invoke	:add	"894932"
+2022-03-13 17:11:44,677{GMT}	INFO	[jepsen worker 0] jepsen.util: 0	:ok	:add	"894932"
+2022-03-13 17:11:44,714{GMT}	INFO	[jepsen worker 0] jepsen.util: 0	:invoke	:read	nil
+2022-03-13 17:11:44,720{GMT}	INFO	[jepsen worker 0] jepsen.util: 0	:ok	:read	["428466" "30028" "24397" "546951" "404010" "630701" "661606" "744560" "894932"]
+2022-03-13 17:11:44,858{GMT}	INFO	[jepsen worker 4] jepsen.util: 4	:invoke	:read	nil
+2022-03-13 17:11:44,867{GMT}	INFO	[jepsen worker 4] jepsen.util: 4	:ok	:read	["428466" "30028" "539408" "546951" "67895" "404010" "630701" "744560" "13746" "247734"]
+2022-03-13 17:11:44,892{GMT}	INFO	[jepsen worker 3] jepsen.util: 3	:invoke	:add	"235327"
+2022-03-13 17:11:44,901{GMT}	INFO	[jepsen worker 3] jepsen.util: 3	:ok	:add	"235327"
+2022-03-13 17:11:45,054{GMT}	INFO	[jepsen worker 2] jepsen.util: 2	:invoke	:add	"423663"
+2022-03-13 17:11:45,062{GMT}	INFO	[jepsen worker 2] jepsen.util: 2	:ok	:add	"423663"
+2022-03-13 17:11:45,229{GMT}	INFO	[jepsen worker 2] jepsen.util: 2	:invoke	:add	"746066"
+2022-03-13 17:11:45,233{GMT}	INFO	[jepsen worker 2] jepsen.util: 2	:ok	:add	"746066"
+2022-03-13 17:11:45,311{GMT}	INFO	[jepsen worker 1] jepsen.util: 1	:invoke	:add	"799823"
+2022-03-13 17:11:45,320{GMT}	INFO	[jepsen worker 1] jepsen.util: 1	:ok	:add	"799823"
+2022-03-13 17:11:45,415{GMT}	INFO	[jepsen worker 2] jepsen.util: 2	:invoke	:read	nil
+2022-03-13 17:11:45,421{GMT}	INFO	[jepsen worker 2] jepsen.util: 2	:ok	:read	["428466" "30028" "539408" "24397" "546951" "67895" "404010" "626184" "317603" "630701" "754311" "423663" "661606" "744560" "417553" "894932" "13746" "202263" "247734" "746066"]
+2022-03-13 17:11:45,531{GMT}	INFO	[jepsen worker 1] jepsen.util: 1	:invoke	:read	nil
+2022-03-13 17:11:45,538{GMT}	INFO	[jepsen worker 1] jepsen.util: 1	:ok	:read	["428466" "799823" "30028" "539408" "24397" "546951" "67895" "404010" "630701" "754311" "661606" "744560" "417553" "894932" "13746" "247734"]
+2022-03-13 17:11:45,728{GMT}	INFO	[jepsen worker 2] jepsen.util: 2	:invoke	:read	nil
+2022-03-13 17:11:45,735{GMT}	INFO	[jepsen worker 2] jepsen.util: 2	:ok	:read	["428466" "30028" "539408" "24397" "546951" "67895" "404010" "626184" "317603" "630701" "754311" "423663" "661606" "744560" "417553" "894932" "13746" "202263" "247734" "746066"]
+2022-03-13 17:11:45,757{GMT}	INFO	[jepsen worker 4] jepsen.util: 4	:invoke	:add	"488056"
+2022-03-13 17:11:45,768{GMT}	INFO	[jepsen worker 4] jepsen.util: 4	:ok	:add	"488056"
+2022-03-13 17:11:45,940{GMT}	INFO	[jepsen worker 0] jepsen.util: 0	:invoke	:read	nil
+2022-03-13 17:11:45,943{GMT}	INFO	[jepsen worker 0] jepsen.util: 0	:ok	:read	["428466" "30028" "539408" "24397" "546951" "67895" "404010" "630701" "754311" "661606" "744560" "417553" "894932" "13746" "247734"]
+2022-03-13 17:11:45,981{GMT}	INFO	[jepsen worker 1] jepsen.util: 1	:invoke	:read	nil
+2022-03-13 17:11:46,003{GMT}	INFO	[jepsen worker 1] jepsen.util: 1	:ok	:read	["428466" "799823" "30028" "539408" "24397" "546951" "67895" "404010" "630701" "754311" "661606" "744560" "417553" "894932" "13746" "247734"]
+2022-03-13 17:11:46,152{GMT}	INFO	[jepsen worker 0] jepsen.util: 0	:invoke	:add	"439671"
+2022-03-13 17:11:46,156{GMT}	INFO	[jepsen worker 0] jepsen.util: 0	:ok	:add	"439671"
+2022-03-13 17:11:46,242{GMT}	INFO	[jepsen worker 0] jepsen.util: 0	:invoke	:read	nil
+2022-03-13 17:11:46,246{GMT}	INFO	[jepsen worker 0] jepsen.util: 0	:ok	:read	["428466" "30028" "539408" "24397" "546951" "67895" "404010" "630701" "754311" "661606" "744560" "417553" "894932" "13746" "439671" "247734"]
+2022-03-13 17:11:46,289{GMT}	INFO	[jepsen worker 0] jepsen.util: 0	:invoke	:add	"118823"
+2022-03-13 17:11:46,293{GMT}	INFO	[jepsen worker 0] jepsen.util: 0	:ok	:add	"118823"
+2022-03-13 17:11:46,484{GMT}	INFO	[jepsen worker 3] jepsen.util: 3	:invoke	:add	"170025"
+2022-03-13 17:11:46,495{GMT}	INFO	[jepsen worker 3] jepsen.util: 3	:ok	:add	"170025"
+2022-03-13 17:11:46,550{GMT}	INFO	[jepsen worker nemesis] jepsen.util: :nemesis	:info	:start	nil
+2022-03-13 17:11:46,649{GMT}	INFO	[jepsen worker 0] jepsen.util: 0	:invoke	:add	"163140"
+2022-03-13 17:11:46,658{GMT}	INFO	[jepsen worker 0] jepsen.util: 0	:ok	:add	"163140"
+2022-03-13 17:11:46,809{GMT}	INFO	[jepsen worker 3] jepsen.util: 3	:invoke	:read	nil
+2022-03-13 17:11:46,820{GMT}	INFO	[jepsen worker 3] jepsen.util: 3	:ok	:read	["428466" "30028" "539408" "24397" "546951" "67895" "404010" "626184" "317603" "170025" "630701" "754311" "423663" "661606" "744560" "417553" "894932" "13746" "202263" "247734" "235327"]
+2022-03-13 17:11:46,929{GMT}	INFO	[jepsen worker 2] jepsen.util: 2	:invoke	:add	"958055"
+2022-03-13 17:11:46,932{GMT}	INFO	[jepsen worker 2] jepsen.util: 2	:ok	:add	"958055"
+2022-03-13 17:11:47,080{GMT}	INFO	[jepsen worker nemesis] jepsen.util: :nemesis	:info	:start	[:isolated {"n4" #{"n2" "n5" "n1"}, "n3" #{"n2" "n5" "n1"}, "n2" #{"n4" "n3"}, "n5" #{"n4" "n3"}, "n1" #{"n4" "n3"}}]
+2022-03-13 17:11:47,092{GMT}	INFO	[jepsen worker 4] jepsen.util: 4	:invoke	:add	"551458"
+2022-03-13 17:11:47,097{GMT}	INFO	[jepsen worker 4] jepsen.util: 4	:ok	:add	"551458"
+2022-03-13 17:11:47,098{GMT}	INFO	[jepsen worker 4] jepsen.util: 4	:invoke	:add	"839441"
+2022-03-13 17:11:47,103{GMT}	INFO	[jepsen worker 4] jepsen.util: 4	:ok	:add	"839441"
+2022-03-13 17:11:47,110{GMT}	INFO	[jepsen worker 0] jepsen.util: 0	:invoke	:add	"639089"
+2022-03-13 17:11:47,115{GMT}	INFO	[jepsen worker 0] jepsen.util: 0	:ok	:add	"639089"
+2022-03-13 17:11:47,154{GMT}	INFO	[jepsen worker 3] jepsen.util: 3	:invoke	:read	nil
+2022-03-13 17:11:47,158{GMT}	INFO	[jepsen worker 3] jepsen.util: 3	:ok	:read	["428466" "30028" "488056" "539408" "24397" "546951" "67895" "404010" "626184" "317603" "170025" "630701" "754311" "423663" "661606" "744560" "417553" "894932" "13746" "202263" "247734" "235327"]
+2022-03-13 17:11:47,171{GMT}	INFO	[jepsen worker 3] jepsen.util: 3	:invoke	:add	"330051"
+2022-03-13 17:11:47,177{GMT}	INFO	[jepsen worker 3] jepsen.util: 3	:ok	:add	"330051"
+2022-03-13 17:11:47,368{GMT}	INFO	[jepsen worker 4] jepsen.util: 4	:invoke	:read	nil
+2022-03-13 17:11:47,375{GMT}	INFO	[jepsen worker 4] jepsen.util: 4	:ok	:read	["428466" "799823" "30028" "488056" "539408" "24397" "546951" "67895" "404010" "626184" "317603" "630701" "754311" "423663" "551458" "163140" "661606" "839441" "744560" "417553" "894932" "13746" "439671" "202263" "247734" "746066" "235327" "118823"]
+2022-03-13 17:11:47,412{GMT}	INFO	[jepsen worker 2] jepsen.util: 2	:invoke	:read	nil
+2022-03-13 17:11:47,418{GMT}	INFO	[jepsen worker 2] jepsen.util: 2	:ok	:read	["428466" "30028" "958055" "488056" "539408" "24397" "546951" "67895" "404010" "626184" "317603" "630701" "754311" "423663" "661606" "744560" "417553" "894932" "13746" "202263" "247734" "746066" "235327"]
+2022-03-13 17:11:47,494{GMT}	INFO	[jepsen worker 1] jepsen.util: 1	:invoke	:add	"919358"
+2022-03-13 17:11:47,509{GMT}	INFO	[jepsen worker 1] jepsen.util: 1	:ok	:add	"919358"
+2022-03-13 17:11:47,542{GMT}	INFO	[jepsen worker 2] jepsen.util: 2	:invoke	:read	nil
+2022-03-13 17:11:47,548{GMT}	INFO	[jepsen worker 2] jepsen.util: 2	:ok	:read	["428466" "30028" "958055" "488056" "539408" "24397" "546951" "67895" "404010" "626184" "317603" "630701" "754311" "423663" "661606" "744560" "417553" "894932" "13746" "202263" "247734" "746066" "235327"]
+2022-03-13 17:11:47,602{GMT}	INFO	[jepsen worker 3] jepsen.util: 3	:invoke	:add	"404469"
+2022-03-13 17:11:47,606{GMT}	INFO	[jepsen worker 2] jepsen.util: 2	:invoke	:add	"575911"
+2022-03-13 17:11:47,612{GMT}	INFO	[jepsen worker 3] jepsen.util: 3	:ok	:add	"404469"
+2022-03-13 17:11:47,617{GMT}	INFO	[jepsen worker 2] jepsen.util: 2	:ok	:add	"575911"
+2022-03-13 17:11:47,746{GMT}	INFO	[jepsen worker 1] jepsen.util: 1	:invoke	:add	"536733"
+2022-03-13 17:11:47,757{GMT}	INFO	[jepsen worker 1] jepsen.util: 1	:ok	:add	"536733"
+2022-03-13 17:11:47,838{GMT}	INFO	[jepsen worker 2] jepsen.util: 2	:invoke	:add	"158197"
+2022-03-13 17:11:47,857{GMT}	INFO	[jepsen worker 2] jepsen.util: 2	:ok	:add	"158197"
+2022-03-13 17:11:47,926{GMT}	INFO	[jepsen worker 3] jepsen.util: 3	:invoke	:read	nil
+2022-03-13 17:11:47,939{GMT}	INFO	[jepsen worker 3] jepsen.util: 3	:ok	:read	["428466" "404469" "30028" "330051" "488056" "539408" "24397" "546951" "67895" "404010" "626184" "317603" "170025" "630701" "754311" "423663" "661606" "744560" "417553" "894932" "13746" "202263" "247734" "235327"]
+2022-03-13 17:11:47,994{GMT}	INFO	[jepsen worker 2] jepsen.util: 2	:invoke	:read	nil
+2022-03-13 17:11:48,005{GMT}	INFO	[jepsen worker 2] jepsen.util: 2	:ok	:read	["428466" "575911" "30028" "958055" "488056" "539408" "24397" "546951" "67895" "158197" "404010" "626184" "317603" "630701" "754311" "423663" "661606" "744560" "417553" "894932" "13746" "202263" "247734" "746066" "235327"]
+2022-03-13 17:11:48,124{GMT}	INFO	[jepsen worker 4] jepsen.util: 4	:invoke	:read	nil
+2022-03-13 17:11:48,128{GMT}	INFO	[jepsen worker 4] jepsen.util: 4	:ok	:read	["428466" "799823" "30028" "488056" "539408" "24397" "546951" "67895" "404010" "626184" "317603" "630701" "754311" "423663" "551458" "163140" "661606" "839441" "744560" "417553" "639089" "894932" "13746" "439671" "202263" "247734" "746066" "235327" "118823"]
+2022-03-13 17:11:48,150{GMT}	INFO	[jepsen worker 3] jepsen.util: 3	:invoke	:add	"354697"
+2022-03-13 17:11:48,155{GMT}	INFO	[jepsen worker 3] jepsen.util: 3	:ok	:add	"354697"
+2022-03-13 17:11:48,213{GMT}	INFO	[jepsen worker 2] jepsen.util: 2	:invoke	:add	"409146"
+2022-03-13 17:11:48,221{GMT}	INFO	[jepsen worker 2] jepsen.util: 2	:ok	:add	"409146"
+2022-03-13 17:11:48,379{GMT}	INFO	[jepsen worker 3] jepsen.util: 3	:invoke	:add	"94078"
+2022-03-13 17:11:48,388{GMT}	INFO	[jepsen worker 3] jepsen.util: 3	:ok	:add	"94078"
+2022-03-13 17:11:48,397{GMT}	INFO	[jepsen worker 4] jepsen.util: 4	:invoke	:add	"49817"
+2022-03-13 17:11:48,405{GMT}	INFO	[jepsen worker 4] jepsen.util: 4	:ok	:add	"49817"
+2022-03-13 17:11:48,413{GMT}	INFO	[jepsen worker 4] jepsen.util: 4	:invoke	:add	"621488"
+2022-03-13 17:11:48,421{GMT}	INFO	[jepsen worker 4] jepsen.util: 4	:ok	:add	"621488"
+2022-03-13 17:11:48,595{GMT}	INFO	[jepsen worker 2] jepsen.util: 2	:invoke	:read	nil
+2022-03-13 17:11:48,602{GMT}	INFO	[jepsen worker 2] jepsen.util: 2	:ok	:read	["428466" "575911" "799823" "30028" "958055" "488056" "539408" "24397" "546951" "67895" "158197" "404010" "626184" "317603" "170025" "630701" "754311" "409146" "423663" "661606" "744560" "417553" "894932" "13746" "202263" "247734" "746066" "235327"]
+2022-03-13 17:11:48,698{GMT}	INFO	[jepsen worker 3] jepsen.util: 3	:invoke	:add	"939382"
+2022-03-13 17:11:48,708{GMT}	INFO	[jepsen worker 3] jepsen.util: 3	:ok	:add	"939382"
+2022-03-13 17:11:48,805{GMT}	INFO	[jepsen worker 1] jepsen.util: 1	:invoke	:read	nil
+2022-03-13 17:11:48,807{GMT}	INFO	[jepsen worker 1] jepsen.util: 1	:ok	:read	["428466" "799823" "30028" "488056" "539408" "919358" "24397" "546951" "67895" "404010" "626184" "317603" "630701" "754311" "423663" "163140" "536733" "661606" "744560" "417553" "639089" "894932" "13746" "439671" "202263" "247734" "746066" "235327" "118823"]
+2022-03-13 17:11:48,953{GMT}	INFO	[jepsen worker 2] jepsen.util: 2	:invoke	:add	"423034"
+2022-03-13 17:11:48,960{GMT}	INFO	[jepsen worker 2] jepsen.util: 2	:ok	:add	"423034"
+2022-03-13 17:11:48,975{GMT}	INFO	[jepsen worker 3] jepsen.util: 3	:invoke	:add	"130727"
+2022-03-13 17:11:48,983{GMT}	INFO	[jepsen worker 3] jepsen.util: 3	:ok	:add	"130727"
+2022-03-13 17:11:49,070{GMT}	INFO	[jepsen worker 2] jepsen.util: 2	:invoke	:read	nil
+2022-03-13 17:11:49,077{GMT}	INFO	[jepsen worker 2] jepsen.util: 2	:ok	:read	["428466" "575911" "799823" "30028" "423034" "958055" "488056" "539408" "24397" "546951" "67895" "158197" "404010" "626184" "317603" "170025" "630701" "754311" "409146" "423663" "661606" "744560" "417553" "894932" "13746" "202263" "247734" "746066" "235327"]
+2022-03-13 17:11:49,134{GMT}	INFO	[jepsen worker 3] jepsen.util: 3	:invoke	:read	nil
+2022-03-13 17:11:49,138{GMT}	INFO	[jepsen worker 3] jepsen.util: 3	:ok	:read	["130727" "354697" "428466" "799823" "404469" "30028" "330051" "958055" "488056" "539408" "24397" "546951" "67895" "939382" "404010" "626184" "317603" "170025" "630701" "754311" "423663" "661606" "744560" "417553" "894932" "13746" "202263" "247734" "746066" "235327" "94078"]
+2022-03-13 17:11:49,210{GMT}	INFO	[jepsen worker 3] jepsen.util: 3	:invoke	:read	nil
+2022-03-13 17:11:49,226{GMT}	INFO	[jepsen worker 3] jepsen.util: 3	:ok	:read	["130727" "354697" "428466" "799823" "404469" "30028" "330051" "958055" "488056" "539408" "24397" "546951" "67895" "939382" "404010" "626184" "317603" "170025" "630701" "754311" "423663" "661606" "744560" "417553" "894932" "13746" "202263" "247734" "746066" "235327" "94078"]
+2022-03-13 17:11:49,388{GMT}	INFO	[jepsen worker 3] jepsen.util: 3	:invoke	:add	"490773"
+2022-03-13 17:11:49,397{GMT}	INFO	[jepsen worker 3] jepsen.util: 3	:ok	:add	"490773"
+2022-03-13 17:11:49,502{GMT}	INFO	[jepsen worker 4] jepsen.util: 4	:invoke	:add	"6542"
+2022-03-13 17:11:49,510{GMT}	INFO	[jepsen worker 4] jepsen.util: 4	:ok	:add	"6542"
+2022-03-13 17:11:49,690{GMT}	INFO	[jepsen worker 0] jepsen.util: 0	:invoke	:read	nil
+2022-03-13 17:11:49,696{GMT}	INFO	[jepsen worker 0] jepsen.util: 0	:ok	:read	["428466" "799823" "30028" "488056" "539408" "24397" "546951" "67895" "404010" "626184" "317603" "630701" "754311" "423663" "551458" "163140" "661606" "839441" "744560" "417553" "639089" "894932" "13746" "439671" "202263" "247734" "746066" "235327" "118823"]
+2022-03-13 17:11:49,759{GMT}	INFO	[jepsen worker 4] jepsen.util: 4	:invoke	:add	"236909"
+2022-03-13 17:11:49,760{GMT}	INFO	[jepsen worker 1] jepsen.util: 1	:invoke	:add	"449740"
+2022-03-13 17:11:49,768{GMT}	INFO	[jepsen worker 4] jepsen.util: 4	:ok	:add	"236909"
+2022-03-13 17:11:49,768{GMT}	INFO	[jepsen worker 1] jepsen.util: 1	:ok	:add	"449740"
+2022-03-13 17:11:49,789{GMT}	INFO	[jepsen worker 0] jepsen.util: 0	:invoke	:read	nil
+2022-03-13 17:11:49,796{GMT}	INFO	[jepsen worker 0] jepsen.util: 0	:ok	:read	["428466" "799823" "30028" "488056" "539408" "24397" "546951" "67895" "404010" "626184" "317603" "630701" "754311" "423663" "551458" "163140" "661606" "839441" "744560" "417553" "639089" "894932" "13746" "439671" "202263" "247734" "746066" "235327" "118823"]
+2022-03-13 17:11:49,875{GMT}	INFO	[jepsen worker 3] jepsen.util: 3	:invoke	:add	"261576"
+2022-03-13 17:11:49,884{GMT}	INFO	[jepsen worker 3] jepsen.util: 3	:ok	:add	"261576"
+2022-03-13 17:11:50,054{GMT}	INFO	[jepsen worker 0] jepsen.util: 0	:invoke	:read	nil
+2022-03-13 17:11:50,063{GMT}	INFO	[jepsen worker 0] jepsen.util: 0	:ok	:read	["428466" "799823" "30028" "488056" "539408" "919358" "24397" "546951" "67895" "404010" "626184" "317603" "630701" "754311" "423663" "551458" "163140" "536733" "661606" "839441" "49817" "744560" "417553" "639089" "894932" "13746" "439671" "202263" "247734" "621488" "746066" "235327" "118823"]
+2022-03-13 17:11:50,070{GMT}	INFO	[jepsen worker 3] jepsen.util: 3	:invoke	:read	nil
+2022-03-13 17:11:50,084{GMT}	INFO	[jepsen worker 3] jepsen.util: 3	:ok	:read	["130727" "354697" "428466" "799823" "404469" "30028" "330051" "490773" "958055" "488056" "539408" "24397" "546951" "67895" "939382" "404010" "626184" "317603" "170025" "630701" "754311" "423663" "261576" "661606" "744560" "417553" "894932" "13746" "202263" "247734" "746066" "235327" "94078"]
+2022-03-13 17:11:50,084{GMT}	INFO	[jepsen worker 1] jepsen.util: 1	:invoke	:add	"746765"
+2022-03-13 17:11:50,094{GMT}	INFO	[jepsen worker 1] jepsen.util: 1	:ok	:add	"746765"
+2022-03-13 17:11:50,253{GMT}	INFO	[jepsen worker 2] jepsen.util: 2	:invoke	:read	nil
+2022-03-13 17:11:50,256{GMT}	INFO	[jepsen worker 2] jepsen.util: 2	:ok	:read	["130727" "354697" "428466" "575911" "799823" "404469" "30028" "330051" "423034" "958055" "488056" "539408" "24397" "546951" "67895" "939382" "158197" "404010" "626184" "317603" "170025" "630701" "754311" "409146" "423663" "661606" "744560" "417553" "894932" "13746" "202263" "247734" "746066" "235327" "94078"]
+2022-03-13 17:11:50,285{GMT}	INFO	[jepsen worker 2] jepsen.util: 2	:invoke	:add	"117251"
+2022-03-13 17:11:50,288{GMT}	INFO	[jepsen worker 2] jepsen.util: 2	:ok	:add	"117251"
+2022-03-13 17:11:50,304{GMT}	INFO	[jepsen worker 1] jepsen.util: 1	:invoke	:read	nil
+2022-03-13 17:11:50,306{GMT}	INFO	[jepsen worker 1] jepsen.util: 1	:ok	:read	["428466" "799823" "30028" "488056" "539408" "746765" "919358" "24397" "546951" "67895" "404010" "626184" "317603" "630701" "754311" "423663" "551458" "163140" "536733" "661606" "839441" "49817" "744560" "417553" "639089" "894932" "13746" "439671" "449740" "202263" "247734" "621488" "746066" "235327" "118823"]
+2022-03-13 17:11:50,365{GMT}	INFO	[jepsen worker 3] jepsen.util: 3	:invoke	:add	"642648"
+2022-03-13 17:11:50,373{GMT}	INFO	[jepsen worker 3] jepsen.util: 3	:ok	:add	"642648"
+2022-03-13 17:11:50,446{GMT}	INFO	[jepsen worker 4] jepsen.util: 4	:invoke	:add	"86941"
+2022-03-13 17:11:50,456{GMT}	INFO	[jepsen worker 4] jepsen.util: 4	:ok	:add	"86941"
+2022-03-13 17:11:50,599{GMT}	INFO	[jepsen worker 3] jepsen.util: 3	:invoke	:read	nil
+2022-03-13 17:11:50,606{GMT}	INFO	[jepsen worker 3] jepsen.util: 3	:ok	:read	["130727" "354697" "428466" "799823" "404469" "30028" "330051" "490773" "958055" "488056" "539408" "24397" "546951" "642648" "67895" "939382" "404010" "626184" "317603" "170025" "630701" "754311" "423663" "261576" "661606" "744560" "417553" "894932" "13746" "202263" "247734" "746066" "235327" "94078"]
+2022-03-13 17:11:50,765{GMT}	INFO	[jepsen worker 1] jepsen.util: 1	:invoke	:read	nil
+2022-03-13 17:11:50,771{GMT}	INFO	[jepsen worker 1] jepsen.util: 1	:ok	:read	["428466" "799823" "30028" "488056" "539408" "746765" "919358" "24397" "546951" "67895" "404010" "626184" "317603" "630701" "754311" "423663" "551458" "163140" "536733" "661606" "839441" "49817" "744560" "417553" "639089" "894932" "13746" "439671" "449740" "202263" "247734" "621488" "746066" "235327" "118823"]
+2022-03-13 17:11:50,928{GMT}	INFO	[jepsen worker 3] jepsen.util: 3	:invoke	:read	nil
+2022-03-13 17:11:50,935{GMT}	INFO	[jepsen worker 3] jepsen.util: 3	:ok	:read	["130727" "354697" "428466" "799823" "404469" "30028" "330051" "490773" "958055" "488056" "539408" "24397" "546951" "642648" "67895" "939382" "404010" "626184" "317603" "170025" "630701" "754311" "423663" "261576" "661606" "744560" "417553" "894932" "13746" "202263" "247734" "746066" "235327" "94078"]
+2022-03-13 17:11:51,089{GMT}	INFO	[jepsen worker 3] jepsen.util: 3	:invoke	:read	nil
+2022-03-13 17:11:51,094{GMT}	INFO	[jepsen worker 3] jepsen.util: 3	:ok	:read	["130727" "354697" "428466" "799823" "404469" "30028" "330051" "490773" "958055" "488056" "539408" "24397" "546951" "642648" "67895" "939382" "404010" "626184" "317603" "170025" "630701" "754311" "423663" "261576" "661606" "744560" "417553" "894932" "13746" "202263" "247734" "746066" "235327" "94078"]
+2022-03-13 17:11:51,152{GMT}	INFO	[jepsen worker 2] jepsen.util: 2	:invoke	:read	nil
+2022-03-13 17:11:51,155{GMT}	INFO	[jepsen worker 2] jepsen.util: 2	:ok	:read	["130727" "354697" "428466" "575911" "799823" "404469" "30028" "330051" "423034" "490773" "958055" "488056" "539408" "24397" "546951" "67895" "939382" "158197" "404010" "626184" "317603" "170025" "630701" "754311" "409146" "423663" "261576" "661606" "744560" "417553" "894932" "13746" "117251" "202263" "247734" "746066" "235327" "94078"]
+2022-03-13 17:11:51,269{GMT}	INFO	[jepsen worker 0] jepsen.util: 0	:invoke	:read	nil
+2022-03-13 17:11:51,272{GMT}	INFO	[jepsen worker 0] jepsen.util: 0	:ok	:read	["428466" "799823" "30028" "488056" "539408" "919358" "24397" "546951" "67895" "404010" "626184" "317603" "236909" "630701" "754311" "423663" "551458" "163140" "536733" "661606" "839441" "49817" "744560" "417553" "639089" "894932" "13746" "439671" "202263" "247734" "621488" "6542" "746066" "235327" "118823"]
+2022-03-13 17:11:51,370{GMT}	INFO	[jepsen worker 0] jepsen.util: 0	:invoke	:add	"553500"
+2022-03-13 17:11:51,377{GMT}	INFO	[jepsen worker 0] jepsen.util: 0	:ok	:add	"553500"
+2022-03-13 17:11:51,456{GMT}	INFO	[jepsen worker 4] jepsen.util: 4	:invoke	:add	"216087"
+2022-03-13 17:11:51,464{GMT}	INFO	[jepsen worker 4] jepsen.util: 4	:ok	:add	"216087"
+2022-03-13 17:11:51,631{GMT}	INFO	[jepsen worker 2] jepsen.util: 2	:invoke	:read	nil
+2022-03-13 17:11:51,633{GMT}	INFO	[jepsen worker 0] jepsen.util: 0	:invoke	:add	"909131"
+2022-03-13 17:11:51,638{GMT}	INFO	[jepsen worker 2] jepsen.util: 2	:ok	:read	["130727" "354697" "428466" "575911" "799823" "404469" "30028" "330051" "423034" "490773" "958055" "488056" "539408" "24397" "546951" "67895" "939382" "158197" "404010" "626184" "317603" "170025" "630701" "754311" "409146" "423663" "261576" "661606" "744560" "417553" "894932" "13746" "117251" "202263" "247734" "746066" "235327" "94078"]
+2022-03-13 17:11:51,641{GMT}	INFO	[jepsen worker 0] jepsen.util: 0	:ok	:add	"909131"
+2022-03-13 17:11:51,706{GMT}	INFO	[jepsen worker 1] jepsen.util: 1	:invoke	:add	"170561"
+2022-03-13 17:11:51,715{GMT}	INFO	[jepsen worker 1] jepsen.util: 1	:ok	:add	"170561"
+2022-03-13 17:11:51,846{GMT}	INFO	[jepsen worker 3] jepsen.util: 3	:invoke	:add	"179174"
+2022-03-13 17:11:51,852{GMT}	INFO	[jepsen worker 3] jepsen.util: 3	:ok	:add	"179174"
+2022-03-13 17:11:51,959{GMT}	INFO	[jepsen worker 4] jepsen.util: 4	:invoke	:add	"40790"
+2022-03-13 17:11:51,965{GMT}	INFO	[jepsen worker 4] jepsen.util: 4	:ok	:add	"40790"
+2022-03-13 17:11:52,082{GMT}	INFO	[jepsen worker nemesis] jepsen.util: :nemesis	:info	:stop	nil
+2022-03-13 17:11:52,101{GMT}	INFO	[jepsen worker 3] jepsen.util: 3	:invoke	:add	"178919"
+2022-03-13 17:11:52,109{GMT}	INFO	[jepsen worker 3] jepsen.util: 3	:ok	:add	"178919"
+2022-03-13 17:11:52,113{GMT}	INFO	[jepsen worker 2] jepsen.util: 2	:invoke	:read	nil
+2022-03-13 17:11:52,118{GMT}	INFO	[jepsen worker 2] jepsen.util: 2	:ok	:read	["130727" "354697" "428466" "575911" "799823" "404469" "30028" "330051" "423034" "490773" "958055" "488056" "539408" "24397" "546951" "67895" "939382" "158197" "404010" "626184" "317603" "170025" "630701" "754311" "409146" "423663" "261576" "661606" "744560" "417553" "894932" "13746" "117251" "202263" "247734" "746066" "235327" "94078"]
+2022-03-13 17:11:52,170{GMT}	INFO	[jepsen worker 0] jepsen.util: 0	:invoke	:add	"242869"
+2022-03-13 17:11:52,174{GMT}	INFO	[jepsen worker 0] jepsen.util: 0	:ok	:add	"242869"
+2022-03-13 17:11:52,291{GMT}	INFO	[jepsen worker nemesis] jepsen.util: :nemesis	:info	:stop	:network-healed
+2022-03-13 17:11:52,299{GMT}	INFO	[jepsen worker 4] jepsen.util: 4	:invoke	:add	"540118"
+2022-03-13 17:11:52,309{GMT}	INFO	[jepsen worker 4] jepsen.util: 4	:ok	:add	"540118"
+2022-03-13 17:11:52,475{GMT}	INFO	[jepsen worker 2] jepsen.util: 2	:invoke	:add	"764865"
+2022-03-13 17:11:52,483{GMT}	INFO	[jepsen worker 2] jepsen.util: 2	:ok	:add	"764865"
+2022-03-13 17:11:52,551{GMT}	INFO	[jepsen worker 3] jepsen.util: 3	:invoke	:read	nil
+2022-03-13 17:11:52,558{GMT}	INFO	[jepsen worker 3] jepsen.util: 3	:ok	:read	["130727" "354697" "428466" "799823" "404469" "30028" "330051" "490773" "958055" "488056" "539408" "24397" "546951" "642648" "67895" "939382" "404010" "626184" "317603" "170025" "630701" "754311" "423663" "178919" "179174" "261576" "661606" "744560" "417553" "894932" "13746" "202263" "247734" "746066" "235327" "94078"]
+2022-03-13 17:11:52,646{GMT}	INFO	[jepsen worker 0] jepsen.util: 0	:invoke	:read	nil
+2022-03-13 17:11:52,653{GMT}	INFO	[jepsen worker 0] jepsen.util: 0	:ok	:read	["428466" "553500" "799823" "30028" "488056" "539408" "746765" "909131" "919358" "24397" "546951" "67895" "404010" "626184" "317603" "236909" "630701" "754311" "423663" "551458" "163140" "536733" "661606" "839441" "49817" "744560" "417553" "639089" "894932" "13746" "439671" "449740" "202263" "242869" "247734" "621488" "6542" "746066" "86941" "235327" "118823"]
+2022-03-13 17:11:52,748{GMT}	INFO	[jepsen worker 0] jepsen.util: 0	:invoke	:read	nil
+2022-03-13 17:11:52,754{GMT}	INFO	[jepsen worker 0] jepsen.util: 0	:ok	:read	["428466" "553500" "799823" "30028" "488056" "539408" "746765" "909131" "919358" "24397" "546951" "67895" "404010" "626184" "317603" "236909" "630701" "754311" "423663" "551458" "163140" "536733" "661606" "839441" "49817" "744560" "417553" "639089" "894932" "13746" "439671" "449740" "202263" "242869" "247734" "621488" "6542" "746066" "86941" "235327" "118823"]
+2022-03-13 17:11:52,873{GMT}	INFO	[jepsen worker 4] jepsen.util: 4	:invoke	:read	nil
+2022-03-13 17:11:52,889{GMT}	INFO	[jepsen worker 4] jepsen.util: 4	:ok	:read	["428466" "553500" "799823" "540118" "30028" "488056" "539408" "746765" "909131" "919358" "24397" "546951" "67895" "404010" "626184" "317603" "236909" "630701" "754311" "423663" "551458" "163140" "536733" "661606" "839441" "49817" "744560" "40790" "417553" "639089" "894932" "13746" "439671" "449740" "202263" "247734" "621488" "6542" "746066" "86941" "216087" "235327" "118823"]
+2022-03-13 17:11:52,956{GMT}	INFO	[jepsen worker 1] jepsen.util: 1	:invoke	:add	"970591"
+2022-03-13 17:11:52,965{GMT}	INFO	[jepsen worker 1] jepsen.util: 1	:ok	:add	"970591"
+2022-03-13 17:11:53,136{GMT}	INFO	[jepsen worker 1] jepsen.util: 1	:invoke	:read	nil
+2022-03-13 17:11:53,141{GMT}	INFO	[jepsen worker 1] jepsen.util: 1	:ok	:read	["428466" "553500" "799823" "30028" "488056" "539408" "746765" "909131" "919358" "24397" "546951" "67895" "404010" "626184" "970591" "317603" "236909" "630701" "754311" "170561" "423663" "551458" "163140" "536733" "661606" "839441" "49817" "744560" "417553" "639089" "894932" "13746" "439671" "449740" "202263" "242869" "247734" "621488" "6542" "746066" "86941" "216087" "235327" "118823"]
+2022-03-13 17:11:53,239{GMT}	INFO	[jepsen worker 2] jepsen.util: 2	:invoke	:add	"201274"
+2022-03-13 17:11:53,245{GMT}	INFO	[jepsen worker 2] jepsen.util: 2	:ok	:add	"201274"
+2022-03-13 17:11:53,259{GMT}	INFO	[jepsen worker 3] jepsen.util: 3	:invoke	:read	nil
+2022-03-13 17:11:53,263{GMT}	INFO	[jepsen worker 3] jepsen.util: 3	:ok	:read	["130727" "354697" "428466" "799823" "404469" "30028" "330051" "490773" "958055" "488056" "539408" "24397" "546951" "642648" "67895" "939382" "404010" "626184" "317603" "170025" "630701" "754311" "423663" "178919" "179174" "261576" "661606" "744560" "417553" "894932" "13746" "202263" "247734" "746066" "235327" "94078"]
+2022-03-13 17:11:53,281{GMT}	INFO	[jepsen worker 3] jepsen.util: 3	:invoke	:add	"449487"
+2022-03-13 17:11:53,284{GMT}	INFO	[jepsen worker 3] jepsen.util: 3	:ok	:add	"449487"
+2022-03-13 17:11:53,331{GMT}	INFO	[jepsen worker 1] jepsen.util: 1	:invoke	:add	"404692"
+2022-03-13 17:11:53,335{GMT}	INFO	[jepsen worker 1] jepsen.util: 1	:ok	:add	"404692"
+2022-03-13 17:11:53,354{GMT}	INFO	[jepsen worker 3] jepsen.util: 3	:invoke	:read	nil
+2022-03-13 17:11:53,359{GMT}	INFO	[jepsen worker 3] jepsen.util: 3	:ok	:read	["130727" "354697" "428466" "799823" "404469" "30028" "330051" "490773" "958055" "488056" "539408" "24397" "449487" "546951" "642648" "67895" "939382" "404010" "626184" "317603" "170025" "630701" "754311" "423663" "178919" "179174" "261576" "661606" "744560" "417553" "894932" "13746" "202263" "247734" "746066" "235327" "94078"]
+2022-03-13 17:11:53,466{GMT}	INFO	[jepsen worker 4] jepsen.util: 4	:invoke	:read	nil
+2022-03-13 17:11:53,475{GMT}	INFO	[jepsen worker 4] jepsen.util: 4	:ok	:read	["428466" "553500" "799823" "540118" "30028" "488056" "539408" "746765" "909131" "919358" "24397" "546951" "67895" "404010" "626184" "317603" "236909" "630701" "754311" "170561" "423663" "551458" "163140" "536733" "661606" "839441" "49817" "744560" "40790" "417553" "639089" "894932" "13746" "439671" "449740" "202263" "247734" "621488" "6542" "746066" "86941" "216087" "235327" "118823"]
+2022-03-13 17:11:53,556{GMT}	INFO	[jepsen worker 0] jepsen.util: 0	:invoke	:add	"892952"
+2022-03-13 17:11:53,559{GMT}	INFO	[jepsen worker 0] jepsen.util: 0	:ok	:add	"892952"
+2022-03-13 17:11:53,696{GMT}	INFO	[jepsen worker 0] jepsen.util: 0	:invoke	:read	nil
+2022-03-13 17:11:53,708{GMT}	INFO	[jepsen worker 0] jepsen.util: 0	:ok	:read	["428466" "553500" "799823" "30028" "488056" "539408" "746765" "909131" "919358" "24397" "546951" "67895" "404010" "626184" "317603" "236909" "630701" "754311" "423663" "551458" "163140" "536733" "661606" "839441" "49817" "744560" "417553" "639089" "892952" "894932" "13746" "439671" "449740" "202263" "242869" "247734" "621488" "6542" "746066" "86941" "216087" "235327" "118823"]
+2022-03-13 17:11:53,714{GMT}	INFO	[jepsen worker 4] jepsen.util: 4	:invoke	:add	"501613"
+2022-03-13 17:11:53,731{GMT}	INFO	[jepsen worker 4] jepsen.util: 4	:ok	:add	"501613"
+2022-03-13 17:11:53,846{GMT}	INFO	[jepsen worker 4] jepsen.util: 4	:invoke	:read	nil
+2022-03-13 17:11:53,849{GMT}	INFO	[jepsen worker 4] jepsen.util: 4	:ok	:read	["428466" "553500" "799823" "540118" "30028" "488056" "539408" "746765" "909131" "919358" "24397" "501613" "546951" "67895" "404010" "626184" "317603" "236909" "630701" "754311" "170561" "423663" "551458" "163140" "536733" "661606" "839441" "49817" "744560" "40790" "417553" "639089" "894932" "13746" "439671" "449740" "202263" "247734" "621488" "6542" "746066" "86941" "216087" "235327" "118823"]
+2022-03-13 17:11:54,009{GMT}	INFO	[jepsen worker 2] jepsen.util: 2	:invoke	:read	nil
+2022-03-13 17:11:54,013{GMT}	INFO	[jepsen worker 2] jepsen.util: 2	:ok	:read	["130727" "354697" "428466" "575911" "799823" "404469" "201274" "30028" "330051" "423034" "490773" "958055" "488056" "539408" "24397" "546951" "642648" "67895" "764865" "939382" "158197" "404010" "626184" "317603" "170025" "630701" "754311" "409146" "423663" "178919" "179174" "261576" "661606" "744560" "417553" "894932" "13746" "117251" "202263" "247734" "746066" "235327" "94078"]
+2022-03-13 17:11:54,057{GMT}	INFO	[jepsen worker 3] jepsen.util: 3	:invoke	:add	"105251"
+2022-03-13 17:11:54,072{GMT}	INFO	[jepsen worker 3] jepsen.util: 3	:ok	:add	"105251"
+2022-03-13 17:11:54,203{GMT}	INFO	[jepsen worker 0] jepsen.util: 0	:invoke	:read	nil
+2022-03-13 17:11:54,207{GMT}	INFO	[jepsen worker 0] jepsen.util: 0	:ok	:read	["428466" "553500" "575911" "799823" "540118" "30028" "330051" "423034" "958055" "488056" "539408" "746765" "909131" "919358" "24397" "546951" "67895" "158197" "404010" "626184" "970591" "317603" "170025" "236909" "630701" "754311" "170561" "409146" "423663" "551458" "163140" "536733" "661606" "839441" "49817" "744560" "40790" "417553" "639089" "892952" "894932" "13746" "439671" "449740" "202263" "242869" "247734" "621488" "6542" "746066" "86941" "216087" "235327" "118823"]
+2022-03-13 17:11:54,227{GMT}	INFO	[jepsen worker 1] jepsen.util: 1	:invoke	:read	nil
+2022-03-13 17:11:54,230{GMT}	INFO	[jepsen worker 1] jepsen.util: 1	:ok	:read	["130727" "354697" "428466" "553500" "575911" "799823" "404469" "540118" "30028" "330051" "423034" "490773" "958055" "488056" "539408" "746765" "909131" "919358" "24397" "546951" "642648" "67895" "764865" "939382" "158197" "404010" "404692" "626184" "970591" "317603" "170025" "236909" "630701" "754311" "170561" "409146" "423663" "551458" "163140" "178919" "179174" "261576" "536733" "661606" "839441" "49817" "744560" "40790" "417553" "639089" "892952" "894932" "13746" "439671" "449740" "117251" "202263" "242869" "247734" "621488" "6542" "746066" "86941" "216087" "235327" "118823" "94078"]
+2022-03-13 17:11:54,317{GMT}	INFO	[jepsen worker 0] jepsen.util: 0	:invoke	:add	"55684"
+2022-03-13 17:11:54,321{GMT}	INFO	[jepsen worker 0] jepsen.util: 0	:ok	:add	"55684"
+2022-03-13 17:11:54,510{GMT}	INFO	[jepsen worker 1] jepsen.util: 1	:invoke	:add	"132301"
+2022-03-13 17:11:54,519{GMT}	INFO	[jepsen worker 1] jepsen.util: 1	:ok	:add	"132301"
+2022-03-13 17:11:54,600{GMT}	INFO	[jepsen worker 2] jepsen.util: 2	:invoke	:add	"398672"
+2022-03-13 17:11:54,608{GMT}	INFO	[jepsen worker 2] jepsen.util: 2	:ok	:add	"398672"
+2022-03-13 17:11:54,682{GMT}	INFO	[jepsen worker 1] jepsen.util: 1	:invoke	:read	nil
+2022-03-13 17:11:54,689{GMT}	INFO	[jepsen worker 1] jepsen.util: 1	:ok	:read	["130727" "354697" "428466" "553500" "575911" "799823" "404469" "540118" "30028" "330051" "423034" "490773" "958055" "488056" "539408" "746765" "909131" "919358" "24397" "546951" "642648" "67895" "764865" "939382" "158197" "404010" "404692" "626184" "970591" "317603" "170025" "236909" "630701" "754311" "170561" "409146" "423663" "551458" "163140" "178919" "179174" "261576" "536733" "661606" "839441" "49817" "744560" "40790" "417553" "639089" "892952" "894932" "13746" "439671" "449740" "117251" "202263" "242869" "247734" "621488" "6542" "746066" "86941" "132301" "216087" "235327" "118823" "94078"]
+2022-03-13 17:11:54,733{GMT}	INFO	[jepsen worker 3] jepsen.util: 3	:invoke	:add	"958551"
+2022-03-13 17:11:54,742{GMT}	INFO	[jepsen worker 3] jepsen.util: 3	:ok	:add	"958551"
+2022-03-13 17:11:54,786{GMT}	INFO	[jepsen worker 4] jepsen.util: 4	:invoke	:read	nil
+2022-03-13 17:11:54,792{GMT}	INFO	[jepsen worker 4] jepsen.util: 4	:ok	:read	["354697" "428466" "553500" "575911" "799823" "404469" "540118" "30028" "330051" "423034" "958055" "488056" "539408" "746765" "909131" "919358" "24397" "501613" "546951" "67895" "939382" "158197" "404010" "626184" "970591" "317603" "170025" "236909" "630701" "754311" "170561" "409146" "423663" "551458" "163140" "536733" "661606" "839441" "49817" "744560" "40790" "417553" "639089" "894932" "13746" "439671" "449740" "202263" "242869" "247734" "621488" "6542" "746066" "86941" "216087" "235327" "118823" "94078"]
+2022-03-13 17:11:54,911{GMT}	INFO	[jepsen worker 2] jepsen.util: 2	:invoke	:read	nil
+2022-03-13 17:11:54,916{GMT}	INFO	[jepsen worker 2] jepsen.util: 2	:ok	:read	["130727" "354697" "428466" "553500" "575911" "799823" "398672" "404469" "540118" "201274" "30028" "330051" "423034" "490773" "958055" "488056" "539408" "746765" "909131" "919358" "24397" "546951" "642648" "67895" "764865" "939382" "158197" "404010" "626184" "970591" "317603" "170025" "236909" "630701" "754311" "170561" "409146" "423663" "551458" "163140" "178919" "179174" "261576" "536733" "661606" "839441" "49817" "744560" "40790" "417553" "639089" "892952" "894932" "13746" "439671" "449740" "117251" "202263" "242869" "247734" "621488" "6542" "746066" "86941" "216087" "235327" "118823" "94078"]
+2022-03-13 17:11:55,086{GMT}	INFO	[jepsen worker 1] jepsen.util: 1	:invoke	:read	nil
+2022-03-13 17:11:55,089{GMT}	INFO	[jepsen worker 1] jepsen.util: 1	:ok	:read	["130727" "354697" "428466" "553500" "575911" "799823" "404469" "540118" "30028" "330051" "423034" "490773" "958055" "488056" "539408" "746765" "909131" "919358" "24397" "546951" "642648" "67895" "764865" "939382" "158197" "404010" "404692" "626184" "970591" "317603" "170025" "236909" "630701" "754311" "170561" "409146" "423663" "551458" "163140" "178919" "179174" "261576" "536733" "661606" "839441" "49817" "744560" "40790" "417553" "639089" "892952" "894932" "13746" "439671" "449740" "117251" "202263" "242869" "247734" "621488" "6542" "746066" "86941" "132301" "216087" "235327" "118823" "94078"]
+2022-03-13 17:11:55,100{GMT}	INFO	[jepsen worker 0] jepsen.util: 0	:invoke	:read	nil
+2022-03-13 17:11:55,105{GMT}	INFO	[jepsen worker 0] jepsen.util: 0	:ok	:read	["130727" "354697" "428466" "553500" "575911" "799823" "404469" "540118" "30028" "330051" "423034" "490773" "958055" "488056" "539408" "746765" "909131" "919358" "24397" "501613" "546951" "642648" "67895" "764865" "939382" "158197" "404010" "626184" "970591" "317603" "170025" "236909" "630701" "754311" "170561" "409146" "423663" "551458" "163140" "178919" "179174" "261576" "536733" "661606" "839441" "49817" "744560" "40790" "417553" "55684" "639089" "892952" "894932" "13746" "439671" "449740" "117251" "202263" "242869" "247734" "621488" "6542" "746066" "86941" "216087" "235327" "118823" "94078"]
+2022-03-13 17:11:55,190{GMT}	INFO	[jepsen worker 3] jepsen.util: 3	:invoke	:add	"334133"
+2022-03-13 17:11:55,196{GMT}	INFO	[jepsen worker 3] jepsen.util: 3	:ok	:add	"334133"
+2022-03-13 17:11:55,316{GMT}	INFO	[jepsen worker 0] jepsen.util: 0	:invoke	:add	"570165"
+2022-03-13 17:11:55,320{GMT}	INFO	[jepsen worker 0] jepsen.util: 0	:ok	:add	"570165"
+2022-03-13 17:11:55,493{GMT}	INFO	[jepsen worker 3] jepsen.util: 3	:invoke	:read	nil
+2022-03-13 17:11:55,500{GMT}	INFO	[jepsen worker 3] jepsen.util: 3	:ok	:read	["130727" "354697" "428466" "553500" "575911" "799823" "404469" "540118" "105251" "201274" "30028" "330051" "423034" "490773" "958055" "488056" "539408" "746765" "909131" "919358" "24397" "449487" "501613" "546951" "642648" "67895" "764865" "939382" "158197" "404010" "404692" "626184" "970591" "317603" "170025" "236909" "630701" "754311" "958551" "170561" "409146" "423663" "551458" "163140" "178919" "179174" "261576" "536733" "661606" "839441" "49817" "744560" "40790" "417553" "55684" "639089" "892952" "894932" "13746" "439671" "449740" "117251" "202263" "242869" "247734" "621488" "6542" "746066" "86941" "216087" "235327" "118823" "334133" "94078"]
+2022-03-13 17:11:55,672{GMT}	INFO	[jepsen worker 1] jepsen.util: 1	:invoke	:add	"277831"
+2022-03-13 17:11:55,679{GMT}	INFO	[jepsen worker 1] jepsen.util: 1	:ok	:add	"277831"
+2022-03-13 17:11:55,752{GMT}	INFO	[jepsen worker 1] jepsen.util: 1	:invoke	:read	nil
+2022-03-13 17:11:55,759{GMT}	INFO	[jepsen worker 1] jepsen.util: 1	:ok	:read	["130727" "354697" "428466" "553500" "575911" "799823" "404469" "540118" "105251" "201274" "277831" "30028" "330051" "423034" "490773" "958055" "488056" "539408" "746765" "909131" "919358" "24397" "449487" "501613" "546951" "642648" "67895" "764865" "939382" "158197" "404010" "404692" "626184" "970591" "317603" "170025" "236909" "630701" "754311" "170561" "409146" "423663" "551458" "163140" "178919" "179174" "261576" "536733" "661606" "839441" "49817" "744560" "40790" "417553" "55684" "639089" "892952" "894932" "13746" "439671" "449740" "117251" "202263" "242869" "247734" "621488" "6542" "746066" "86941" "132301" "216087" "235327" "118823" "94078"]
+2022-03-13 17:11:55,806{GMT}	INFO	[jepsen worker 1] jepsen.util: 1	:invoke	:add	"960568"
+2022-03-13 17:11:55,814{GMT}	INFO	[jepsen worker 1] jepsen.util: 1	:ok	:add	"960568"
+2022-03-13 17:11:55,842{GMT}	INFO	[jepsen worker 0] jepsen.util: 0	:invoke	:read	nil
+2022-03-13 17:11:55,851{GMT}	INFO	[jepsen worker 0] jepsen.util: 0	:ok	:read	["130727" "354697" "428466" "553500" "575911" "799823" "404469" "540118" "105251" "201274" "30028" "330051" "423034" "490773" "958055" "488056" "539408" "746765" "909131" "919358" "24397" "449487" "501613" "546951" "570165" "642648" "67895" "764865" "939382" "158197" "404010" "404692" "626184" "970591" "317603" "170025" "236909" "630701" "754311" "170561" "409146" "423663" "551458" "163140" "178919" "179174" "261576" "536733" "661606" "839441" "49817" "744560" "40790" "417553" "55684" "639089" "892952" "894932" "13746" "439671" "449740" "117251" "202263" "242869" "247734" "621488" "6542" "746066" "86941" "216087" "235327" "118823" "94078"]
+2022-03-13 17:11:55,911{GMT}	INFO	[jepsen worker 0] jepsen.util: 0	:invoke	:read	nil
+2022-03-13 17:11:55,917{GMT}	INFO	[jepsen worker 0] jepsen.util: 0	:ok	:read	["130727" "354697" "428466" "553500" "575911" "799823" "404469" "540118" "105251" "201274" "30028" "330051" "423034" "490773" "958055" "488056" "539408" "746765" "909131" "919358" "24397" "449487" "501613" "546951" "570165" "642648" "67895" "764865" "939382" "158197" "404010" "404692" "626184" "970591" "317603" "170025" "236909" "630701" "754311" "170561" "409146" "423663" "551458" "163140" "178919" "179174" "261576" "536733" "661606" "839441" "49817" "744560" "40790" "417553" "55684" "639089" "892952" "894932" "13746" "439671" "449740" "117251" "202263" "242869" "247734" "621488" "6542" "746066" "86941" "216087" "235327" "118823" "94078"]
+2022-03-13 17:11:56,085{GMT}	INFO	[jepsen worker 1] jepsen.util: 1	:invoke	:read	nil
+2022-03-13 17:11:56,088{GMT}	INFO	[jepsen worker 1] jepsen.util: 1	:ok	:read	["130727" "354697" "428466" "553500" "575911" "799823" "404469" "540118" "105251" "201274" "277831" "30028" "330051" "423034" "490773" "958055" "488056" "539408" "746765" "909131" "919358" "24397" "449487" "501613" "546951" "642648" "67895" "764865" "939382" "158197" "404010" "404692" "626184" "970591" "317603" "170025" "236909" "630701" "754311" "170561" "409146" "423663" "551458" "163140" "178919" "179174" "261576" "536733" "661606" "839441" "49817" "744560" "40790" "417553" "55684" "639089" "892952" "894932" "13746" "439671" "449740" "117251" "202263" "242869" "247734" "621488" "6542" "746066" "86941" "132301" "216087" "235327" "960568" "118823" "94078"]
+2022-03-13 17:11:56,265{GMT}	INFO	[jepsen worker 2] jepsen.util: 2	:invoke	:read	nil
+2022-03-13 17:11:56,268{GMT}	INFO	[jepsen worker 2] jepsen.util: 2	:ok	:read	["130727" "354697" "428466" "553500" "575911" "799823" "398672" "404469" "540118" "105251" "201274" "30028" "330051" "423034" "490773" "958055" "488056" "539408" "746765" "909131" "919358" "24397" "449487" "501613" "546951" "570165" "642648" "67895" "764865" "939382" "158197" "404010" "404692" "626184" "970591" "317603" "170025" "236909" "630701" "754311" "958551" "170561" "409146" "423663" "551458" "163140" "178919" "179174" "261576" "536733" "661606" "839441" "49817" "744560" "40790" "417553" "55684" "639089" "892952" "894932" "13746" "439671" "449740" "117251" "202263" "242869" "247734" "621488" "6542" "746066" "86941" "132301" "216087" "235327" "118823" "94078"]
+2022-03-13 17:11:56,385{GMT}	INFO	[jepsen worker 0] jepsen.util: 0	:invoke	:read	nil
+2022-03-13 17:11:56,391{GMT}	INFO	[jepsen worker 0] jepsen.util: 0	:ok	:read	["130727" "354697" "428466" "553500" "575911" "799823" "404469" "540118" "105251" "201274" "30028" "330051" "423034" "490773" "958055" "488056" "539408" "746765" "909131" "919358" "24397" "449487" "501613" "546951" "570165" "642648" "67895" "764865" "939382" "158197" "404010" "404692" "626184" "970591" "317603" "170025" "236909" "630701" "754311" "170561" "409146" "423663" "551458" "163140" "178919" "179174" "261576" "536733" "661606" "839441" "49817" "744560" "40790" "417553" "55684" "639089" "892952" "894932" "13746" "439671" "449740" "117251" "202263" "242869" "247734" "621488" "6542" "746066" "86941" "216087" "235327" "118823" "94078"]
+2022-03-13 17:11:56,571{GMT}	INFO	[jepsen worker 4] jepsen.util: 4	:invoke	:add	"493410"
+2022-03-13 17:11:56,578{GMT}	INFO	[jepsen worker 4] jepsen.util: 4	:ok	:add	"493410"
+2022-03-13 17:11:56,747{GMT}	INFO	[jepsen worker 0] jepsen.util: 0	:invoke	:add	"150931"
+2022-03-13 17:11:56,753{GMT}	INFO	[jepsen worker 0] jepsen.util: 0	:ok	:add	"150931"
+2022-03-13 17:11:56,789{GMT}	INFO	[jepsen worker 0] jepsen.util: 0	:invoke	:read	nil
+2022-03-13 17:11:56,792{GMT}	INFO	[jepsen worker 0] jepsen.util: 0	:ok	:read	["130727" "354697" "428466" "553500" "575911" "799823" "404469" "540118" "105251" "201274" "30028" "330051" "423034" "490773" "958055" "488056" "539408" "746765" "909131" "919358" "24397" "449487" "501613" "546951" "570165" "642648" "67895" "764865" "939382" "158197" "404010" "404692" "626184" "970591" "317603" "170025" "236909" "630701" "754311" "170561" "409146" "423663" "551458" "163140" "178919" "179174" "261576" "536733" "661606" "839441" "49817" "744560" "40790" "417553" "55684" "639089" "892952" "894932" "13746" "439671" "449740" "117251" "150931" "202263" "242869" "247734" "621488" "6542" "746066" "86941" "216087" "235327" "118823" "94078"]
+2022-03-13 17:11:56,848{GMT}	INFO	[jepsen worker 0] jepsen.util: 0	:invoke	:read	nil
+2022-03-13 17:11:56,852{GMT}	INFO	[jepsen worker 0] jepsen.util: 0	:ok	:read	["130727" "354697" "428466" "553500" "575911" "799823" "398672" "404469" "540118" "105251" "201274" "30028" "330051" "423034" "490773" "958055" "488056" "539408" "746765" "909131" "919358" "24397" "449487" "501613" "546951" "570165" "642648" "67895" "764865" "939382" "158197" "404010" "404692" "626184" "970591" "317603" "170025" "236909" "630701" "754311" "958551" "170561" "409146" "423663" "551458" "163140" "178919" "179174" "261576" "536733" "661606" "839441" "49817" "744560" "40790" "417553" "55684" "639089" "892952" "894932" "13746" "439671" "449740" "117251" "150931" "202263" "242869" "247734" "621488" "6542" "746066" "86941" "132301" "216087" "235327" "118823" "94078"]
+2022-03-13 17:11:56,894{GMT}	INFO	[jepsen worker 2] jepsen.util: 2	:invoke	:read	nil
+2022-03-13 17:11:56,897{GMT}	INFO	[jepsen worker 2] jepsen.util: 2	:ok	:read	["130727" "354697" "428466" "553500" "575911" "799823" "398672" "404469" "540118" "105251" "201274" "30028" "330051" "423034" "490773" "958055" "488056" "539408" "746765" "909131" "919358" "24397" "449487" "501613" "546951" "570165" "642648" "67895" "764865" "939382" "158197" "404010" "404692" "626184" "970591" "317603" "170025" "236909" "630701" "754311" "958551" "170561" "409146" "423663" "551458" "163140" "178919" "179174" "261576" "536733" "661606" "839441" "49817" "744560" "40790" "417553" "55684" "639089" "892952" "894932" "13746" "439671" "449740" "117251" "202263" "242869" "247734" "621488" "6542" "746066" "86941" "132301" "216087" "235327" "118823" "94078"]
+2022-03-13 17:11:56,973{GMT}	INFO	[jepsen worker 0] jepsen.util: 0	:invoke	:add	"277238"
+2022-03-13 17:11:56,976{GMT}	INFO	[jepsen worker 0] jepsen.util: 0	:ok	:add	"277238"
+2022-03-13 17:11:57,041{GMT}	INFO	[jepsen worker 1] jepsen.util: 1	:invoke	:read	nil
+2022-03-13 17:11:57,044{GMT}	INFO	[jepsen worker 1] jepsen.util: 1	:ok	:read	["130727" "354697" "428466" "553500" "575911" "799823" "398672" "404469" "540118" "105251" "201274" "277831" "30028" "330051" "423034" "490773" "958055" "488056" "539408" "746765" "909131" "919358" "24397" "449487" "501613" "546951" "570165" "642648" "67895" "764865" "939382" "158197" "404010" "404692" "626184" "970591" "317603" "170025" "236909" "630701" "754311" "958551" "170561" "409146" "423663" "551458" "163140" "178919" "179174" "261576" "536733" "661606" "839441" "49817" "744560" "40790" "417553" "55684" "639089" "892952" "894932" "13746" "439671" "449740" "117251" "202263" "242869" "247734" "621488" "6542" "746066" "86941" "132301" "216087" "235327" "960568" "118823" "94078"]
+2022-03-13 17:11:57,134{GMT}	INFO	[jepsen worker 1] jepsen.util: 1	:invoke	:add	"132745"
+2022-03-13 17:11:57,138{GMT}	INFO	[jepsen worker 1] jepsen.util: 1	:ok	:add	"132745"
+2022-03-13 17:11:57,220{GMT}	INFO	[jepsen worker 1] jepsen.util: 1	:invoke	:add	"332177"
+2022-03-13 17:11:57,224{GMT}	INFO	[jepsen worker 1] jepsen.util: 1	:ok	:add	"332177"
+2022-03-13 17:11:57,249{GMT}	INFO	[jepsen worker 1] jepsen.util: 1	:invoke	:read	nil
+2022-03-13 17:11:57,254{GMT}	INFO	[jepsen worker 1] jepsen.util: 1	:ok	:read	["428466" "799823" "332177" "398672" "404469" "540118" "105251" "132745" "201274" "277831" "30028" "330051" "423034" "490773" "958055" "488056" "539408" "746765" "909131" "919358" "24397" "449487" "501613" "546951" "570165" "642648" "67895" "764865" "939382" "158197" "404010" "404692" "626184" "970591" "317603" "170025" "236909" "630701" "754311" "958551" "170561" "409146" "423663" "551458" "163140" "178919" "179174" "261576" "536733" "661606" "839441" "49817" "744560" "40790" "417553" "55684" "639089" "892952" "894932" "13746" "439671" "449740" "117251" "150931" "202263" "242869" "247734" "621488" "6542" "746066" "86941" "132301" "216087" "235327" "960568" "118823" "334133" "94078" "130727" "354697" "553500" "575911"]
+2022-03-13 17:11:57,292{GMT}	INFO	[jepsen worker nemesis] jepsen.util: :nemesis	:info	:start	nil
+2022-03-13 17:11:57,366{GMT}	INFO	[jepsen worker 3] jepsen.util: 3	:invoke	:add	"845655"
+2022-03-13 17:11:57,369{GMT}	INFO	[jepsen worker 3] jepsen.util: 3	:ok	:add	"845655"
+2022-03-13 17:11:57,395{GMT}	INFO	[jepsen worker nemesis] jepsen.util: :nemesis	:info	:start	[:isolated {"n4" #{"n2" "n5" "n1"}, "n3" #{"n2" "n5" "n1"}, "n2" #{"n4" "n3"}, "n5" #{"n4" "n3"}, "n1" #{"n4" "n3"}}]
+2022-03-13 17:11:57,457{GMT}	INFO	[jepsen worker 0] jepsen.util: 0	:invoke	:add	"326686"
+2022-03-13 17:11:57,466{GMT}	INFO	[jepsen worker 0] jepsen.util: 0	:ok	:add	"326686"
+2022-03-13 17:11:57,544{GMT}	INFO	[jepsen worker 1] jepsen.util: 1	:invoke	:read	nil
+2022-03-13 17:11:57,552{GMT}	INFO	[jepsen worker 1] jepsen.util: 1	:ok	:read	["428466" "799823" "332177" "398672" "404469" "540118" "105251" "132745" "201274" "277831" "30028" "330051" "423034" "490773" "958055" "488056" "539408" "746765" "909131" "919358" "24397" "449487" "501613" "546951" "570165" "642648" "67895" "764865" "939382" "158197" "404010" "404692" "626184" "970591" "317603" "170025" "236909" "630701" "754311" "958551" "170561" "409146" "423663" "551458" "163140" "178919" "179174" "261576" "536733" "661606" "839441" "49817" "744560" "40790" "417553" "55684" "639089" "892952" "894932" "13746" "439671" "449740" "117251" "150931" "202263" "242869" "247734" "621488" "6542" "746066" "86941" "132301" "216087" "235327" "960568" "118823" "334133" "94078" "130727" "354697" "553500" "575911"]
+2022-03-13 17:11:57,674{GMT}	INFO	[jepsen worker 0] jepsen.util: 0	:invoke	:read	nil
+2022-03-13 17:11:57,683{GMT}	INFO	[jepsen worker 0] jepsen.util: 0	:ok	:read	["130727" "354697" "428466" "553500" "575911" "799823" "398672" "404469" "540118" "105251" "201274" "30028" "330051" "423034" "490773" "958055" "326686" "488056" "539408" "746765" "909131" "919358" "24397" "449487" "501613" "546951" "570165" "642648" "67895" "764865" "939382" "158197" "404010" "404692" "626184" "970591" "317603" "170025" "236909" "630701" "754311" "958551" "170561" "409146" "423663" "551458" "163140" "178919" "179174" "261576" "536733" "661606" "839441" "49817" "744560" "40790" "417553" "55684" "639089" "892952" "894932" "13746" "439671" "449740" "117251" "150931" "202263" "242869" "247734" "621488" "6542" "746066" "86941" "132301" "216087" "235327" "118823" "277238" "94078"]
+2022-03-13 17:11:57,816{GMT}	INFO	[jepsen worker 1] jepsen.util: 1	:invoke	:add	"860126"
+2022-03-13 17:11:57,822{GMT}	INFO	[jepsen worker 1] jepsen.util: 1	:ok	:add	"860126"
+2022-03-13 17:11:58,002{GMT}	INFO	[jepsen worker 3] jepsen.util: 3	:invoke	:add	"957487"
+2022-03-13 17:11:58,015{GMT}	INFO	[jepsen worker 3] jepsen.util: 3	:ok	:add	"957487"
+2022-03-13 17:11:58,078{GMT}	INFO	[jepsen worker 4] jepsen.util: 4	:invoke	:add	"659234"
+2022-03-13 17:11:58,093{GMT}	INFO	[jepsen worker 4] jepsen.util: 4	:ok	:add	"659234"
+2022-03-13 17:11:58,219{GMT}	INFO	[jepsen worker 4] jepsen.util: 4	:invoke	:add	"869028"
+2022-03-13 17:11:58,225{GMT}	INFO	[jepsen worker 4] jepsen.util: 4	:ok	:add	"869028"
+2022-03-13 17:11:58,292{GMT}	INFO	[jepsen worker 3] jepsen.util: 3	:invoke	:add	"750358"
+2022-03-13 17:11:58,295{GMT}	INFO	[jepsen worker 3] jepsen.util: 3	:ok	:add	"750358"
+2022-03-13 17:11:58,328{GMT}	INFO	[jepsen worker 2] jepsen.util: 2	:invoke	:add	"28436"
+2022-03-13 17:11:58,332{GMT}	INFO	[jepsen worker 2] jepsen.util: 2	:ok	:add	"28436"
+2022-03-13 17:11:58,376{GMT}	INFO	[jepsen worker 2] jepsen.util: 2	:invoke	:read	nil
+2022-03-13 17:11:58,382{GMT}	INFO	[jepsen worker 2] jepsen.util: 2	:ok	:read	["428466" "799823" "398672" "404469" "540118" "105251" "201274" "277831" "30028" "330051" "423034" "490773" "958055" "488056" "539408" "746765" "909131" "919358" "24397" "449487" "501613" "546951" "570165" "642648" "67895" "764865" "939382" "158197" "404010" "404692" "626184" "970591" "317603" "170025" "236909" "630701" "754311" "958551" "170561" "409146" "423663" "551458" "163140" "178919" "179174" "261576" "536733" "661606" "839441" "49817" "744560" "40790" "417553" "55684" "639089" "892952" "894932" "13746" "439671" "449740" "117251" "150931" "202263" "242869" "247734" "621488" "6542" "746066" "86941" "132301" "216087" "235327" "28436" "960568" "118823" "334133" "493410" "94078" "130727" "354697" "553500" "575911"]
+2022-03-13 17:11:58,527{GMT}	INFO	[jepsen worker 0] jepsen.util: 0	:invoke	:read	nil
+2022-03-13 17:11:58,536{GMT}	INFO	[jepsen worker 0] jepsen.util: 0	:ok	:read	["428466" "799823" "398672" "404469" "540118" "105251" "201274" "277831" "30028" "330051" "423034" "490773" "958055" "326686" "488056" "539408" "746765" "909131" "919358" "24397" "449487" "501613" "546951" "570165" "642648" "67895" "764865" "939382" "158197" "404010" "404692" "626184" "970591" "317603" "170025" "236909" "630701" "754311" "958551" "170561" "409146" "423663" "551458" "163140" "178919" "179174" "261576" "536733" "661606" "839441" "49817" "744560" "40790" "417553" "55684" "639089" "892952" "894932" "13746" "439671" "449740" "117251" "150931" "202263" "242869" "247734" "621488" "6542" "746066" "86941" "132301" "216087" "235327" "960568" "118823" "277238" "334133" "493410" "94078" "130727" "354697" "553500" "575911"]
+2022-03-13 17:11:58,575{GMT}	INFO	[jepsen worker 0] jepsen.util: 0	:invoke	:add	"51075"
+2022-03-13 17:11:58,587{GMT}	INFO	[jepsen worker 0] jepsen.util: 0	:ok	:add	"51075"
+2022-03-13 17:11:58,684{GMT}	INFO	[jepsen worker 4] jepsen.util: 4	:invoke	:read	nil
+2022-03-13 17:11:58,692{GMT}	INFO	[jepsen worker 4] jepsen.util: 4	:ok	:read	["428466" "799823" "398672" "404469" "540118" "105251" "201274" "277831" "30028" "330051" "423034" "490773" "958055" "488056" "539408" "746765" "909131" "919358" "24397" "449487" "501613" "546951" "570165" "642648" "67895" "764865" "939382" "158197" "404010" "404692" "626184" "970591" "317603" "170025" "236909" "630701" "754311" "958551" "170561" "409146" "423663" "551458" "163140" "178919" "179174" "261576" "536733" "661606" "839441" "869028" "49817" "744560" "40790" "417553" "55684" "639089" "659234" "892952" "894932" "13746" "439671" "449740" "117251" "150931" "202263" "242869" "247734" "621488" "6542" "746066" "86941" "132301" "216087" "235327" "960568" "118823" "334133" "493410" "94078" "130727" "354697" "553500" "575911"]
+2022-03-13 17:11:58,752{GMT}	INFO	[jepsen worker 3] jepsen.util: 3	:invoke	:add	"545159"
+2022-03-13 17:11:58,756{GMT}	INFO	[jepsen worker 3] jepsen.util: 3	:ok	:add	"545159"
+2022-03-13 17:11:58,760{GMT}	INFO	[jepsen worker 0] jepsen.util: 0	:invoke	:read	nil
+2022-03-13 17:11:58,762{GMT}	INFO	[jepsen worker 0] jepsen.util: 0	:ok	:read	["428466" "799823" "398672" "404469" "540118" "105251" "201274" "277831" "30028" "330051" "423034" "490773" "958055" "326686" "488056" "539408" "746765" "909131" "919358" "24397" "449487" "501613" "546951" "570165" "642648" "67895" "764865" "939382" "158197" "404010" "404692" "626184" "970591" "317603" "170025" "236909" "51075" "630701" "754311" "958551" "170561" "409146" "423663" "551458" "163140" "178919" "179174" "261576" "536733" "661606" "839441" "49817" "744560" "40790" "417553" "55684" "639089" "892952" "894932" "13746" "439671" "449740" "117251" "150931" "202263" "242869" "247734" "621488" "6542" "746066" "86941" "132301" "216087" "235327" "960568" "118823" "277238" "334133" "493410" "94078" "130727" "354697" "553500" "575911"]
+2022-03-13 17:11:58,949{GMT}	INFO	[jepsen worker 3] jepsen.util: 3	:invoke	:add	"255304"
+2022-03-13 17:11:58,955{GMT}	INFO	[jepsen worker 3] jepsen.util: 3	:ok	:add	"255304"
+2022-03-13 17:11:59,053{GMT}	INFO	[jepsen worker 1] jepsen.util: 1	:invoke	:add	"553769"
+2022-03-13 17:11:59,059{GMT}	INFO	[jepsen worker 1] jepsen.util: 1	:ok	:add	"553769"
+2022-03-13 17:11:59,140{GMT}	INFO	[jepsen worker 2] jepsen.util: 2	:invoke	:add	"655209"
+2022-03-13 17:11:59,144{GMT}	INFO	[jepsen worker 2] jepsen.util: 2	:ok	:add	"655209"
+2022-03-13 17:11:59,237{GMT}	INFO	[jepsen worker 4] jepsen.util: 4	:invoke	:add	"690813"
+2022-03-13 17:11:59,243{GMT}	INFO	[jepsen worker 4] jepsen.util: 4	:ok	:add	"690813"
+2022-03-13 17:11:59,308{GMT}	INFO	[jepsen worker 3] jepsen.util: 3	:invoke	:add	"590458"
+2022-03-13 17:11:59,311{GMT}	INFO	[jepsen worker 3] jepsen.util: 3	:ok	:add	"590458"
+2022-03-13 17:11:59,348{GMT}	INFO	[jepsen worker 1] jepsen.util: 1	:invoke	:read	nil
+2022-03-13 17:11:59,351{GMT}	INFO	[jepsen worker 1] jepsen.util: 1	:ok	:read	["428466" "799823" "332177" "105251" "132745" "201274" "277831" "30028" "330051" "423034" "490773" "958055" "326686" "488056" "539408" "746765" "909131" "919358" "24397" "449487" "501613" "546951" "570165" "642648" "67895" "764865" "939382" "158197" "404010" "404692" "626184" "970591" "317603" "170025" "236909" "51075" "630701" "754311" "958551" "170561" "409146" "423663" "551458" "163140" "178919" "179174" "261576" "536733" "553769" "661606" "839441" "49817" "744560" "40790" "417553" "55684" "639089" "892952" "894932" "13746" "439671" "449740" "117251" "150931" "202263" "242869" "247734" "621488" "6542" "746066" "860126" "86941" "132301" "216087" "235327" "960568" "118823" "277238" "334133" "493410" "94078" "130727" "354697" "553500" "575911" "398672" "404469" "540118"]
+2022-03-13 17:11:59,442{GMT}	INFO	[jepsen worker 2] jepsen.util: 2	:invoke	:read	nil
+2022-03-13 17:11:59,448{GMT}	INFO	[jepsen worker 2] jepsen.util: 2	:ok	:read	["428466" "799823" "398672" "404469" "540118" "105251" "201274" "277831" "30028" "330051" "423034" "490773" "958055" "488056" "539408" "746765" "909131" "919358" "24397" "449487" "501613" "546951" "570165" "642648" "67895" "764865" "939382" "158197" "404010" "404692" "626184" "970591" "317603" "957487" "170025" "236909" "630701" "754311" "958551" "170561" "409146" "423663" "551458" "163140" "178919" "179174" "261576" "536733" "661606" "839441" "49817" "744560" "40790" "417553" "55684" "639089" "655209" "892952" "894932" "13746" "439671" "449740" "117251" "150931" "202263" "242869" "247734" "621488" "6542" "746066" "86941" "132301" "216087" "235327" "28436" "960568" "118823" "334133" "493410" "845655" "94078" "130727" "354697" "553500" "575911"]
+2022-03-13 17:11:59,565{GMT}	INFO	[jepsen worker 2] jepsen.util: 2	:invoke	:add	"144525"
+2022-03-13 17:11:59,573{GMT}	INFO	[jepsen worker 2] jepsen.util: 2	:ok	:add	"144525"
+2022-03-13 17:11:59,705{GMT}	INFO	[jepsen worker 3] jepsen.util: 3	:invoke	:add	"216479"
+2022-03-13 17:11:59,713{GMT}	INFO	[jepsen worker 3] jepsen.util: 3	:ok	:add	"216479"
+2022-03-13 17:11:59,824{GMT}	INFO	[jepsen worker 2] jepsen.util: 2	:invoke	:add	"289230"
+2022-03-13 17:11:59,831{GMT}	INFO	[jepsen worker 2] jepsen.util: 2	:ok	:add	"289230"
+2022-03-13 17:11:59,844{GMT}	INFO	[jepsen worker 0] jepsen.util: 0	:invoke	:read	nil
+2022-03-13 17:11:59,852{GMT}	INFO	[jepsen worker 0] jepsen.util: 0	:ok	:read	["428466" "799823" "332177" "105251" "132745" "201274" "277831" "30028" "330051" "423034" "490773" "958055" "326686" "488056" "539408" "746765" "909131" "919358" "24397" "449487" "501613" "546951" "570165" "642648" "67895" "764865" "939382" "158197" "404010" "404692" "626184" "970591" "317603" "170025" "236909" "51075" "630701" "754311" "958551" "170561" "409146" "423663" "551458" "163140" "178919" "179174" "261576" "536733" "661606" "839441" "869028" "49817" "744560" "40790" "417553" "55684" "639089" "659234" "892952" "894932" "13746" "439671" "449740" "117251" "150931" "202263" "242869" "247734" "621488" "6542" "746066" "860126" "86941" "132301" "216087" "235327" "960568" "118823" "277238" "334133" "493410" "94078" "130727" "354697" "553500" "575911" "398672" "404469" "540118"]
+2022-03-13 17:11:59,928{GMT}	INFO	[jepsen worker 3] jepsen.util: 3	:invoke	:read	nil
+2022-03-13 17:11:59,939{GMT}	INFO	[jepsen worker 3] jepsen.util: 3	:ok	:read	["428466" "799823" "105251" "201274" "277831" "30028" "330051" "423034" "490773" "750358" "958055" "255304" "488056" "539408" "746765" "909131" "919358" "24397" "449487" "501613" "546951" "570165" "642648" "67895" "764865" "939382" "158197" "216479" "404010" "404692" "545159" "626184" "970591" "317603" "957487" "170025" "236909" "630701" "754311" "958551" "170561" "409146" "423663" "551458" "163140" "178919" "179174" "261576" "536733" "661606" "839441" "49817" "744560" "40790" "417553" "55684" "639089" "892952" "894932" "13746" "439671" "449740" "117251" "150931" "202263" "242869" "247734" "590458" "621488" "6542" "746066" "86941" "132301" "216087" "235327" "960568" "118823" "334133" "493410" "845655" "94078" "130727" "354697" "553500" "575911" "398672" "404469" "540118"]
+2022-03-13 17:11:59,968{GMT}	INFO	[jepsen worker 4] jepsen.util: 4	:invoke	:add	"315760"
+2022-03-13 17:11:59,977{GMT}	INFO	[jepsen worker 4] jepsen.util: 4	:ok	:add	"315760"
+2022-03-13 17:11:59,986{GMT}	INFO	[jepsen worker 0] jepsen.util: 0	:invoke	:add	"209375"
+2022-03-13 17:11:59,992{GMT}	INFO	[jepsen worker 0] jepsen.util: 0	:ok	:add	"209375"
+2022-03-13 17:12:00,152{GMT}	INFO	[jepsen worker 3] jepsen.util: 3	:invoke	:add	"468286"
+2022-03-13 17:12:00,156{GMT}	INFO	[jepsen worker 3] jepsen.util: 3	:ok	:add	"468286"
+2022-03-13 17:12:00,189{GMT}	INFO	[jepsen worker 4] jepsen.util: 4	:invoke	:read	nil
+2022-03-13 17:12:00,193{GMT}	INFO	[jepsen worker 4] jepsen.util: 4	:ok	:read	["315760" "428466" "799823" "332177" "132745" "201274" "277831" "30028" "423034" "958055" "326686" "488056" "539408" "746765" "909131" "919358" "24397" "449487" "501613" "546951" "570165" "642648" "67895" "764865" "939382" "158197" "404010" "404692" "626184" "970591" "317603" "170025" "236909" "51075" "630701" "754311" "958551" "170561" "409146" "423663" "551458" "163140" "178919" "179174" "261576" "536733" "553769" "661606" "839441" "869028" "49817" "744560" "40790" "417553" "55684" "639089" "659234" "690813" "892952" "894932" "13746" "439671" "449740" "117251" "150931" "202263" "242869" "247734" "621488" "6542" "746066" "860126" "86941" "132301" "216087" "235327" "960568" "118823" "277238" "334133" "493410" "94078" "130727" "354697" "553500" "575911" "398672" "404469" "540118" "105251" "330051" "490773"]
+2022-03-13 17:12:00,302{GMT}	INFO	[jepsen worker 4] jepsen.util: 4	:invoke	:read	nil
+2022-03-13 17:12:00,304{GMT}	INFO	[jepsen worker 4] jepsen.util: 4	:ok	:read	["315760" "428466" "799823" "332177" "132745" "201274" "277831" "30028" "423034" "958055" "326686" "488056" "539408" "746765" "909131" "919358" "24397" "449487" "501613" "546951" "570165" "642648" "67895" "764865" "939382" "158197" "404010" "404692" "626184" "970591" "317603" "170025" "236909" "51075" "630701" "754311" "958551" "170561" "409146" "423663" "551458" "163140" "178919" "179174" "261576" "536733" "553769" "661606" "839441" "869028" "49817" "744560" "40790" "417553" "55684" "639089" "659234" "690813" "892952" "894932" "13746" "439671" "449740" "117251" "150931" "202263" "242869" "247734" "621488" "6542" "746066" "860126" "86941" "132301" "216087" "235327" "960568" "118823" "277238" "334133" "493410" "94078" "130727" "354697" "553500" "575911" "398672" "404469" "540118" "105251" "330051" "490773"]
+2022-03-13 17:12:00,326{GMT}	INFO	[jepsen worker 0] jepsen.util: 0	:invoke	:read	nil
+2022-03-13 17:12:00,328{GMT}	INFO	[jepsen worker 0] jepsen.util: 0	:ok	:read	["428466" "799823" "332177" "105251" "132745" "201274" "277831" "30028" "330051" "423034" "490773" "958055" "326686" "488056" "539408" "746765" "909131" "919358" "24397" "449487" "501613" "546951" "570165" "642648" "67895" "764865" "939382" "158197" "404010" "404692" "626184" "970591" "317603" "170025" "236909" "51075" "630701" "754311" "958551" "170561" "409146" "423663" "551458" "163140" "178919" "179174" "261576" "536733" "661606" "839441" "869028" "49817" "744560" "40790" "417553" "55684" "639089" "659234" "892952" "894932" "13746" "209375" "439671" "449740" "117251" "150931" "202263" "242869" "247734" "621488" "6542" "746066" "860126" "86941" "132301" "216087" "235327" "960568" "118823" "277238" "334133" "493410" "94078" "130727" "354697" "553500" "575911" "398672" "404469" "540118"]
+2022-03-13 17:12:00,486{GMT}	INFO	[jepsen worker 2] jepsen.util: 2	:invoke	:read	nil
+2022-03-13 17:12:00,493{GMT}	INFO	[jepsen worker 2] jepsen.util: 2	:ok	:read	["428466" "799823" "105251" "201274" "277831" "289230" "30028" "330051" "423034" "490773" "750358" "958055" "255304" "488056" "539408" "746765" "909131" "919358" "24397" "449487" "501613" "546951" "570165" "642648" "67895" "764865" "939382" "144525" "158197" "404010" "404692" "545159" "626184" "970591" "317603" "957487" "170025" "236909" "630701" "754311" "958551" "170561" "409146" "423663" "551458" "163140" "178919" "179174" "261576" "536733" "661606" "839441" "49817" "744560" "40790" "417553" "55684" "639089" "655209" "892952" "894932" "13746" "439671" "449740" "117251" "150931" "202263" "242869" "247734" "621488" "6542" "746066" "86941" "132301" "216087" "235327" "28436" "960568" "118823" "334133" "493410" "845655" "94078" "130727" "354697" "553500" "575911" "398672" "404469" "540118"]
+2022-03-13 17:12:00,549{GMT}	INFO	[jepsen worker 2] jepsen.util: 2	:invoke	:read	nil
+2022-03-13 17:12:00,557{GMT}	INFO	[jepsen worker 2] jepsen.util: 2	:ok	:read	["428466" "799823" "105251" "201274" "277831" "289230" "30028" "330051" "423034" "490773" "750358" "958055" "255304" "488056" "539408" "746765" "909131" "919358" "24397" "449487" "501613" "546951" "570165" "642648" "67895" "764865" "939382" "144525" "158197" "404010" "404692" "545159" "626184" "970591" "317603" "957487" "170025" "236909" "630701" "754311" "958551" "170561" "409146" "423663" "551458" "163140" "178919" "179174" "261576" "536733" "661606" "839441" "49817" "744560" "40790" "417553" "55684" "639089" "655209" "892952" "894932" "13746" "439671" "449740" "117251" "150931" "202263" "242869" "247734" "621488" "6542" "746066" "86941" "132301" "216087" "235327" "28436" "960568" "118823" "334133" "493410" "845655" "94078" "130727" "354697" "553500" "575911" "398672" "404469" "540118"]
+2022-03-13 17:12:00,608{GMT}	INFO	[jepsen worker 0] jepsen.util: 0	:invoke	:read	nil
+2022-03-13 17:12:00,614{GMT}	INFO	[jepsen worker 0] jepsen.util: 0	:ok	:read	["428466" "799823" "332177" "105251" "132745" "201274" "277831" "30028" "330051" "423034" "490773" "958055" "326686" "488056" "539408" "746765" "909131" "919358" "24397" "449487" "501613" "546951" "570165" "642648" "67895" "764865" "939382" "158197" "404010" "404692" "626184" "970591" "317603" "170025" "236909" "51075" "630701" "754311" "958551" "170561" "409146" "423663" "551458" "163140" "178919" "179174" "261576" "536733" "661606" "839441" "869028" "49817" "744560" "40790" "417553" "55684" "639089" "659234" "892952" "894932" "13746" "209375" "439671" "449740" "117251" "150931" "202263" "242869" "247734" "621488" "6542" "746066" "860126" "86941" "132301" "216087" "235327" "960568" "118823" "277238" "334133" "493410" "94078" "130727" "354697" "553500" "575911" "398672" "404469" "540118"]
+2022-03-13 17:12:00,696{GMT}	INFO	[jepsen worker 0] jepsen.util: 0	:invoke	:read	nil
+2022-03-13 17:12:00,703{GMT}	INFO	[jepsen worker 0] jepsen.util: 0	:ok	:read	["428466" "799823" "332177" "105251" "132745" "201274" "277831" "30028" "330051" "423034" "490773" "958055" "326686" "488056" "539408" "746765" "909131" "919358" "24397" "449487" "501613" "546951" "570165" "642648" "67895" "764865" "939382" "158197" "404010" "404692" "626184" "970591" "317603" "170025" "236909" "51075" "630701" "754311" "958551" "170561" "409146" "423663" "551458" "163140" "178919" "179174" "261576" "536733" "661606" "839441" "869028" "49817" "744560" "40790" "417553" "55684" "639089" "659234" "892952" "894932" "13746" "209375" "439671" "449740" "117251" "150931" "202263" "242869" "247734" "621488" "6542" "746066" "860126" "86941" "132301" "216087" "235327" "960568" "118823" "277238" "334133" "493410" "94078" "130727" "354697" "553500" "575911" "398672" "404469" "540118"]
+2022-03-13 17:12:00,735{GMT}	INFO	[jepsen worker 4] jepsen.util: 4	:invoke	:add	"91581"
+2022-03-13 17:12:00,737{GMT}	INFO	[jepsen worker 3] jepsen.util: 3	:invoke	:add	"103011"
+2022-03-13 17:12:00,744{GMT}	INFO	[jepsen worker 4] jepsen.util: 4	:ok	:add	"91581"
+2022-03-13 17:12:00,747{GMT}	INFO	[jepsen worker 3] jepsen.util: 3	:ok	:add	"103011"
+2022-03-13 17:12:00,831{GMT}	INFO	[jepsen worker 0] jepsen.util: 0	:invoke	:read	nil
+2022-03-13 17:12:00,839{GMT}	INFO	[jepsen worker 0] jepsen.util: 0	:ok	:read	["428466" "799823" "332177" "132745" "201274" "277831" "30028" "423034" "958055" "326686" "488056" "539408" "746765" "909131" "919358" "24397" "449487" "501613" "546951" "570165" "642648" "67895" "764865" "939382" "158197" "404010" "404692" "626184" "970591" "317603" "170025" "236909" "51075" "630701" "754311" "958551" "170561" "409146" "423663" "551458" "163140" "178919" "179174" "261576" "536733" "553769" "661606" "839441" "869028" "49817" "744560" "40790" "417553" "55684" "639089" "659234" "690813" "892952" "894932" "13746" "209375" "439671" "449740" "117251" "150931" "202263" "242869" "247734" "621488" "6542" "746066" "860126" "86941" "132301" "216087" "235327" "960568" "118823" "277238" "334133" "493410" "94078" "130727" "354697" "553500" "575911" "398672" "404469" "540118" "105251" "330051" "490773"]
+2022-03-13 17:12:00,944{GMT}	INFO	[jepsen worker 4] jepsen.util: 4	:invoke	:add	"53986"
+2022-03-13 17:12:00,947{GMT}	INFO	[jepsen worker 4] jepsen.util: 4	:ok	:add	"53986"
+2022-03-13 17:12:01,110{GMT}	INFO	[jepsen worker 4] jepsen.util: 4	:invoke	:add	"227864"
+2022-03-13 17:12:01,116{GMT}	INFO	[jepsen worker 4] jepsen.util: 4	:ok	:add	"227864"
+2022-03-13 17:12:01,117{GMT}	INFO	[jepsen worker 0] jepsen.util: 0	:invoke	:add	"565488"
+2022-03-13 17:12:01,123{GMT}	INFO	[jepsen worker 0] jepsen.util: 0	:ok	:add	"565488"
+2022-03-13 17:12:01,131{GMT}	INFO	[jepsen worker 0] jepsen.util: 0	:invoke	:add	"368866"
+2022-03-13 17:12:01,136{GMT}	INFO	[jepsen worker 0] jepsen.util: 0	:ok	:add	"368866"
+2022-03-13 17:12:01,197{GMT}	INFO	[jepsen worker 3] jepsen.util: 3	:invoke	:add	"685425"
+2022-03-13 17:12:01,206{GMT}	INFO	[jepsen worker 3] jepsen.util: 3	:ok	:add	"685425"
+2022-03-13 17:12:01,368{GMT}	INFO	[jepsen worker 2] jepsen.util: 2	:invoke	:read	nil
+2022-03-13 17:12:01,373{GMT}	INFO	[jepsen worker 2] jepsen.util: 2	:ok	:read	["428466" "799823" "201274" "277831" "30028" "423034" "750358" "958055" "255304" "488056" "539408" "746765" "909131" "919358" "24397" "449487" "501613" "546951" "570165" "642648" "67895" "764865" "939382" "144525" "158197" "216479" "404010" "404692" "545159" "626184" "970591" "317603" "957487" "170025" "236909" "630701" "754311" "958551" "170561" "409146" "423663" "551458" "163140" "178919" "179174" "261576" "536733" "661606" "839441" "49817" "744560" "40790" "417553" "55684" "639089" "655209" "892952" "894932" "13746" "439671" "449740" "117251" "150931" "202263" "242869" "247734" "590458" "621488" "6542" "746066" "86941" "132301" "216087" "235327" "28436" "960568" "118823" "334133" "493410" "845655" "94078" "130727" "354697" "553500" "575911" "398672" "404469" "540118" "105251" "289230" "330051" "490773"]
+2022-03-13 17:12:01,565{GMT}	INFO	[jepsen worker 3] jepsen.util: 3	:invoke	:read	nil
+2022-03-13 17:12:01,572{GMT}	INFO	[jepsen worker 3] jepsen.util: 3	:ok	:read	["428466" "799823" "201274" "277831" "30028" "423034" "750358" "958055" "255304" "488056" "539408" "746765" "909131" "919358" "24397" "449487" "501613" "546951" "570165" "642648" "67895" "764865" "939382" "144525" "158197" "216479" "404010" "404692" "545159" "626184" "970591" "317603" "685425" "957487" "170025" "236909" "630701" "754311" "958551" "170561" "409146" "423663" "468286" "551458" "163140" "178919" "179174" "261576" "536733" "661606" "839441" "49817" "744560" "40790" "417553" "55684" "639089" "655209" "892952" "894932" "13746" "439671" "449740" "117251" "150931" "202263" "242869" "247734" "590458" "621488" "6542" "746066" "86941" "103011" "132301" "216087" "235327" "28436" "960568" "118823" "334133" "493410" "845655" "94078" "130727" "354697" "553500" "575911" "398672" "404469" "540118" "105251" "289230" "330051" "490773"]
+2022-03-13 17:12:01,763{GMT}	INFO	[jepsen worker 4] jepsen.util: 4	:invoke	:add	"639058"
+2022-03-13 17:12:01,771{GMT}	INFO	[jepsen worker 4] jepsen.util: 4	:ok	:add	"639058"
+2022-03-13 17:12:01,784{GMT}	INFO	[jepsen worker 3] jepsen.util: 3	:invoke	:add	"82623"
+2022-03-13 17:12:01,793{GMT}	INFO	[jepsen worker 3] jepsen.util: 3	:ok	:add	"82623"
+2022-03-13 17:12:01,894{GMT}	INFO	[jepsen worker 3] jepsen.util: 3	:invoke	:add	"814072"
+2022-03-13 17:12:01,913{GMT}	INFO	[jepsen worker 3] jepsen.util: 3	:ok	:add	"814072"
+2022-03-13 17:12:01,984{GMT}	INFO	[jepsen worker 3] jepsen.util: 3	:invoke	:add	"203052"
+2022-03-13 17:12:01,989{GMT}	INFO	[jepsen worker 3] jepsen.util: 3	:ok	:add	"203052"
+2022-03-13 17:12:02,100{GMT}	INFO	[jepsen worker 3] jepsen.util: 3	:invoke	:add	"559671"
+2022-03-13 17:12:02,107{GMT}	INFO	[jepsen worker 3] jepsen.util: 3	:ok	:add	"559671"
+2022-03-13 17:12:02,165{GMT}	INFO	[jepsen worker 3] jepsen.util: 3	:invoke	:add	"80919"
+2022-03-13 17:12:02,169{GMT}	INFO	[jepsen worker 3] jepsen.util: 3	:ok	:add	"80919"
+2022-03-13 17:12:02,274{GMT}	INFO	[jepsen worker 0] jepsen.util: 0	:invoke	:read	nil
+2022-03-13 17:12:02,277{GMT}	INFO	[jepsen worker 0] jepsen.util: 0	:ok	:read	["315760" "428466" "799823" "332177" "132745" "201274" "277831" "30028" "423034" "958055" "326686" "539408" "909131" "24397" "449487" "501613" "546951" "570165" "642648" "67895" "764865" "939382" "158197" "404010" "404692" "626184" "970591" "317603" "565488" "170025" "236909" "51075" "630701" "754311" "91581" "958551" "170561" "409146" "423663" "551458" "163140" "178919" "179174" "261576" "536733" "553769" "661606" "839441" "869028" "49817" "744560" "40790" "417553" "55684" "639089" "659234" "690813" "892952" "894932" "13746" "209375" "439671" "449740" "117251" "150931" "202263" "242869" "247734" "621488" "6542" "746066" "860126" "86941" "132301" "216087" "235327" "960568" "118823" "277238" "334133" "493410" "94078" "130727" "354697" "553500" "575911" "368866" "398672" "404469" "540118" "105251" "330051" "490773" "488056" "746765" "919358"]
+2022-03-13 17:12:02,381{GMT}	INFO	[jepsen worker 0] jepsen.util: 0	:invoke	:read	nil
+2022-03-13 17:12:02,387{GMT}	INFO	[jepsen worker 0] jepsen.util: 0	:ok	:read	["315760" "428466" "799823" "332177" "132745" "201274" "277831" "30028" "423034" "958055" "326686" "539408" "909131" "24397" "449487" "501613" "546951" "570165" "642648" "67895" "764865" "939382" "158197" "404010" "404692" "626184" "970591" "317603" "565488" "170025" "236909" "51075" "630701" "754311" "91581" "958551" "170561" "409146" "423663" "551458" "163140" "178919" "179174" "261576" "536733" "553769" "661606" "839441" "869028" "49817" "744560" "40790" "417553" "55684" "639089" "659234" "690813" "892952" "894932" "13746" "209375" "439671" "449740" "117251" "150931" "202263" "242869" "247734" "621488" "6542" "746066" "860126" "86941" "132301" "216087" "235327" "960568" "118823" "277238" "334133" "493410" "94078" "130727" "354697" "553500" "575911" "368866" "398672" "404469" "540118" "105251" "330051" "490773" "488056" "746765" "919358"]
+2022-03-13 17:12:02,397{GMT}	INFO	[jepsen worker nemesis] jepsen.util: :nemesis	:info	:stop	nil
+2022-03-13 17:12:02,548{GMT}	INFO	[jepsen worker 2] jepsen.util: 2	:invoke	:add	"358310"
+2022-03-13 17:12:02,555{GMT}	INFO	[jepsen worker 2] jepsen.util: 2	:ok	:add	"358310"
+2022-03-13 17:12:02,604{GMT}	INFO	[jepsen worker nemesis] jepsen.util: :nemesis	:info	:stop	:network-healed
+2022-03-13 17:12:02,667{GMT}	INFO	[jepsen worker 4] jepsen.util: 4	:invoke	:read	nil
+2022-03-13 17:12:02,671{GMT}	INFO	[jepsen worker 3] jepsen.util: 3	:invoke	:add	"840138"
+2022-03-13 17:12:02,676{GMT}	INFO	[jepsen worker 4] jepsen.util: 4	:ok	:read	["315760" "428466" "799823" "332177" "132745" "201274" "277831" "30028" "423034" "958055" "326686" "539408" "909131" "24397" "449487" "501613" "546951" "570165" "642648" "67895" "764865" "939382" "158197" "404010" "404692" "626184" "970591" "317603" "53986" "170025" "236909" "51075" "630701" "754311" "91581" "958551" "170561" "409146" "423663" "551458" "163140" "178919" "179174" "261576" "536733" "553769" "639058" "661606" "839441" "869028" "49817" "744560" "40790" "417553" "55684" "639089" "659234" "690813" "892952" "894932" "13746" "209375" "439671" "449740" "117251" "150931" "202263" "227864" "242869" "247734" "621488" "6542" "746066" "860126" "86941" "132301" "216087" "235327" "960568" "118823" "277238" "334133" "493410" "94078" "130727" "354697" "553500" "575911" "398672" "404469" "540118" "105251" "330051" "490773" "488056" "746765" "919358"]
+2022-03-13 17:12:02,683{GMT}	INFO	[jepsen worker 3] jepsen.util: 3	:ok	:add	"840138"
+2022-03-13 17:12:02,731{GMT}	INFO	[jepsen worker 3] jepsen.util: 3	:invoke	:add	"703180"
+2022-03-13 17:12:02,739{GMT}	INFO	[jepsen worker 3] jepsen.util: 3	:ok	:add	"703180"
+2022-03-13 17:12:02,795{GMT}	INFO	[jepsen worker 3] jepsen.util: 3	:invoke	:add	"163208"
+2022-03-13 17:12:02,805{GMT}	INFO	[jepsen worker 3] jepsen.util: 3	:ok	:add	"163208"
+2022-03-13 17:12:02,862{GMT}	INFO	[jepsen worker 2] jepsen.util: 2	:invoke	:add	"684899"
+2022-03-13 17:12:02,870{GMT}	INFO	[jepsen worker 2] jepsen.util: 2	:ok	:add	"684899"
+2022-03-13 17:12:02,925{GMT}	INFO	[jepsen worker 1] jepsen.util: 1	:invoke	:read	nil
+2022-03-13 17:12:02,932{GMT}	INFO	[jepsen worker 3] jepsen.util: 3	:invoke	:read	nil
+2022-03-13 17:12:02,933{GMT}	INFO	[jepsen worker 0] jepsen.util: 0	:invoke	:read	nil
+2022-03-13 17:12:02,937{GMT}	INFO	[jepsen worker 1] jepsen.util: 1	:ok	:read	["315760" "428466" "799823" "332177" "132745" "201274" "277831" "30028" "423034" "958055" "326686" "539408" "909131" "24397" "449487" "501613" "546951" "570165" "642648" "67895" "764865" "939382" "158197" "404010" "404692" "626184" "970591" "317603" "53986" "565488" "170025" "236909" "51075" "630701" "754311" "91581" "958551" "170561" "409146" "423663" "551458" "163140" "178919" "179174" "261576" "536733" "553769" "661606" "839441" "869028" "49817" "744560" "40790" "417553" "55684" "639089" "659234" "690813" "892952" "894932" "13746" "209375" "439671" "449740" "117251" "150931" "202263" "242869" "247734" "621488" "6542" "746066" "860126" "86941" "132301" "216087" "235327" "960568" "118823" "277238" "334133" "493410" "94078" "130727" "354697" "553500" "575911" "368866" "398672" "404469" "540118" "105251" "330051" "490773" "488056" "746765" "919358"]
+2022-03-13 17:12:02,948{GMT}	INFO	[jepsen worker 3] jepsen.util: 3	:ok	:read	["428466" "799823" "201274" "277831" "30028" "423034" "750358" "814072" "958055" "539408" "909131" "24397" "501613" "570165" "642648" "67895" "764865" "840138" "144525" "158197" "216479" "404010" "404692" "545159" "626184" "970591" "317603" "685425" "80919" "957487" "170025" "236909" "630701" "754311" "958551" "170561" "409146" "423663" "468286" "551458" "163140" "178919" "179174" "261576" "536733" "661606" "839441" "163208" "49817" "744560" "40790" "417553" "55684" "639089" "655209" "892952" "894932" "13746" "439671" "449740" "117251" "150931" "202263" "242869" "247734" "559671" "590458" "621488" "6542" "746066" "86941" "103011" "132301" "203052" "216087" "235327" "28436" "82623" "960568" "118823" "334133" "493410" "845655" "94078" "130727" "354697" "553500" "575911" "398672" "404469" "540118" "703180" "105251" "289230" "330051" "490773" "255304" "488056" "746765" "919358" "449487" "546951" "939382"]
+2022-03-13 17:12:02,953{GMT}	INFO	[jepsen worker 0] jepsen.util: 0	:ok	:read	["315760" "428466" "799823" "332177" "132745" "201274" "277831" "30028" "423034" "958055" "326686" "539408" "909131" "24397" "449487" "501613" "546951" "570165" "642648" "67895" "764865" "939382" "158197" "404010" "404692" "626184" "970591" "317603" "53986" "565488" "170025" "236909" "51075" "630701" "754311" "91581" "958551" "170561" "409146" "423663" "551458" "163140" "178919" "179174" "261576" "536733" "553769" "639058" "661606" "839441" "869028" "49817" "744560" "40790" "417553" "55684" "639089" "659234" "690813" "892952" "894932" "13746" "209375" "439671" "449740" "117251" "150931" "202263" "227864" "242869" "247734" "621488" "6542" "746066" "860126" "86941" "132301" "216087" "235327" "960568" "118823" "277238" "334133" "493410" "94078" "130727" "354697" "553500" "575911" "368866" "398672" "404469" "540118" "105251" "330051" "490773" "488056" "746765" "919358"]
+2022-03-13 17:12:02,964{GMT}	INFO	[jepsen worker 1] jepsen.util: 1	:invoke	:read	nil
+2022-03-13 17:12:02,967{GMT}	INFO	[jepsen worker 1] jepsen.util: 1	:ok	:read	["315760" "428466" "799823" "332177" "132745" "201274" "277831" "30028" "423034" "958055" "326686" "539408" "909131" "24397" "449487" "501613" "546951" "570165" "642648" "67895" "764865" "939382" "158197" "404010" "404692" "626184" "970591" "317603" "53986" "565488" "170025" "236909" "51075" "630701" "754311" "91581" "958551" "170561" "409146" "423663" "551458" "163140" "178919" "179174" "261576" "536733" "553769" "661606" "839441" "869028" "49817" "744560" "40790" "417553" "55684" "639089" "659234" "690813" "892952" "894932" "13746" "209375" "439671" "449740" "117251" "150931" "202263" "242869" "247734" "621488" "6542" "746066" "860126" "86941" "132301" "216087" "235327" "960568" "118823" "277238" "334133" "493410" "94078" "130727" "354697" "553500" "575911" "368866" "398672" "404469" "540118" "105251" "330051" "490773" "488056" "746765" "919358"]
+2022-03-13 17:12:03,039{GMT}	INFO	[jepsen worker 1] jepsen.util: 1	:invoke	:read	nil
+2022-03-13 17:12:03,042{GMT}	INFO	[jepsen worker 1] jepsen.util: 1	:ok	:read	["315760" "428466" "799823" "332177" "132745" "201274" "277831" "30028" "423034" "958055" "326686" "539408" "909131" "24397" "449487" "501613" "546951" "570165" "642648" "67895" "764865" "939382" "158197" "404010" "404692" "626184" "970591" "317603" "53986" "565488" "170025" "236909" "51075" "630701" "754311" "91581" "958551" "170561" "409146" "423663" "551458" "163140" "178919" "179174" "261576" "536733" "553769" "661606" "839441" "869028" "49817" "744560" "40790" "417553" "55684" "639089" "659234" "690813" "892952" "894932" "13746" "209375" "439671" "449740" "117251" "150931" "202263" "242869" "247734" "621488" "6542" "746066" "860126" "86941" "132301" "216087" "235327" "960568" "118823" "277238" "334133" "493410" "94078" "130727" "354697" "553500" "575911" "368866" "398672" "404469" "540118" "105251" "330051" "490773" "488056" "746765" "919358"]
+2022-03-13 17:12:03,185{GMT}	INFO	[jepsen worker 0] jepsen.util: 0	:invoke	:read	nil
+2022-03-13 17:12:03,188{GMT}	INFO	[jepsen worker 0] jepsen.util: 0	:ok	:read	["315760" "428466" "799823" "332177" "132745" "201274" "277831" "30028" "423034" "958055" "326686" "539408" "909131" "24397" "449487" "501613" "546951" "570165" "642648" "67895" "764865" "939382" "158197" "404010" "404692" "626184" "970591" "317603" "53986" "565488" "170025" "236909" "51075" "630701" "754311" "91581" "958551" "170561" "409146" "423663" "551458" "163140" "178919" "179174" "261576" "536733" "553769" "639058" "661606" "839441" "869028" "49817" "744560" "40790" "417553" "55684" "639089" "659234" "690813" "892952" "894932" "13746" "209375" "439671" "449740" "117251" "150931" "202263" "227864" "242869" "247734" "621488" "6542" "746066" "860126" "86941" "132301" "216087" "235327" "960568" "118823" "277238" "334133" "493410" "94078" "130727" "354697" "553500" "575911" "368866" "398672" "404469" "540118" "105251" "330051" "490773" "488056" "746765" "919358"]
+2022-03-13 17:12:03,287{GMT}	INFO	[jepsen worker 2] jepsen.util: 2	:invoke	:add	"362483"
+2022-03-13 17:12:03,291{GMT}	INFO	[jepsen worker 2] jepsen.util: 2	:ok	:add	"362483"
+2022-03-13 17:12:03,424{GMT}	INFO	[jepsen worker 3] jepsen.util: 3	:invoke	:read	nil
+2022-03-13 17:12:03,432{GMT}	INFO	[jepsen worker 3] jepsen.util: 3	:ok	:read	["428466" "799823" "201274" "277831" "30028" "423034" "750358" "814072" "958055" "539408" "909131" "24397" "501613" "570165" "642648" "67895" "764865" "840138" "144525" "158197" "216479" "404010" "404692" "545159" "626184" "970591" "317603" "685425" "80919" "957487" "170025" "236909" "630701" "754311" "958551" "170561" "409146" "423663" "468286" "551458" "163140" "178919" "179174" "261576" "536733" "661606" "839441" "163208" "49817" "744560" "40790" "417553" "55684" "639089" "655209" "892952" "894932" "13746" "439671" "449740" "117251" "150931" "202263" "242869" "247734" "559671" "590458" "621488" "6542" "746066" "86941" "103011" "132301" "203052" "216087" "235327" "28436" "82623" "960568" "118823" "334133" "493410" "845655" "94078" "130727" "354697" "553500" "575911" "398672" "404469" "540118" "703180" "105251" "289230" "330051" "490773" "255304" "488056" "746765" "919358" "449487" "546951" "939382"]
+2022-03-13 17:12:03,454{GMT}	INFO	[jepsen worker 4] jepsen.util: 4	:invoke	:read	nil
+2022-03-13 17:12:03,460{GMT}	INFO	[jepsen worker 4] jepsen.util: 4	:ok	:read	["315760" "428466" "799823" "332177" "132745" "201274" "277831" "30028" "423034" "958055" "326686" "539408" "909131" "24397" "449487" "501613" "546951" "570165" "642648" "67895" "764865" "939382" "158197" "404010" "404692" "626184" "970591" "317603" "53986" "565488" "170025" "236909" "51075" "630701" "754311" "91581" "958551" "170561" "409146" "423663" "551458" "163140" "178919" "179174" "261576" "536733" "553769" "639058" "661606" "839441" "869028" "49817" "744560" "40790" "417553" "55684" "639089" "659234" "690813" "892952" "894932" "13746" "209375" "439671" "449740" "117251" "150931" "202263" "227864" "242869" "247734" "621488" "6542" "746066" "860126" "86941" "132301" "216087" "235327" "960568" "118823" "277238" "334133" "493410" "94078" "130727" "354697" "553500" "575911" "368866" "398672" "404469" "540118" "105251" "330051" "490773" "488056" "746765" "919358"]
+2022-03-13 17:12:03,478{GMT}	INFO	[jepsen worker 4] jepsen.util: 4	:invoke	:add	"446525"
+2022-03-13 17:12:03,486{GMT}	INFO	[jepsen worker 4] jepsen.util: 4	:ok	:add	"446525"
+2022-03-13 17:12:03,494{GMT}	INFO	[jepsen worker 1] jepsen.util: 1	:invoke	:add	"287069"
+2022-03-13 17:12:03,501{GMT}	INFO	[jepsen worker 1] jepsen.util: 1	:ok	:add	"287069"
+2022-03-13 17:12:03,638{GMT}	INFO	[jepsen worker 2] jepsen.util: 2	:invoke	:read	nil
+2022-03-13 17:12:03,645{GMT}	INFO	[jepsen worker 2] jepsen.util: 2	:ok	:read	["428466" "799823" "201274" "277831" "30028" "423034" "750358" "814072" "958055" "539408" "909131" "24397" "501613" "570165" "642648" "67895" "764865" "144525" "158197" "216479" "404010" "404692" "545159" "626184" "970591" "317603" "685425" "957487" "170025" "236909" "630701" "754311" "958551" "170561" "409146" "423663" "468286" "551458" "163140" "178919" "179174" "261576" "536733" "661606" "839441" "358310" "362483" "49817" "744560" "40790" "417553" "55684" "639089" "655209" "892952" "894932" "13746" "439671" "449740" "117251" "150931" "202263" "242869" "247734" "559671" "590458" "621488" "6542" "746066" "86941" "103011" "132301" "203052" "216087" "235327" "28436" "82623" "960568" "118823" "334133" "493410" "845655" "94078" "130727" "354697" "553500" "575911" "684899" "398672" "404469" "540118" "105251" "289230" "330051" "490773" "255304" "488056" "746765" "919358" "449487" "546951" "939382"]
+2022-03-13 17:12:03,795{GMT}	INFO	[jepsen worker 4] jepsen.util: 4	:invoke	:add	"668650"
+2022-03-13 17:12:03,803{GMT}	INFO	[jepsen worker 4] jepsen.util: 4	:ok	:add	"668650"
+2022-03-13 17:12:03,892{GMT}	INFO	[jepsen worker 2] jepsen.util: 2	:invoke	:read	nil
+2022-03-13 17:12:03,897{GMT}	INFO	[jepsen worker 2] jepsen.util: 2	:ok	:read	["428466" "799823" "201274" "277831" "30028" "423034" "750358" "814072" "958055" "539408" "909131" "24397" "501613" "570165" "642648" "67895" "764865" "144525" "158197" "216479" "404010" "404692" "545159" "626184" "970591" "317603" "685425" "957487" "170025" "236909" "630701" "754311" "958551" "170561" "409146" "423663" "468286" "551458" "163140" "178919" "179174" "261576" "536733" "661606" "839441" "358310" "362483" "49817" "744560" "40790" "417553" "55684" "639089" "655209" "892952" "894932" "13746" "439671" "449740" "117251" "150931" "202263" "242869" "247734" "559671" "590458" "621488" "6542" "746066" "86941" "103011" "132301" "203052" "216087" "235327" "28436" "82623" "960568" "118823" "334133" "493410" "845655" "94078" "130727" "354697" "553500" "575911" "684899" "398672" "404469" "540118" "105251" "289230" "330051" "490773" "255304" "488056" "746765" "919358" "449487" "546951" "939382"]
+2022-03-13 17:12:03,897{GMT}	INFO	[jepsen worker 3] jepsen.util: 3	:invoke	:add	"244078"
+2022-03-13 17:12:03,919{GMT}	INFO	[jepsen worker 4] jepsen.util: 4	:invoke	:add	"610375"
+2022-03-13 17:12:03,921{GMT}	INFO	[jepsen worker 3] jepsen.util: 3	:ok	:add	"244078"
+2022-03-13 17:12:03,926{GMT}	INFO	[jepsen worker 4] jepsen.util: 4	:ok	:add	"610375"
+2022-03-13 17:12:04,091{GMT}	INFO	[jepsen worker 3] jepsen.util: 3	:invoke	:read	nil
+2022-03-13 17:12:04,095{GMT}	INFO	[jepsen worker 3] jepsen.util: 3	:ok	:read	["428466" "799823" "201274" "277831" "30028" "423034" "750358" "814072" "958055" "539408" "909131" "24397" "501613" "570165" "642648" "67895" "764865" "840138" "144525" "158197" "216479" "404010" "404692" "545159" "626184" "970591" "317603" "685425" "80919" "957487" "170025" "236909" "630701" "754311" "958551" "170561" "409146" "423663" "468286" "551458" "163140" "178919" "179174" "261576" "536733" "661606" "839441" "163208" "49817" "744560" "40790" "417553" "55684" "639089" "655209" "892952" "894932" "13746" "439671" "449740" "117251" "150931" "202263" "242869" "244078" "247734" "559671" "590458" "621488" "6542" "746066" "86941" "103011" "132301" "203052" "216087" "235327" "28436" "82623" "960568" "118823" "334133" "493410" "845655" "94078" "130727" "354697" "553500" "575911" "398672" "404469" "540118" "703180" "105251" "289230" "330051" "490773" "255304" "488056" "746765" "919358" "449487" "546951" "939382"]
+2022-03-13 17:12:04,134{GMT}	INFO	[jepsen worker 3] jepsen.util: 3	:invoke	:add	"545190"
+2022-03-13 17:12:04,138{GMT}	INFO	[jepsen worker 3] jepsen.util: 3	:ok	:add	"545190"
+2022-03-13 17:12:04,162{GMT}	INFO	[jepsen worker 0] jepsen.util: 0	:invoke	:add	"882858"
+2022-03-13 17:12:04,165{GMT}	INFO	[jepsen worker 0] jepsen.util: 0	:ok	:add	"882858"
+2022-03-13 17:12:04,334{GMT}	INFO	[jepsen worker 1] jepsen.util: 1	:invoke	:add	"320971"
+2022-03-13 17:12:04,340{GMT}	INFO	[jepsen worker 1] jepsen.util: 1	:ok	:add	"320971"
+2022-03-13 17:12:04,449{GMT}	INFO	[jepsen worker 3] jepsen.util: 3	:invoke	:read	nil
+2022-03-13 17:12:04,467{GMT}	INFO	[jepsen worker 3] jepsen.util: 3	:ok	:read	["428466" "799823" "201274" "277831" "30028" "423034" "750358" "814072" "958055" "326686" "539408" "909131" "24397" "501613" "570165" "642648" "67895" "764865" "840138" "144525" "216479" "404010" "626184" "317603" "685425" "80919" "957487" "170025" "236909" "630701" "754311" "958551" "170561" "409146" "423663" "468286" "551458" "163140" "178919" "179174" "261576" "536733" "661606" "839441" "163208" "358310" "49817" "744560" "40790" "417553" "55684" "639089" "655209" "892952" "894932" "13746" "439671" "449740" "545190" "117251" "150931" "202263" "242869" "244078" "247734" "559671" "590458" "621488" "6542" "746066" "86941" "103011" "132301" "203052" "216087" "235327" "28436" "82623" "960568" "118823" "277238" "334133" "493410" "845655" "94078" "130727" "354697" "553500" "575911" "684899" "398672" "404469" "540118" "703180" "105251" "289230" "330051" "490773" "255304" "488056" "746765" "919358" "449487" "546951" "939382" "158197" "404692" "545159" "970591"]
+2022-03-13 17:12:04,498{GMT}	INFO	[jepsen worker 3] jepsen.util: 3	:invoke	:add	"491702"
+2022-03-13 17:12:04,511{GMT}	INFO	[jepsen worker 3] jepsen.util: 3	:ok	:add	"491702"
+2022-03-13 17:12:04,603{GMT}	INFO	[jepsen worker 4] jepsen.util: 4	:invoke	:add	"291211"
+2022-03-13 17:12:04,611{GMT}	INFO	[jepsen worker 4] jepsen.util: 4	:ok	:add	"291211"
+2022-03-13 17:12:04,615{GMT}	INFO	[jepsen worker 0] jepsen.util: 0	:invoke	:read	nil
+2022-03-13 17:12:04,625{GMT}	INFO	[jepsen worker 0] jepsen.util: 0	:ok	:read	["315760" "428466" "799823" "332177" "132745" "201274" "277831" "30028" "423034" "958055" "326686" "539408" "909131" "24397" "449487" "501613" "546951" "570165" "642648" "67895" "764865" "939382" "158197" "404010" "404692" "626184" "970591" "317603" "53986" "565488" "170025" "236909" "51075" "630701" "754311" "882858" "91581" "958551" "170561" "409146" "423663" "551458" "163140" "178919" "179174" "261576" "536733" "553769" "639058" "661606" "839441" "869028" "49817" "744560" "40790" "417553" "55684" "639089" "659234" "690813" "892952" "894932" "13746" "209375" "439671" "449740" "117251" "150931" "202263" "227864" "242869" "247734" "621488" "6542" "746066" "860126" "86941" "132301" "216087" "235327" "960568" "118823" "277238" "334133" "493410" "94078" "130727" "354697" "553500" "575911" "368866" "398672" "404469" "540118" "105251" "330051" "490773" "488056" "746765" "919358"]
+2022-03-13 17:12:04,643{GMT}	INFO	[jepsen worker 3] jepsen.util: 3	:invoke	:add	"59327"
+2022-03-13 17:12:04,645{GMT}	INFO	[jepsen worker 4] jepsen.util: 4	:invoke	:read	nil
+2022-03-13 17:12:04,653{GMT}	INFO	[jepsen worker 3] jepsen.util: 3	:ok	:add	"59327"
+2022-03-13 17:12:04,653{GMT}	INFO	[jepsen worker 4] jepsen.util: 4	:ok	:read	["315760" "428466" "799823" "332177" "132745" "201274" "277831" "30028" "423034" "958055" "326686" "539408" "909131" "24397" "501613" "570165" "642648" "67895" "764865" "158197" "404010" "404692" "626184" "970591" "291211" "317603" "53986" "565488" "170025" "236909" "51075" "630701" "668650" "754311" "91581" "958551" "170561" "409146" "423663" "446525" "551458" "163140" "178919" "179174" "261576" "536733" "553769" "639058" "661606" "839441" "869028" "49817" "744560" "40790" "417553" "55684" "639089" "659234" "690813" "892952" "894932" "13746" "209375" "439671" "449740" "117251" "150931" "202263" "227864" "242869" "247734" "621488" "6542" "746066" "860126" "86941" "132301" "216087" "235327" "610375" "960568" "118823" "277238" "334133" "493410" "94078" "130727" "354697" "553500" "575911" "368866" "398672" "404469" "540118" "105251" "330051" "490773" "488056" "746765" "919358" "449487" "546951" "939382"]
+2022-03-13 17:12:04,807{GMT}	INFO	[jepsen worker 1] jepsen.util: 1	:invoke	:add	"956527"
+2022-03-13 17:12:04,813{GMT}	INFO	[jepsen worker 1] jepsen.util: 1	:ok	:add	"956527"
+2022-03-13 17:12:04,991{GMT}	INFO	[jepsen worker 3] jepsen.util: 3	:invoke	:add	"920576"
+2022-03-13 17:12:05,000{GMT}	INFO	[jepsen worker 3] jepsen.util: 3	:ok	:add	"920576"
+2022-03-13 17:12:05,071{GMT}	INFO	[jepsen worker 0] jepsen.util: 0	:invoke	:read	nil
+2022-03-13 17:12:05,074{GMT}	INFO	[jepsen worker 0] jepsen.util: 0	:ok	:read	["315760" "428466" "799823" "332177" "132745" "201274" "277831" "30028" "423034" "750358" "958055" "326686" "539408" "909131" "24397" "501613" "570165" "642648" "67895" "764865" "216479" "404010" "626184" "317603" "53986" "957487" "170025" "236909" "51075" "630701" "668650" "754311" "882858" "91581" "958551" "170561" "409146" "423663" "446525" "551458" "163140" "178919" "179174" "261576" "536733" "553769" "639058" "661606" "839441" "869028" "49817" "744560" "40790" "417553" "55684" "639089" "659234" "690813" "892952" "894932" "13746" "209375" "439671" "449740" "117251" "150931" "202263" "227864" "242869" "247734" "590458" "621488" "6542" "746066" "860126" "86941" "132301" "216087" "235327" "610375" "960568" "118823" "277238" "334133" "493410" "845655" "94078" "130727" "354697" "553500" "575911" "368866" "398672" "404469" "540118" "105251" "330051" "490773" "255304" "488056" "746765" "919358" "287069" "449487" "546951" "939382" "158197" "404692" "545159" "970591" "565488"]
+2022-03-13 17:12:05,253{GMT}	INFO	[jepsen worker 2] jepsen.util: 2	:invoke	:read	nil
+2022-03-13 17:12:05,257{GMT}	INFO	[jepsen worker 2] jepsen.util: 2	:ok	:read	["315760" "428466" "799823" "332177" "132745" "201274" "277831" "30028" "423034" "750358" "814072" "958055" "326686" "539408" "909131" "24397" "501613" "570165" "642648" "67895" "764865" "840138" "144525" "216479" "404010" "626184" "317603" "53986" "957487" "630701" "754311" "91581" "170561" "423663" "446525" "551458" "261576" "639058" "661606" "839441" "163208" "358310" "362483" "49817" "744560" "40790" "417553" "55684" "639089" "655209" "659234" "690813" "892952" "894932" "13746" "209375" "439671" "449740" "117251" "150931" "202263" "227864" "242869" "244078" "247734" "559671" "590458" "621488" "6542" "746066" "860126" "86941" "103011" "132301" "203052" "216087" "235327" "28436" "610375" "82623" "960568" "118823" "277238" "334133" "493410" "845655" "94078" "130727" "354697" "553500" "575911" "684899" "368866" "398672" "404469" "540118" "703180" "105251" "289230" "330051" "490773" "255304" "488056" "746765" "919358" "287069" "449487" "546951" "939382" "158197" "404692" "545159" "970591" "565488" "685425" "80919" "170025" "236909" "51075" "668650" "882858" "958551" "409146" "468286" "163140" "178919" "179174" "536733" "553769" "869028"]
+2022-03-13 17:12:05,376{GMT}	INFO	[jepsen worker 0] jepsen.util: 0	:invoke	:read	nil
+2022-03-13 17:12:05,379{GMT}	INFO	[jepsen worker 0] jepsen.util: 0	:ok	:read	["315760" "428466" "799823" "332177" "132745" "201274" "277831" "30028" "423034" "750358" "958055" "326686" "539408" "909131" "24397" "501613" "570165" "642648" "67895" "764865" "216479" "404010" "626184" "317603" "53986" "957487" "170025" "236909" "51075" "630701" "668650" "754311" "882858" "91581" "958551" "170561" "409146" "423663" "446525" "551458" "163140" "178919" "179174" "261576" "536733" "553769" "639058" "661606" "839441" "869028" "49817" "744560" "40790" "417553" "55684" "639089" "659234" "690813" "892952" "894932" "13746" "209375" "439671" "449740" "117251" "150931" "202263" "227864" "242869" "247734" "590458" "621488" "6542" "746066" "860126" "86941" "132301" "216087" "235327" "610375" "960568" "118823" "277238" "334133" "493410" "845655" "94078" "130727" "354697" "553500" "575911" "368866" "398672" "404469" "540118" "105251" "330051" "490773" "255304" "488056" "746765" "919358" "287069" "449487" "546951" "939382" "158197" "404692" "545159" "970591" "565488"]
+2022-03-13 17:12:05,505{GMT}	INFO	[jepsen worker 4] jepsen.util: 4	:invoke	:read	nil
+2022-03-13 17:12:05,512{GMT}	INFO	[jepsen worker 4] jepsen.util: 4	:ok	:read	["315760" "428466" "799823" "332177" "132745" "201274" "277831" "30028" "423034" "750358" "958055" "326686" "539408" "909131" "24397" "501613" "570165" "642648" "67895" "764865" "216479" "404010" "626184" "317603" "53986" "957487" "170025" "236909" "51075" "630701" "668650" "754311" "91581" "958551" "170561" "409146" "423663" "446525" "551458" "163140" "178919" "179174" "261576" "536733" "553769" "639058" "661606" "839441" "869028" "49817" "744560" "40790" "417553" "55684" "639089" "659234" "690813" "892952" "894932" "13746" "209375" "439671" "449740" "117251" "150931" "202263" "227864" "242869" "247734" "590458" "621488" "6542" "746066" "860126" "86941" "132301" "216087" "235327" "610375" "960568" "118823" "277238" "334133" "493410" "845655" "94078" "130727" "354697" "553500" "575911" "368866" "398672" "404469" "540118" "105251" "330051" "490773" "255304" "488056" "746765" "919358" "287069" "449487" "546951" "939382" "158197" "404692" "545159" "970591" "291211" "565488"]
+2022-03-13 17:12:05,614{GMT}	INFO	[jepsen worker 0] jepsen.util: 0	:invoke	:add	"430524"
+2022-03-13 17:12:05,627{GMT}	INFO	[jepsen worker 0] jepsen.util: 0	:ok	:add	"430524"
+2022-03-13 17:12:05,699{GMT}	INFO	[jepsen worker 2] jepsen.util: 2	:invoke	:read	nil
+2022-03-13 17:12:05,709{GMT}	INFO	[jepsen worker 2] jepsen.util: 2	:ok	:read	["315760" "428466" "799823" "332177" "132745" "201274" "277831" "30028" "423034" "750358" "814072" "958055" "326686" "539408" "909131" "24397" "501613" "570165" "642648" "67895" "764865" "840138" "144525" "216479" "404010" "626184" "317603" "53986" "957487" "630701" "754311" "91581" "170561" "423663" "446525" "551458" "261576" "639058" "661606" "839441" "163208" "358310" "362483" "49817" "744560" "40790" "417553" "55684" "639089" "655209" "659234" "690813" "892952" "894932" "13746" "209375" "439671" "449740" "117251" "150931" "202263" "227864" "242869" "244078" "247734" "559671" "590458" "621488" "6542" "746066" "860126" "86941" "103011" "132301" "203052" "216087" "235327" "28436" "610375" "82623" "960568" "118823" "277238" "334133" "493410" "845655" "94078" "130727" "354697" "553500" "575911" "684899" "368866" "398672" "404469" "540118" "703180" "105251" "289230" "330051" "490773" "255304" "488056" "746765" "919358" "287069" "449487" "546951" "939382" "158197" "404692" "545159" "970591" "565488" "685425" "80919" "170025" "236909" "51075" "668650" "882858" "958551" "409146" "468286" "163140" "178919" "179174" "536733" "553769" "869028"]
+2022-03-13 17:12:05,821{GMT}	INFO	[jepsen worker 1] jepsen.util: 1	:invoke	:read	nil
+2022-03-13 17:12:05,837{GMT}	INFO	[jepsen worker 1] jepsen.util: 1	:ok	:read	["315760" "320971" "428466" "799823" "332177" "132745" "201274" "277831" "30028" "423034" "750358" "814072" "958055" "326686" "539408" "909131" "24397" "501613" "570165" "642648" "67895" "764865" "840138" "144525" "216479" "404010" "626184" "317603" "53986" "957487" "630701" "754311" "91581" "170561" "423663" "446525" "551458" "261576" "639058" "661606" "839441" "362483" "49817" "744560" "40790" "417553" "55684" "639089" "655209" "659234" "690813" "892952" "894932" "13746" "209375" "439671" "449740" "117251" "150931" "202263" "227864" "242869" "244078" "247734" "559671" "590458" "621488" "6542" "746066" "860126" "86941" "103011" "132301" "203052" "216087" "235327" "28436" "610375" "82623" "960568" "118823" "277238" "334133" "493410" "845655" "94078" "130727" "354697" "553500" "575911" "684899" "368866" "398672" "404469" "540118" "703180" "105251" "289230" "330051" "490773" "956527" "255304" "488056" "746765" "919358" "287069" "449487" "546951" "939382" "158197" "404692" "545159" "970591" "565488" "685425" "80919" "170025" "236909" "51075" "668650" "882858" "958551" "409146" "468286" "163140" "178919" "179174" "536733" "553769" "869028" "163208" "358310"]
+2022-03-13 17:12:05,845{GMT}	INFO	[jepsen worker 4] jepsen.util: 4	:invoke	:add	"911868"
+2022-03-13 17:12:05,847{GMT}	INFO	[jepsen worker 2] jepsen.util: 2	:invoke	:add	"254090"
+2022-03-13 17:12:05,880{GMT}	INFO	[jepsen worker 2] jepsen.util: 2	:ok	:add	"254090"
+2022-03-13 17:12:05,889{GMT}	INFO	[jepsen worker 2] jepsen.util: 2	:invoke	:read	nil
+2022-03-13 17:12:05,894{GMT}	INFO	[jepsen worker 4] jepsen.util: 4	:ok	:add	"911868"
+2022-03-13 17:12:05,909{GMT}	INFO	[jepsen worker 2] jepsen.util: 2	:ok	:read	["254090" "315760" "428466" "799823" "332177" "132745" "201274" "277831" "30028" "423034" "750358" "814072" "958055" "326686" "539408" "909131" "24397" "501613" "570165" "642648" "67895" "764865" "840138" "144525" "216479" "404010" "626184" "317603" "53986" "957487" "630701" "754311" "91581" "170561" "423663" "446525" "551458" "261576" "639058" "661606" "839441" "362483" "49817" "744560" "40790" "417553" "55684" "639089" "655209" "659234" "690813" "892952" "894932" "13746" "209375" "439671" "449740" "117251" "150931" "202263" "227864" "242869" "244078" "247734" "559671" "590458" "621488" "6542" "746066" "860126" "86941" "103011" "132301" "203052" "216087" "235327" "28436" "610375" "82623" "960568" "118823" "277238" "334133" "493410" "845655" "94078" "130727" "354697" "553500" "575911" "684899" "368866" "398672" "404469" "540118" "703180" "105251" "289230" "330051" "490773" "255304" "488056" "746765" "919358" "287069" "449487" "546951" "939382" "158197" "404692" "545159" "970591" "565488" "685425" "80919" "170025" "236909" "51075" "668650" "882858" "958551" "409146" "468286" "163140" "178919" "179174" "536733" "553769" "869028" "163208" "358310"]
+2022-03-13 17:12:06,017{GMT}	INFO	[jepsen worker 4] jepsen.util: 4	:invoke	:add	"163318"
+2022-03-13 17:12:06,022{GMT}	INFO	[jepsen worker 4] jepsen.util: 4	:ok	:add	"163318"
+2022-03-13 17:12:06,211{GMT}	INFO	[jepsen worker 4] jepsen.util: 4	:invoke	:read	nil
+2022-03-13 17:12:06,215{GMT}	INFO	[jepsen worker 4] jepsen.util: 4	:ok	:read	["315760" "320971" "428466" "799823" "332177" "132745" "201274" "277831" "30028" "423034" "750358" "814072" "958055" "326686" "539408" "909131" "24397" "501613" "570165" "642648" "67895" "764865" "840138" "144525" "216479" "404010" "626184" "317603" "53986" "957487" "630701" "754311" "91581" "170561" "423663" "446525" "551458" "261576" "639058" "661606" "839441" "362483" "49817" "744560" "417553" "55684" "639089" "659234" "690813" "894932" "911868" "13746" "209375" "439671" "449740" "545190" "117251" "150931" "202263" "227864" "242869" "244078" "247734" "559671" "590458" "621488" "6542" "746066" "860126" "86941" "103011" "132301" "203052" "216087" "235327" "28436" "610375" "82623" "960568" "118823" "277238" "334133" "493410" "845655" "94078" "130727" "354697" "553500" "575911" "684899" "368866" "398672" "404469" "540118" "703180" "105251" "289230" "330051" "490773" "956527" "255304" "488056" "746765" "919358" "287069" "449487" "546951" "939382" "158197" "404692" "545159" "970591" "163318" "291211" "565488" "685425" "80919" "170025" "236909" "51075" "668650" "882858" "958551" "409146" "468286" "163140" "178919" "179174" "536733" "553769" "869028" "163208" "358310" "40790" "655209" "892952"]
+2022-03-13 17:12:06,360{GMT}	INFO	[jepsen worker 0] jepsen.util: 0	:invoke	:read	nil
+2022-03-13 17:12:06,367{GMT}	INFO	[jepsen worker 0] jepsen.util: 0	:ok	:read	["315760" "428466" "799823" "332177" "132745" "201274" "277831" "30028" "423034" "750358" "814072" "958055" "326686" "539408" "909131" "24397" "430524" "501613" "570165" "642648" "67895" "764865" "840138" "144525" "216479" "404010" "626184" "317603" "53986" "957487" "630701" "754311" "91581" "170561" "423663" "446525" "551458" "261576" "639058" "661606" "839441" "362483" "49817" "744560" "40790" "417553" "55684" "639089" "655209" "659234" "690813" "892952" "894932" "13746" "209375" "439671" "449740" "117251" "150931" "202263" "227864" "242869" "244078" "247734" "559671" "590458" "621488" "6542" "746066" "860126" "86941" "103011" "132301" "203052" "216087" "235327" "28436" "610375" "82623" "960568" "118823" "277238" "334133" "493410" "845655" "94078" "130727" "354697" "553500" "575911" "684899" "368866" "398672" "404469" "540118" "703180" "105251" "289230" "330051" "490773" "255304" "488056" "746765" "919358" "287069" "449487" "546951" "939382" "158197" "404692" "545159" "970591" "291211" "565488" "685425" "80919" "170025" "236909" "51075" "668650" "882858" "958551" "409146" "468286" "163140" "178919" "179174" "536733" "553769" "869028" "163208" "358310"]
+2022-03-13 17:12:06,438{GMT}	INFO	[jepsen worker 1] jepsen.util: 1	:invoke	:read	nil
+2022-03-13 17:12:06,446{GMT}	INFO	[jepsen worker 1] jepsen.util: 1	:ok	:read	["315760" "320971" "428466" "799823" "332177" "132745" "201274" "277831" "30028" "423034" "750358" "814072" "958055" "326686" "539408" "909131" "24397" "430524" "501613" "570165" "642648" "67895" "764865" "840138" "144525" "216479" "404010" "59327" "626184" "317603" "53986" "957487" "630701" "754311" "91581" "170561" "423663" "446525" "551458" "261576" "639058" "661606" "839441" "362483" "49817" "744560" "417553" "55684" "639089" "659234" "690813" "894932" "13746" "209375" "439671" "449740" "545190" "117251" "150931" "202263" "227864" "242869" "244078" "247734" "559671" "590458" "621488" "6542" "746066" "860126" "86941" "103011" "132301" "203052" "216087" "235327" "28436" "610375" "82623" "960568" "118823" "277238" "334133" "493410" "845655" "94078" "130727" "354697" "553500" "575911" "684899" "368866" "398672" "404469" "540118" "703180" "105251" "289230" "330051" "490773" "956527" "255304" "488056" "491702" "746765" "919358" "287069" "449487" "546951" "939382" "158197" "404692" "545159" "970591" "291211" "565488" "685425" "80919" "170025" "236909" "51075" "668650" "882858" "920576" "958551" "409146" "468286" "163140" "178919" "179174" "536733" "553769" "869028" "163208" "358310" "40790" "655209" "892952"]
+2022-03-13 17:12:06,567{GMT}	INFO	[jepsen worker 4] jepsen.util: 4	:invoke	:add	"462898"
+2022-03-13 17:12:06,579{GMT}	INFO	[jepsen worker 4] jepsen.util: 4	:ok	:add	"462898"
+2022-03-13 17:12:06,702{GMT}	INFO	[jepsen worker 3] jepsen.util: 3	:invoke	:add	"92255"
+2022-03-13 17:12:06,710{GMT}	INFO	[jepsen worker 3] jepsen.util: 3	:ok	:add	"92255"
+2022-03-13 17:12:06,834{GMT}	INFO	[jepsen worker 0] jepsen.util: 0	:invoke	:read	nil
+2022-03-13 17:12:06,848{GMT}	INFO	[jepsen worker 0] jepsen.util: 0	:ok	:read	["315760" "320971" "428466" "799823" "332177" "132745" "201274" "277831" "30028" "423034" "750358" "814072" "958055" "326686" "539408" "909131" "24397" "430524" "501613" "570165" "642648" "67895" "764865" "840138" "144525" "216479" "404010" "59327" "626184" "317603" "53986" "957487" "630701" "754311" "91581" "170561" "423663" "446525" "551458" "261576" "639058" "661606" "839441" "362483" "49817" "744560" "417553" "55684" "639089" "659234" "690813" "894932" "911868" "13746" "209375" "439671" "449740" "545190" "117251" "150931" "202263" "227864" "242869" "244078" "247734" "559671" "590458" "621488" "6542" "746066" "860126" "86941" "103011" "132301" "203052" "216087" "235327" "28436" "610375" "82623" "960568" "118823" "277238" "334133" "493410" "845655" "94078" "130727" "354697" "553500" "575911" "684899" "368866" "398672" "404469" "540118" "703180" "105251" "289230" "330051" "490773" "956527" "255304" "488056" "491702" "746765" "919358" "287069" "449487" "546951" "939382" "158197" "404692" "545159" "970591" "291211" "565488" "685425" "80919" "170025" "236909" "51075" "668650" "882858" "920576" "958551" "409146" "468286" "163140" "178919" "179174" "536733" "553769" "869028" "163208" "358310" "40790" "655209" "892952"]
+2022-03-13 17:12:06,993{GMT}	INFO	[jepsen worker 4] jepsen.util: 4	:invoke	:read	nil
+2022-03-13 17:12:06,996{GMT}	INFO	[jepsen worker 4] jepsen.util: 4	:ok	:read	["315760" "320971" "428466" "799823" "332177" "132745" "201274" "277831" "30028" "423034" "750358" "814072" "958055" "326686" "539408" "909131" "24397" "430524" "501613" "570165" "642648" "67895" "764865" "840138" "144525" "216479" "404010" "59327" "626184" "317603" "53986" "957487" "630701" "754311" "91581" "170561" "423663" "446525" "551458" "261576" "639058" "661606" "839441" "362483" "49817" "744560" "417553" "55684" "639089" "659234" "690813" "894932" "911868" "13746" "439671" "117251" "150931" "202263" "227864" "242869" "244078" "247734" "462898" "559671" "590458" "621488" "6542" "746066" "860126" "86941" "103011" "132301" "203052" "216087" "235327" "28436" "610375" "82623" "960568" "118823" "277238" "334133" "493410" "845655" "94078" "130727" "354697" "553500" "575911" "684899" "368866" "398672" "404469" "540118" "703180" "105251" "289230" "330051" "490773" "956527" "255304" "488056" "491702" "746765" "919358" "287069" "449487" "546951" "939382" "158197" "404692" "545159" "970591" "163318" "291211" "565488" "685425" "80919" "170025" "236909" "51075" "668650" "882858" "920576" "958551" "409146" "468286" "163140" "178919" "179174" "536733" "553769" "869028" "163208" "358310" "40790" "655209" "892952" "209375" "449740" "545190"]
+2022-03-13 17:12:07,092{GMT}	INFO	[jepsen worker 2] jepsen.util: 2	:invoke	:read	nil
+2022-03-13 17:12:07,096{GMT}	INFO	[jepsen worker 2] jepsen.util: 2	:ok	:read	["254090" "315760" "320971" "428466" "799823" "332177" "132745" "201274" "277831" "30028" "423034" "750358" "814072" "958055" "326686" "539408" "909131" "24397" "430524" "501613" "570165" "642648" "67895" "764865" "840138" "144525" "216479" "404010" "59327" "626184" "317603" "53986" "957487" "630701" "754311" "91581" "170561" "423663" "446525" "551458" "261576" "639058" "661606" "839441" "362483" "49817" "744560" "417553" "55684" "639089" "659234" "690813" "894932" "13746" "209375" "439671" "449740" "545190" "117251" "150931" "202263" "227864" "242869" "244078" "247734" "559671" "590458" "621488" "6542" "746066" "860126" "86941" "103011" "132301" "203052" "216087" "235327" "28436" "610375" "82623" "960568" "118823" "277238" "334133" "493410" "845655" "94078" "130727" "354697" "553500" "575911" "684899" "368866" "398672" "404469" "540118" "703180" "105251" "289230" "330051" "490773" "956527" "255304" "488056" "491702" "746765" "919358" "287069" "449487" "546951" "939382" "158197" "404692" "545159" "970591" "291211" "565488" "685425" "80919" "170025" "236909" "51075" "668650" "882858" "920576" "958551" "409146" "468286" "163140" "178919" "179174" "536733" "553769" "869028" "163208" "358310" "40790" "655209" "892952"]
+2022-03-13 17:12:07,218{GMT}	INFO	[jepsen worker 4] jepsen.util: 4	:invoke	:read	nil
+2022-03-13 17:12:07,221{GMT}	INFO	[jepsen worker 4] jepsen.util: 4	:ok	:read	["315760" "320971" "428466" "799823" "332177" "132745" "201274" "277831" "30028" "423034" "750358" "814072" "958055" "326686" "539408" "909131" "24397" "430524" "501613" "570165" "642648" "67895" "764865" "840138" "144525" "216479" "404010" "59327" "626184" "317603" "53986" "957487" "630701" "754311" "91581" "170561" "423663" "446525" "551458" "261576" "639058" "661606" "839441" "362483" "49817" "744560" "417553" "55684" "639089" "659234" "690813" "894932" "911868" "13746" "439671" "117251" "150931" "202263" "227864" "242869" "244078" "247734" "462898" "559671" "590458" "621488" "6542" "746066" "860126" "86941" "103011" "132301" "203052" "216087" "235327" "28436" "610375" "82623" "960568" "118823" "277238" "334133" "493410" "845655" "94078" "130727" "354697" "553500" "575911" "684899" "368866" "398672" "404469" "540118" "703180" "105251" "289230" "330051" "490773" "956527" "255304" "488056" "491702" "746765" "919358" "287069" "449487" "546951" "939382" "158197" "404692" "545159" "970591" "163318" "291211" "565488" "685425" "80919" "170025" "236909" "51075" "668650" "882858" "920576" "958551" "409146" "468286" "163140" "178919" "179174" "536733" "553769" "869028" "163208" "358310" "40790" "655209" "892952" "209375" "449740" "545190"]
+2022-03-13 17:12:07,317{GMT}	INFO	[jepsen worker 0] jepsen.util: 0	:invoke	:read	nil
+2022-03-13 17:12:07,320{GMT}	INFO	[jepsen worker 0] jepsen.util: 0	:ok	:read	["315760" "320971" "428466" "799823" "332177" "132745" "201274" "277831" "30028" "423034" "750358" "814072" "958055" "326686" "539408" "909131" "24397" "430524" "501613" "570165" "642648" "67895" "764865" "840138" "144525" "216479" "404010" "59327" "626184" "317603" "53986" "957487" "630701" "754311" "91581" "170561" "423663" "446525" "551458" "261576" "639058" "661606" "839441" "362483" "49817" "744560" "417553" "55684" "639089" "659234" "690813" "894932" "911868" "13746" "209375" "439671" "449740" "545190" "117251" "150931" "202263" "227864" "242869" "244078" "247734" "559671" "590458" "621488" "6542" "746066" "860126" "86941" "103011" "132301" "203052" "216087" "235327" "28436" "610375" "82623" "960568" "118823" "277238" "334133" "493410" "845655" "94078" "130727" "354697" "553500" "575911" "684899" "368866" "398672" "404469" "540118" "703180" "105251" "289230" "330051" "490773" "956527" "255304" "488056" "491702" "746765" "919358" "287069" "449487" "546951" "939382" "158197" "404692" "545159" "970591" "291211" "565488" "685425" "80919" "170025" "236909" "51075" "668650" "882858" "920576" "958551" "409146" "468286" "163140" "178919" "179174" "536733" "553769" "869028" "163208" "358310" "40790" "655209" "892952"]
+2022-03-13 17:12:07,418{GMT}	INFO	[jepsen worker 4] jepsen.util: 4	:invoke	:read	nil
+2022-03-13 17:12:07,425{GMT}	INFO	[jepsen worker 4] jepsen.util: 4	:ok	:read	["315760" "320971" "428466" "799823" "332177" "132745" "201274" "277831" "30028" "423034" "750358" "814072" "958055" "326686" "539408" "909131" "24397" "430524" "501613" "570165" "642648" "67895" "764865" "840138" "144525" "216479" "404010" "59327" "626184" "317603" "53986" "957487" "630701" "754311" "91581" "170561" "423663" "446525" "551458" "261576" "639058" "661606" "839441" "362483" "49817" "744560" "417553" "55684" "639089" "659234" "690813" "894932" "911868" "13746" "439671" "117251" "150931" "202263" "227864" "242869" "244078" "247734" "462898" "559671" "590458" "621488" "6542" "746066" "860126" "86941" "103011" "132301" "203052" "216087" "235327" "28436" "610375" "82623" "960568" "118823" "277238" "334133" "493410" "845655" "94078" "130727" "354697" "553500" "575911" "684899" "368866" "398672" "404469" "540118" "703180" "105251" "289230" "330051" "490773" "956527" "255304" "488056" "491702" "746765" "919358" "287069" "449487" "546951" "939382" "158197" "404692" "545159" "970591" "163318" "291211" "565488" "685425" "80919" "170025" "236909" "51075" "668650" "882858" "920576" "958551" "409146" "468286" "163140" "178919" "179174" "536733" "553769" "869028" "163208" "358310" "40790" "655209" "892952" "209375" "449740" "545190"]
+2022-03-13 17:12:07,566{GMT}	INFO	[jepsen worker 1] jepsen.util: 1	:invoke	:read	nil
+2022-03-13 17:12:07,573{GMT}	INFO	[jepsen worker 1] jepsen.util: 1	:ok	:read	["254090" "315760" "320971" "428466" "799823" "332177" "132745" "201274" "277831" "30028" "423034" "750358" "814072" "958055" "326686" "539408" "909131" "24397" "430524" "501613" "570165" "642648" "67895" "764865" "840138" "144525" "216479" "404010" "59327" "626184" "317603" "53986" "957487" "630701" "754311" "91581" "170561" "423663" "446525" "551458" "261576" "639058" "661606" "839441" "362483" "49817" "744560" "417553" "55684" "639089" "659234" "690813" "894932" "911868" "13746" "209375" "439671" "449740" "545190" "117251" "150931" "202263" "227864" "242869" "244078" "247734" "559671" "590458" "621488" "6542" "746066" "860126" "86941" "103011" "132301" "203052" "216087" "235327" "28436" "610375" "82623" "960568" "118823" "277238" "334133" "493410" "845655" "94078" "130727" "354697" "553500" "575911" "684899" "368866" "398672" "404469" "540118" "703180" "105251" "289230" "330051" "490773" "956527" "255304" "488056" "491702" "746765" "919358" "287069" "449487" "546951" "939382" "158197" "404692" "545159" "970591" "291211" "565488" "685425" "80919" "170025" "236909" "51075" "668650" "882858" "920576" "958551" "409146" "468286" "163140" "178919" "179174" "536733" "553769" "869028" "163208" "358310" "40790" "655209" "892952"]
+2022-03-13 17:12:07,606{GMT}	INFO	[jepsen worker nemesis] jepsen.util: :nemesis	:info	:start	nil
+2022-03-13 17:12:07,719{GMT}	INFO	[jepsen worker 4] jepsen.util: 4	:invoke	:read	nil
+2022-03-13 17:12:07,720{GMT}	INFO	[jepsen worker 1] jepsen.util: 1	:invoke	:add	"945153"
+2022-03-13 17:12:07,728{GMT}	INFO	[jepsen worker 4] jepsen.util: 4	:ok	:read	["315760" "320971" "428466" "799823" "332177" "132745" "201274" "277831" "30028" "423034" "750358" "814072" "958055" "326686" "539408" "909131" "24397" "430524" "501613" "570165" "642648" "67895" "764865" "840138" "144525" "216479" "404010" "59327" "626184" "317603" "53986" "957487" "630701" "754311" "91581" "170561" "423663" "446525" "551458" "261576" "639058" "661606" "839441" "362483" "49817" "744560" "417553" "55684" "639089" "659234" "690813" "894932" "911868" "13746" "439671" "117251" "150931" "202263" "227864" "242869" "244078" "247734" "462898" "559671" "590458" "621488" "6542" "746066" "860126" "86941" "103011" "132301" "203052" "216087" "235327" "28436" "610375" "82623" "960568" "118823" "277238" "334133" "493410" "845655" "94078" "130727" "354697" "553500" "575911" "684899" "368866" "398672" "404469" "540118" "703180" "105251" "289230" "330051" "490773" "956527" "255304" "488056" "491702" "746765" "919358" "287069" "449487" "546951" "939382" "158197" "404692" "545159" "970591" "163318" "291211" "565488" "685425" "80919" "170025" "236909" "51075" "668650" "882858" "920576" "958551" "409146" "468286" "163140" "178919" "179174" "536733" "553769" "869028" "163208" "358310" "40790" "655209" "892952" "209375" "449740" "545190"]
+2022-03-13 17:12:07,729{GMT}	INFO	[jepsen worker 1] jepsen.util: 1	:ok	:add	"945153"
+2022-03-13 17:12:07,735{GMT}	INFO	[jepsen worker nemesis] jepsen.util: :nemesis	:info	:start	[:isolated {"n1" #{"n2" "n5" "n4"}, "n3" #{"n2" "n5" "n4"}, "n2" #{"n1" "n3"}, "n5" #{"n1" "n3"}, "n4" #{"n1" "n3"}}]
+2022-03-13 17:12:07,893{GMT}	INFO	[jepsen worker 3] jepsen.util: 3	:invoke	:add	"83508"
+2022-03-13 17:12:07,901{GMT}	INFO	[jepsen worker 3] jepsen.util: 3	:ok	:add	"83508"
+2022-03-13 17:12:08,041{GMT}	INFO	[jepsen worker 3] jepsen.util: 3	:invoke	:read	nil
+2022-03-13 17:12:08,052{GMT}	INFO	[jepsen worker 3] jepsen.util: 3	:ok	:read	["254090" "315760" "320971" "428466" "799823" "332177" "132745" "201274" "277831" "30028" "423034" "750358" "814072" "958055" "326686" "539408" "909131" "24397" "430524" "501613" "570165" "642648" "67895" "764865" "840138" "144525" "216479" "404010" "59327" "626184" "317603" "53986" "92255" "957487" "630701" "754311" "91581" "170561" "423663" "446525" "551458" "261576" "639058" "661606" "839441" "362483" "49817" "744560" "417553" "55684" "639089" "659234" "690813" "83508" "894932" "911868" "13746" "439671" "117251" "150931" "202263" "227864" "242869" "244078" "247734" "559671" "590458" "621488" "6542" "746066" "860126" "86941" "103011" "132301" "203052" "216087" "235327" "28436" "610375" "82623" "960568" "118823" "277238" "334133" "493410" "845655" "94078" "130727" "354697" "553500" "575911" "684899" "368866" "398672" "404469" "540118" "703180" "105251" "289230" "330051" "490773" "956527" "255304" "488056" "491702" "746765" "919358" "287069" "449487" "546951" "939382" "158197" "404692" "545159" "970591" "291211" "565488" "685425" "80919" "170025" "236909" "51075" "668650" "882858" "920576" "958551" "409146" "468286" "163140" "178919" "179174" "536733" "553769" "869028" "163208" "358310" "40790" "655209" "892952" "209375" "449740" "545190"]
+2022-03-13 17:12:08,137{GMT}	INFO	[jepsen worker 3] jepsen.util: 3	:invoke	:read	nil
+2022-03-13 17:12:08,140{GMT}	INFO	[jepsen worker 3] jepsen.util: 3	:ok	:read	["254090" "315760" "320971" "428466" "799823" "332177" "132745" "201274" "277831" "30028" "423034" "750358" "814072" "958055" "326686" "539408" "909131" "24397" "430524" "501613" "570165" "642648" "67895" "764865" "840138" "144525" "216479" "404010" "59327" "626184" "317603" "53986" "92255" "957487" "630701" "754311" "91581" "170561" "423663" "446525" "551458" "261576" "639058" "661606" "839441" "362483" "49817" "744560" "417553" "55684" "639089" "659234" "690813" "83508" "894932" "911868" "13746" "439671" "117251" "150931" "202263" "227864" "242869" "244078" "247734" "462898" "559671" "590458" "621488" "6542" "746066" "860126" "86941" "103011" "132301" "203052" "216087" "235327" "28436" "610375" "82623" "960568" "118823" "277238" "334133" "493410" "845655" "94078" "130727" "354697" "553500" "575911" "684899" "368866" "398672" "404469" "540118" "703180" "105251" "289230" "330051" "490773" "956527" "255304" "488056" "491702" "746765" "919358" "287069" "449487" "546951" "939382" "158197" "404692" "545159" "970591" "163318" "291211" "565488" "685425" "80919" "170025" "236909" "51075" "668650" "882858" "920576" "958551" "409146" "468286" "163140" "178919" "179174" "536733" "553769" "869028" "163208" "358310" "40790" "655209" "892952" "209375" "449740" "545190"]
+2022-03-13 17:12:08,182{GMT}	INFO	[jepsen worker 4] jepsen.util: 4	:invoke	:add	"954512"
+2022-03-13 17:12:08,184{GMT}	INFO	[jepsen worker 4] jepsen.util: 4	:ok	:add	"954512"
+2022-03-13 17:12:08,214{GMT}	INFO	[jepsen worker 1] jepsen.util: 1	:invoke	:add	"135718"
+2022-03-13 17:12:08,217{GMT}	INFO	[jepsen worker 1] jepsen.util: 1	:ok	:add	"135718"
+2022-03-13 17:12:08,293{GMT}	INFO	[jepsen worker 1] jepsen.util: 1	:invoke	:read	nil
+2022-03-13 17:12:08,296{GMT}	INFO	[jepsen worker 1] jepsen.util: 1	:ok	:read	["254090" "315760" "320971" "428466" "799823" "332177" "132745" "201274" "277831" "30028" "423034" "750358" "814072" "958055" "326686" "539408" "909131" "945153" "24397" "430524" "501613" "570165" "642648" "67895" "764865" "840138" "144525" "216479" "404010" "59327" "626184" "317603" "53986" "957487" "630701" "754311" "91581" "170561" "423663" "446525" "551458" "261576" "639058" "661606" "839441" "362483" "49817" "744560" "417553" "55684" "639089" "659234" "690813" "894932" "911868" "13746" "439671" "117251" "150931" "202263" "227864" "242869" "244078" "247734" "462898" "559671" "590458" "621488" "6542" "746066" "860126" "86941" "103011" "132301" "203052" "216087" "235327" "28436" "610375" "82623" "960568" "118823" "277238" "334133" "493410" "845655" "94078" "130727" "354697" "553500" "575911" "684899" "135718" "368866" "398672" "404469" "540118" "703180" "105251" "289230" "330051" "490773" "956527" "255304" "488056" "491702" "746765" "919358" "287069" "449487" "546951" "939382" "158197" "404692" "545159" "970591" "163318" "291211" "565488" "685425" "80919" "170025" "236909" "51075" "668650" "882858" "920576" "958551" "409146" "468286" "163140" "178919" "179174" "536733" "553769" "869028" "163208" "358310" "40790" "655209" "892952" "209375" "449740" "545190"]
+2022-03-13 17:12:08,355{GMT}	INFO	[jepsen worker 1] jepsen.util: 1	:invoke	:read	nil
+2022-03-13 17:12:08,359{GMT}	INFO	[jepsen worker 1] jepsen.util: 1	:ok	:read	["254090" "315760" "320971" "428466" "799823" "332177" "132745" "201274" "277831" "30028" "423034" "750358" "814072" "958055" "326686" "539408" "909131" "945153" "24397" "430524" "501613" "570165" "642648" "67895" "764865" "840138" "144525" "216479" "404010" "59327" "626184" "317603" "53986" "957487" "630701" "754311" "91581" "170561" "423663" "446525" "551458" "261576" "639058" "661606" "839441" "362483" "49817" "744560" "417553" "55684" "639089" "659234" "690813" "894932" "911868" "13746" "439671" "117251" "150931" "202263" "227864" "242869" "244078" "247734" "462898" "559671" "590458" "621488" "6542" "746066" "860126" "86941" "103011" "132301" "203052" "216087" "235327" "28436" "610375" "82623" "960568" "118823" "277238" "334133" "493410" "845655" "94078" "130727" "354697" "553500" "575911" "684899" "135718" "368866" "398672" "404469" "540118" "703180" "105251" "289230" "330051" "490773" "956527" "255304" "488056" "491702" "746765" "919358" "287069" "449487" "546951" "939382" "158197" "404692" "545159" "970591" "163318" "291211" "565488" "685425" "80919" "170025" "236909" "51075" "668650" "882858" "920576" "958551" "409146" "468286" "163140" "178919" "179174" "536733" "553769" "869028" "163208" "358310" "40790" "655209" "892952" "209375" "449740" "545190"]
+2022-03-13 17:12:08,512{GMT}	INFO	[jepsen worker 1] jepsen.util: 1	:invoke	:add	"601055"
+2022-03-13 17:12:08,518{GMT}	INFO	[jepsen worker 1] jepsen.util: 1	:ok	:add	"601055"
+2022-03-13 17:12:08,589{GMT}	INFO	[jepsen worker 1] jepsen.util: 1	:invoke	:add	"306554"
+2022-03-13 17:12:08,597{GMT}	INFO	[jepsen worker 1] jepsen.util: 1	:ok	:add	"306554"
+2022-03-13 17:12:08,703{GMT}	INFO	[jepsen worker 3] jepsen.util: 3	:invoke	:read	nil
+2022-03-13 17:12:08,711{GMT}	INFO	[jepsen worker 3] jepsen.util: 3	:ok	:read	["254090" "315760" "320971" "428466" "799823" "332177" "132745" "201274" "277831" "30028" "423034" "750358" "814072" "958055" "326686" "539408" "909131" "24397" "430524" "501613" "570165" "642648" "67895" "764865" "840138" "144525" "216479" "404010" "59327" "626184" "317603" "53986" "92255" "957487" "630701" "754311" "91581" "170561" "423663" "446525" "551458" "261576" "639058" "661606" "839441" "362483" "49817" "744560" "417553" "55684" "639089" "659234" "690813" "83508" "894932" "911868" "13746" "439671" "117251" "150931" "202263" "227864" "242869" "244078" "247734" "462898" "559671" "590458" "621488" "6542" "746066" "860126" "86941" "103011" "132301" "203052" "216087" "235327" "28436" "610375" "82623" "960568" "118823" "277238" "334133" "493410" "845655" "94078" "130727" "354697" "553500" "575911" "684899" "368866" "398672" "404469" "540118" "703180" "105251" "289230" "330051" "490773" "956527" "255304" "488056" "491702" "746765" "919358" "287069" "449487" "546951" "939382" "158197" "404692" "545159" "970591" "163318" "291211" "565488" "685425" "80919" "170025" "236909" "51075" "668650" "882858" "920576" "958551" "409146" "468286" "163140" "178919" "179174" "536733" "553769" "869028" "163208" "358310" "40790" "655209" "892952" "209375" "449740" "545190"]
+2022-03-13 17:12:08,743{GMT}	INFO	[jepsen worker 0] jepsen.util: 0	:invoke	:read	nil
+2022-03-13 17:12:08,750{GMT}	INFO	[jepsen worker 0] jepsen.util: 0	:ok	:read	["254090" "315760" "320971" "428466" "799823" "332177" "132745" "201274" "277831" "30028" "423034" "750358" "814072" "958055" "326686" "539408" "909131" "24397" "430524" "501613" "570165" "642648" "67895" "764865" "840138" "144525" "216479" "404010" "59327" "626184" "317603" "53986" "957487" "630701" "754311" "91581" "170561" "423663" "446525" "551458" "261576" "639058" "661606" "839441" "362483" "49817" "744560" "417553" "55684" "639089" "659234" "690813" "894932" "911868" "13746" "439671" "117251" "150931" "202263" "227864" "242869" "244078" "247734" "462898" "559671" "590458" "621488" "6542" "746066" "860126" "86941" "103011" "132301" "203052" "216087" "235327" "28436" "610375" "82623" "960568" "118823" "277238" "334133" "493410" "845655" "94078" "130727" "354697" "553500" "575911" "684899" "368866" "398672" "404469" "540118" "703180" "105251" "289230" "330051" "490773" "956527" "255304" "488056" "491702" "746765" "919358" "287069" "449487" "546951" "939382" "158197" "404692" "545159" "970591" "163318" "291211" "565488" "685425" "80919" "170025" "236909" "51075" "668650" "882858" "920576" "958551" "409146" "468286" "163140" "178919" "179174" "536733" "553769" "869028" "163208" "358310" "40790" "655209" "892952" "209375" "449740" "545190"]
+2022-03-13 17:12:08,758{GMT}	INFO	[jepsen worker 0] jepsen.util: 0	:invoke	:read	nil
+2022-03-13 17:12:08,764{GMT}	INFO	[jepsen worker 0] jepsen.util: 0	:ok	:read	["254090" "315760" "320971" "428466" "799823" "332177" "132745" "201274" "277831" "30028" "423034" "750358" "814072" "958055" "326686" "539408" "909131" "24397" "430524" "501613" "570165" "642648" "67895" "764865" "840138" "144525" "216479" "404010" "59327" "626184" "317603" "53986" "957487" "630701" "754311" "91581" "170561" "423663" "446525" "551458" "261576" "639058" "661606" "839441" "362483" "49817" "744560" "417553" "55684" "639089" "659234" "690813" "894932" "911868" "13746" "439671" "117251" "150931" "202263" "227864" "242869" "244078" "247734" "462898" "559671" "590458" "621488" "6542" "746066" "860126" "86941" "103011" "132301" "203052" "216087" "235327" "28436" "610375" "82623" "960568" "118823" "277238" "334133" "493410" "845655" "94078" "130727" "354697" "553500" "575911" "684899" "368866" "398672" "404469" "540118" "703180" "105251" "289230" "330051" "490773" "956527" "255304" "488056" "491702" "746765" "919358" "287069" "449487" "546951" "939382" "158197" "404692" "545159" "970591" "163318" "291211" "565488" "685425" "80919" "170025" "236909" "51075" "668650" "882858" "920576" "958551" "409146" "468286" "163140" "178919" "179174" "536733" "553769" "869028" "163208" "358310" "40790" "655209" "892952" "209375" "449740" "545190"]
+2022-03-13 17:12:08,889{GMT}	INFO	[jepsen worker 4] jepsen.util: 4	:invoke	:read	nil
+2022-03-13 17:12:08,896{GMT}	INFO	[jepsen worker 4] jepsen.util: 4	:ok	:read	["254090" "315760" "320971" "428466" "799823" "332177" "132745" "201274" "277831" "30028" "423034" "750358" "814072" "958055" "326686" "539408" "909131" "24397" "430524" "501613" "570165" "642648" "67895" "764865" "840138" "144525" "216479" "404010" "59327" "626184" "317603" "53986" "957487" "630701" "754311" "91581" "170561" "423663" "446525" "551458" "261576" "639058" "661606" "839441" "362483" "49817" "744560" "417553" "55684" "639089" "659234" "690813" "894932" "911868" "13746" "439671" "954512" "117251" "150931" "202263" "227864" "242869" "244078" "247734" "462898" "559671" "590458" "621488" "6542" "746066" "860126" "86941" "103011" "132301" "203052" "216087" "235327" "28436" "610375" "82623" "960568" "118823" "277238" "334133" "493410" "845655" "94078" "130727" "354697" "553500" "575911" "684899" "368866" "398672" "404469" "540118" "703180" "105251" "289230" "330051" "490773" "956527" "255304" "488056" "491702" "746765" "919358" "287069" "449487" "546951" "939382" "158197" "404692" "545159" "970591" "163318" "291211" "565488" "685425" "80919" "170025" "236909" "51075" "668650" "882858" "920576" "958551" "409146" "468286" "163140" "178919" "179174" "536733" "553769" "869028" "163208" "358310" "40790" "655209" "892952" "209375" "449740" "545190"]
+2022-03-13 17:12:09,000{GMT}	INFO	[jepsen worker 4] jepsen.util: 4	:invoke	:add	"180840"
+2022-03-13 17:12:09,011{GMT}	INFO	[jepsen worker 4] jepsen.util: 4	:ok	:add	"180840"
+2022-03-13 17:12:09,094{GMT}	INFO	[jepsen worker 1] jepsen.util: 1	:invoke	:read	nil
+2022-03-13 17:12:09,102{GMT}	INFO	[jepsen worker 1] jepsen.util: 1	:ok	:read	["254090" "315760" "320971" "428466" "799823" "332177" "132745" "201274" "277831" "30028" "423034" "750358" "814072" "958055" "326686" "539408" "909131" "945153" "24397" "430524" "501613" "570165" "642648" "67895" "764865" "840138" "144525" "216479" "306554" "404010" "59327" "626184" "317603" "53986" "957487" "630701" "754311" "91581" "170561" "423663" "446525" "551458" "261576" "639058" "661606" "839441" "362483" "49817" "744560" "417553" "55684" "639089" "659234" "690813" "894932" "911868" "13746" "439671" "117251" "150931" "202263" "227864" "242869" "746066" "103011" "132301" "203052" "216087" "235327" "28436" "610375" "82623" "960568" "118823" "277238" "334133" "493410" "845655" "94078" "130727" "354697" "553500" "575911" "684899" "135718" "368866" "398672" "404469" "540118" "703180" "105251" "289230" "330051" "490773" "956527" "255304" "488056" "491702" "601055" "746765" "919358" "287069" "449487" "546951" "939382" "158197" "404692" "545159" "970591" "163318" "291211" "565488" "685425" "80919" "170025" "236909" "51075" "668650" "882858" "920576" "958551" "409146" "468286" "163140" "178919" "179174" "536733" "553769" "869028" "163208" "358310" "40790" "655209" "892952" "209375" "449740" "545190" "244078" "247734" "462898" "559671" "590458" "621488" "6542" "860126" "86941"]
+2022-03-13 17:12:09,211{GMT}	INFO	[jepsen worker 1] jepsen.util: 1	:invoke	:add	"678842"
+2022-03-13 17:12:09,213{GMT}	INFO	[jepsen worker 1] jepsen.util: 1	:ok	:add	"678842"
+2022-03-13 17:12:09,289{GMT}	INFO	[jepsen worker 1] jepsen.util: 1	:invoke	:add	"407240"
+2022-03-13 17:12:09,293{GMT}	INFO	[jepsen worker 1] jepsen.util: 1	:ok	:add	"407240"
+2022-03-13 17:12:09,421{GMT}	INFO	[jepsen worker 3] jepsen.util: 3	:invoke	:read	nil
+2022-03-13 17:12:09,428{GMT}	INFO	[jepsen worker 3] jepsen.util: 3	:ok	:read	["254090" "315760" "320971" "428466" "799823" "332177" "132745" "201274" "277831" "30028" "423034" "750358" "814072" "958055" "326686" "539408" "909131" "24397" "430524" "501613" "570165" "642648" "67895" "764865" "840138" "144525" "216479" "404010" "59327" "626184" "317603" "53986" "92255" "957487" "630701" "754311" "91581" "170561" "423663" "446525" "551458" "261576" "639058" "661606" "839441" "362483" "49817" "744560" "417553" "55684" "639089" "659234" "690813" "83508" "894932" "911868" "13746" "439671" "117251" "150931" "202263" "227864" "242869" "244078" "247734" "462898" "559671" "590458" "621488" "6542" "746066" "860126" "86941" "103011" "132301" "203052" "216087" "235327" "28436" "610375" "82623" "960568" "118823" "277238" "334133" "493410" "845655" "94078" "130727" "354697" "553500" "575911" "684899" "368866" "398672" "404469" "540118" "703180" "105251" "289230" "330051" "490773" "956527" "255304" "488056" "491702" "746765" "919358" "287069" "449487" "546951" "939382" "158197" "404692" "545159" "970591" "163318" "291211" "565488" "685425" "80919" "170025" "236909" "51075" "668650" "882858" "920576" "958551" "409146" "468286" "163140" "178919" "179174" "536733" "553769" "869028" "163208" "358310" "40790" "655209" "892952" "209375" "449740" "545190"]
+2022-03-13 17:12:09,605{GMT}	INFO	[jepsen worker 1] jepsen.util: 1	:invoke	:add	"794316"
+2022-03-13 17:12:09,611{GMT}	INFO	[jepsen worker 1] jepsen.util: 1	:ok	:add	"794316"
+2022-03-13 17:12:09,721{GMT}	INFO	[jepsen worker 4] jepsen.util: 4	:invoke	:read	nil
+2022-03-13 17:12:09,727{GMT}	INFO	[jepsen worker 4] jepsen.util: 4	:ok	:read	["254090" "315760" "320971" "428466" "799823" "332177" "132745" "201274" "277831" "30028" "423034" "750358" "814072" "958055" "326686" "539408" "909131" "24397" "430524" "501613" "570165" "642648" "67895" "764865" "840138" "144525" "216479" "404010" "59327" "626184" "317603" "53986" "92255" "957487" "630701" "754311" "91581" "170561" "423663" "446525" "551458" "180840" "261576" "639058" "661606" "839441" "362483" "49817" "744560" "417553" "55684" "639089" "659234" "690813" "894932" "911868" "13746" "439671" "954512" "117251" "150931" "202263" "227864" "242869" "244078" "247734" "462898" "559671" "590458" "621488" "6542" "746066" "860126" "86941" "103011" "132301" "203052" "216087" "235327" "28436" "610375" "82623" "960568" "118823" "277238" "334133" "493410" "845655" "94078" "130727" "354697" "553500" "575911" "684899" "368866" "398672" "404469" "540118" "703180" "105251" "289230" "330051" "490773" "956527" "255304" "488056" "491702" "746765" "919358" "287069" "449487" "546951" "939382" "158197" "404692" "545159" "970591" "163318" "291211" "565488" "685425" "80919" "170025" "236909" "51075" "668650" "882858" "920576" "958551" "409146" "468286" "163140" "178919" "179174" "536733" "553769" "869028" "163208" "358310" "40790" "655209" "892952" "209375" "449740" "545190"]
+2022-03-13 17:12:09,884{GMT}	INFO	[jepsen worker 4] jepsen.util: 4	:invoke	:read	nil
+2022-03-13 17:12:09,891{GMT}	INFO	[jepsen worker 4] jepsen.util: 4	:ok	:read	["254090" "315760" "320971" "428466" "799823" "332177" "132745" "201274" "277831" "30028" "423034" "750358" "814072" "958055" "326686" "539408" "909131" "24397" "430524" "501613" "570165" "642648" "67895" "764865" "840138" "144525" "216479" "404010" "59327" "626184" "317603" "53986" "92255" "957487" "630701" "754311" "91581" "170561" "423663" "446525" "551458" "180840" "261576" "639058" "661606" "839441" "362483" "49817" "744560" "417553" "55684" "639089" "659234" "690813" "894932" "911868" "13746" "439671" "954512" "117251" "150931" "202263" "227864" "242869" "244078" "247734" "462898" "559671" "590458" "621488" "6542" "746066" "860126" "86941" "103011" "132301" "203052" "216087" "235327" "28436" "610375" "82623" "960568" "118823" "277238" "334133" "493410" "845655" "94078" "130727" "354697" "553500" "575911" "684899" "368866" "398672" "404469" "540118" "703180" "105251" "289230" "330051" "490773" "956527" "255304" "488056" "491702" "746765" "919358" "287069" "449487" "546951" "939382" "158197" "404692" "545159" "970591" "163318" "291211" "565488" "685425" "80919" "170025" "236909" "51075" "668650" "882858" "920576" "958551" "409146" "468286" "163140" "178919" "179174" "536733" "553769" "869028" "163208" "358310" "40790" "655209" "892952" "209375" "449740" "545190"]
+2022-03-13 17:12:10,075{GMT}	INFO	[jepsen worker 4] jepsen.util: 4	:invoke	:read	nil
+2022-03-13 17:12:10,082{GMT}	INFO	[jepsen worker 4] jepsen.util: 4	:ok	:read	["254090" "315760" "320971" "428466" "799823" "332177" "132745" "201274" "277831" "30028" "423034" "750358" "814072" "958055" "326686" "539408" "909131" "945153" "24397" "430524" "501613" "570165" "642648" "67895" "764865" "840138" "144525" "216479" "404010" "59327" "626184" "317603" "53986" "92255" "957487" "630701" "754311" "91581" "170561" "423663" "446525" "551458" "180840" "261576" "639058" "661606" "839441" "362483" "49817" "744560" "417553" "55684" "639089" "659234" "690813" "83508" "894932" "911868" "13746" "439671" "954512" "117251" "150931" "202263" "227864" "242869" "746066" "103011" "132301" "203052" "216087" "235327" "28436" "610375" "82623" "960568" "118823" "277238" "334133" "493410" "845655" "94078" "130727" "354697" "553500" "575911" "684899" "368866" "398672" "404469" "540118" "703180" "105251" "289230" "330051" "490773" "956527" "255304" "488056" "491702" "746765" "919358" "287069" "449487" "546951" "939382" "158197" "404692" "545159" "970591" "163318" "291211" "565488" "685425" "80919" "170025" "236909" "51075" "668650" "882858" "920576" "958551" "409146" "468286" "163140" "178919" "179174" "536733" "553769" "869028" "163208" "358310" "40790" "655209" "892952" "209375" "449740" "545190" "244078" "247734" "462898" "559671" "590458" "621488" "6542" "860126" "86941"]
+2022-03-13 17:12:10,224{GMT}	INFO	[jepsen worker 0] jepsen.util: 0	:invoke	:add	"547901"
+2022-03-13 17:12:10,227{GMT}	INFO	[jepsen worker 0] jepsen.util: 0	:ok	:add	"547901"
+2022-03-13 17:12:10,298{GMT}	INFO	[jepsen worker 2] jepsen.util: 2	:invoke	:add	"136730"
+2022-03-13 17:12:10,302{GMT}	INFO	[jepsen worker 2] jepsen.util: 2	:ok	:add	"136730"
+2022-03-13 17:12:10,439{GMT}	INFO	[jepsen worker 2] jepsen.util: 2	:invoke	:add	"404173"
+2022-03-13 17:12:10,445{GMT}	INFO	[jepsen worker 2] jepsen.util: 2	:ok	:add	"404173"
+2022-03-13 17:12:10,574{GMT}	INFO	[jepsen worker 1] jepsen.util: 1	:invoke	:read	nil
+2022-03-13 17:12:10,582{GMT}	INFO	[jepsen worker 1] jepsen.util: 1	:ok	:read	["254090" "315760" "320971" "428466" "799823" "332177" "407240" "132745" "201274" "277831" "30028" "423034" "750358" "814072" "958055" "326686" "539408" "909131" "945153" "24397" "430524" "501613" "570165" "642648" "67895" "764865" "840138" "144525" "216479" "306554" "404010" "59327" "626184" "317603" "53986" "92255" "957487" "630701" "754311" "91581" "170561" "423663" "446525" "551458" "180840" "261576" "639058" "661606" "839441" "362483" "49817" "744560" "417553" "55684" "639089" "659234" "690813" "83508" "894932" "911868" "13746" "439671" "954512" "117251" "150931" "202263" "227864" "242869" "746066" "103011" "203052" "235327" "82623" "118823" "277238" "334133" "493410" "845655" "94078" "130727" "354697" "553500" "575911" "684899" "135718" "368866" "398672" "404469" "540118" "678842" "703180" "105251" "289230" "330051" "490773" "956527" "255304" "488056" "491702" "601055" "746765" "919358" "287069" "449487" "546951" "939382" "158197" "404692" "545159" "970591" "163318" "291211" "565488" "685425" "80919" "170025" "236909" "51075" "668650" "882858" "920576" "958551" "409146" "468286" "163140" "178919" "179174" "536733" "553769" "869028" "163208" "358310" "40790" "655209" "892952" "209375" "449740" "545190" "794316" "244078" "247734" "462898" "559671" "590458" "621488" "6542" "860126" "86941" "132301" "216087" "28436" "610375" "960568"]
+2022-03-13 17:12:10,711{GMT}	INFO	[jepsen worker 4] jepsen.util: 4	:invoke	:add	"3994"
+2022-03-13 17:12:10,720{GMT}	INFO	[jepsen worker 4] jepsen.util: 4	:ok	:add	"3994"
+2022-03-13 17:12:10,842{GMT}	INFO	[jepsen worker 3] jepsen.util: 3	:invoke	:add	"66172"
+2022-03-13 17:12:10,849{GMT}	INFO	[jepsen worker 3] jepsen.util: 3	:ok	:add	"66172"
+2022-03-13 17:12:10,878{GMT}	INFO	[jepsen worker 1] jepsen.util: 1	:invoke	:read	nil
+2022-03-13 17:12:10,885{GMT}	INFO	[jepsen worker 1] jepsen.util: 1	:ok	:read	["254090" "315760" "320971" "428466" "799823" "332177" "407240" "132745" "201274" "277831" "30028" "423034" "750358" "814072" "958055" "326686" "539408" "909131" "945153" "24397" "430524" "501613" "570165" "642648" "67895" "764865" "840138" "144525" "216479" "306554" "404010" "59327" "626184" "317603" "53986" "92255" "957487" "630701" "754311" "91581" "170561" "423663" "446525" "551458" "180840" "261576" "639058" "661606" "839441" "362483" "49817" "744560" "417553" "55684" "639089" "659234" "690813" "83508" "894932" "911868" "13746" "439671" "954512" "117251" "150931" "202263" "227864" "242869" "746066" "103011" "203052" "235327" "82623" "118823" "277238" "334133" "493410" "845655" "94078" "130727" "354697" "553500" "575911" "684899" "135718" "368866" "398672" "404469" "540118" "678842" "703180" "105251" "289230" "330051" "490773" "956527" "255304" "488056" "491702" "601055" "746765" "919358" "287069" "449487" "546951" "939382" "158197" "404692" "545159" "970591" "163318" "291211" "565488" "685425" "80919" "170025" "236909" "51075" "668650" "882858" "920576" "958551" "409146" "468286" "163140" "178919" "179174" "536733" "553769" "869028" "163208" "358310" "40790" "655209" "892952" "209375" "449740" "545190" "794316" "244078" "247734" "462898" "559671" "590458" "621488" "6542" "860126" "86941" "132301" "216087" "28436" "610375" "960568"]
+2022-03-13 17:12:11,014{GMT}	INFO	[jepsen worker 2] jepsen.util: 2	:invoke	:read	nil
+2022-03-13 17:12:11,023{GMT}	INFO	[jepsen worker 2] jepsen.util: 2	:ok	:read	["254090" "315760" "320971" "428466" "799823" "332177" "132745" "201274" "277831" "30028" "423034" "750358" "814072" "958055" "326686" "539408" "909131" "24397" "430524" "501613" "570165" "642648" "67895" "764865" "840138" "144525" "216479" "404010" "59327" "626184" "317603" "53986" "92255" "957487" "630701" "754311" "91581" "170561" "423663" "446525" "551458" "261576" "639058" "661606" "839441" "362483" "49817" "744560" "404173" "417553" "55684" "639089" "659234" "690813" "894932" "911868" "13746" "439671" "117251" "150931" "202263" "227864" "242869" "244078" "247734" "462898" "559671" "590458" "621488" "6542" "746066" "860126" "86941" "103011" "132301" "203052" "216087" "235327" "28436" "610375" "82623" "960568" "118823" "277238" "334133" "493410" "845655" "94078" "130727" "354697" "553500" "575911" "684899" "368866" "398672" "404469" "540118" "703180" "105251" "289230" "330051" "490773" "956527" "255304" "488056" "491702" "746765" "919358" "287069" "449487" "546951" "939382" "158197" "404692" "545159" "970591" "136730" "163318" "291211" "565488" "685425" "80919" "170025" "236909" "51075" "668650" "882858" "920576" "958551" "409146" "468286" "163140" "178919" "179174" "536733" "553769" "869028" "163208" "358310" "40790" "655209" "892952" "209375" "449740" "545190"]
+2022-03-13 17:12:11,168{GMT}	INFO	[jepsen worker 0] jepsen.util: 0	:invoke	:read	nil
+2022-03-13 17:12:11,173{GMT}	INFO	[jepsen worker 0] jepsen.util: 0	:ok	:read	["254090" "315760" "320971" "428466" "799823" "332177" "132745" "201274" "277831" "30028" "423034" "750358" "814072" "958055" "326686" "539408" "909131" "24397" "430524" "501613" "570165" "642648" "67895" "764865" "840138" "144525" "216479" "404010" "59327" "626184" "317603" "53986" "92255" "957487" "630701" "754311" "91581" "170561" "423663" "446525" "551458" "261576" "639058" "661606" "839441" "362483" "49817" "744560" "417553" "55684" "639089" "659234" "690813" "894932" "911868" "13746" "439671" "117251" "150931" "202263" "227864" "242869" "244078" "247734" "462898" "559671" "590458" "621488" "6542" "746066" "860126" "86941" "103011" "132301" "203052" "216087" "235327" "28436" "610375" "82623" "960568" "118823" "277238" "334133" "493410" "845655" "94078" "130727" "354697" "547901" "553500" "575911" "684899" "368866" "398672" "404469" "540118" "703180" "105251" "289230" "330051" "490773" "956527" "255304" "488056" "491702" "746765" "919358" "287069" "449487" "546951" "939382" "158197" "404692" "545159" "970591" "163318" "291211" "565488" "685425" "80919" "170025" "236909" "51075" "668650" "882858" "920576" "958551" "409146" "468286" "163140" "178919" "179174" "536733" "553769" "869028" "163208" "358310" "40790" "655209" "892952" "209375" "449740" "545190"]
+2022-03-13 17:12:11,211{GMT}	INFO	[jepsen worker 3] jepsen.util: 3	:invoke	:add	"731582"
+2022-03-13 17:12:11,216{GMT}	INFO	[jepsen worker 3] jepsen.util: 3	:ok	:add	"731582"
+2022-03-13 17:12:11,300{GMT}	INFO	[jepsen worker 3] jepsen.util: 3	:invoke	:read	nil
+2022-03-13 17:12:11,302{GMT}	INFO	[jepsen worker 3] jepsen.util: 3	:ok	:read	["254090" "315760" "320971" "428466" "799823" "332177" "132745" "201274" "277831" "30028" "423034" "750358" "814072" "958055" "326686" "539408" "909131" "945153" "24397" "430524" "501613" "570165" "642648" "67895" "764865" "840138" "144525" "216479" "306554" "404010" "59327" "626184" "317603" "53986" "92255" "957487" "630701" "754311" "91581" "170561" "423663" "446525" "551458" "180840" "261576" "639058" "661606" "839441" "362483" "49817" "744560" "417553" "55684" "639089" "659234" "690813" "83508" "894932" "911868" "13746" "439671" "954512" "117251" "150931" "202263" "227864" "242869" "746066" "103011" "203052" "235327" "82623" "118823" "277238" "334133" "493410" "845655" "94078" "130727" "354697" "553500" "575911" "684899" "135718" "368866" "398672" "404469" "540118" "703180" "105251" "289230" "330051" "490773" "956527" "255304" "488056" "491702" "601055" "746765" "919358" "287069" "449487" "546951" "939382" "158197" "404692" "545159" "970591" "163318" "291211" "565488" "685425" "80919" "170025" "236909" "51075" "668650" "882858" "920576" "958551" "409146" "468286" "731582" "163140" "178919" "179174" "536733" "553769" "869028" "163208" "358310" "40790" "655209" "892952" "209375" "449740" "545190" "244078" "247734" "462898" "559671" "590458" "621488" "6542" "66172" "860126" "86941" "132301" "216087" "28436" "610375" "960568"]
+2022-03-13 17:12:11,433{GMT}	INFO	[jepsen worker 4] jepsen.util: 4	:invoke	:read	nil
+2022-03-13 17:12:11,440{GMT}	INFO	[jepsen worker 4] jepsen.util: 4	:ok	:read	["254090" "315760" "320971" "428466" "799823" "332177" "132745" "201274" "277831" "30028" "423034" "750358" "814072" "958055" "326686" "539408" "909131" "945153" "24397" "430524" "501613" "570165" "642648" "67895" "764865" "840138" "144525" "216479" "306554" "404010" "59327" "626184" "317603" "53986" "92255" "957487" "630701" "754311" "91581" "170561" "423663" "446525" "551458" "180840" "261576" "639058" "661606" "839441" "362483" "49817" "744560" "417553" "55684" "639089" "659234" "690813" "83508" "894932" "911868" "13746" "439671" "954512" "117251" "150931" "202263" "227864" "242869" "746066" "103011" "203052" "235327" "82623" "118823" "277238" "334133" "493410" "845655" "94078" "130727" "354697" "553500" "575911" "684899" "135718" "368866" "398672" "3994" "404469" "540118" "703180" "105251" "289230" "330051" "490773" "956527" "255304" "488056" "491702" "601055" "746765" "919358" "287069" "449487" "546951" "939382" "158197" "404692" "545159" "970591" "163318" "291211" "565488" "685425" "80919" "170025" "236909" "51075" "668650" "882858" "920576" "958551" "409146" "468286" "163140" "178919" "179174" "536733" "553769" "869028" "163208" "358310" "40790" "655209" "892952" "209375" "449740" "545190" "244078" "247734" "462898" "559671" "590458" "621488" "6542" "860126" "86941" "132301" "216087" "28436" "610375" "960568"]
+2022-03-13 17:12:12,736{GMT}	INFO	[jepsen worker nemesis] jepsen.util: :nemesis	:info	:stop	nil
+2022-03-13 17:12:12,945{GMT}	INFO	[jepsen worker nemesis] jepsen.util: :nemesis	:info	:stop	:network-healed
+2022-03-13 17:12:12,946{GMT}	INFO	[jepsen worker 3] jepsen.generator.interpreter: Let database quiesce...
+2022-03-13 17:12:17,951{GMT}	INFO	[jepsen worker 1] jepsen.util: 1	:invoke	:read	nil
+2022-03-13 17:12:17,952{GMT}	INFO	[jepsen worker 0] jepsen.util: 0	:invoke	:read	nil
+2022-03-13 17:12:17,952{GMT}	INFO	[jepsen worker 4] jepsen.util: 4	:invoke	:read	nil
+2022-03-13 17:12:17,952{GMT}	INFO	[jepsen worker 2] jepsen.util: 2	:invoke	:read	nil
+2022-03-13 17:12:17,952{GMT}	INFO	[jepsen worker 3] jepsen.util: 3	:invoke	:read	nil
+2022-03-13 17:12:17,959{GMT}	INFO	[jepsen worker 0] jepsen.util: 0	:ok	:read	["254090" "315760" "320971" "428466" "799823" "332177" "407240" "132745" "201274" "277831" "30028" "423034" "750358" "814072" "958055" "326686" "539408" "909131" "945153" "24397" "430524" "501613" "570165" "642648" "67895" "764865" "840138" "144525" "216479" "306554" "404010" "59327" "626184" "317603" "53986" "92255" "957487" "630701" "754311" "91581" "170561" "423663" "446525" "551458" "180840" "261576" "639058" "661606" "839441" "362483" "49817" "744560" "404173" "417553" "55684" "639089" "659234" "690813" "83508" "894932" "911868" "13746" "439671" "954512" "117251" "150931" "202263" "227864" "242869" "746066" "103011" "203052" "235327" "82623" "118823" "334133" "845655" "94078" "130727" "354697" "547901" "553500" "575911" "684899" "135718" "368866" "398672" "3994" "404469" "540118" "678842" "703180" "105251" "289230" "330051" "490773" "956527" "255304" "488056" "491702" "601055" "746765" "919358" "287069" "449487" "546951" "939382" "158197" "404692" "545159" "970591" "136730" "163318" "291211" "565488" "685425" "80919" "170025" "236909" "51075" "668650" "882858" "920576" "958551" "409146" "468286" "731582" "163140" "178919" "179174" "536733" "553769" "869028" "163208" "358310" "40790" "655209" "892952" "209375" "449740" "545190" "794316" "244078" "247734" "462898" "559671" "590458" "621488" "6542" "66172" "860126" "86941" "132301" "216087" "28436" "610375" "960568" "277238" "493410"]
+2022-03-13 17:12:17,961{GMT}	INFO	[jepsen worker 4] jepsen.util: 4	:ok	:read	["254090" "315760" "320971" "428466" "799823" "332177" "407240" "132745" "201274" "277831" "30028" "423034" "750358" "814072" "958055" "326686" "539408" "909131" "945153" "24397" "430524" "501613" "570165" "642648" "67895" "764865" "840138" "144525" "216479" "306554" "404010" "59327" "626184" "317603" "53986" "92255" "957487" "630701" "754311" "91581" "170561" "423663" "446525" "551458" "180840" "261576" "639058" "661606" "839441" "362483" "49817" "744560" "404173" "417553" "55684" "639089" "659234" "690813" "83508" "894932" "911868" "13746" "439671" "954512" "117251" "150931" "202263" "227864" "242869" "746066" "103011" "203052" "235327" "82623" "118823" "334133" "845655" "94078" "130727" "354697" "547901" "553500" "575911" "684899" "135718" "368866" "398672" "3994" "404469" "540118" "678842" "703180" "105251" "289230" "330051" "490773" "956527" "255304" "488056" "491702" "601055" "746765" "919358" "287069" "449487" "546951" "939382" "158197" "404692" "545159" "970591" "136730" "163318" "291211" "565488" "685425" "80919" "170025" "236909" "51075" "668650" "882858" "920576" "958551" "409146" "468286" "731582" "163140" "178919" "179174" "536733" "553769" "869028" "163208" "358310" "40790" "655209" "892952" "209375" "449740" "545190" "794316" "244078" "247734" "462898" "559671" "590458" "621488" "6542" "66172" "860126" "86941" "132301" "216087" "28436" "610375" "960568" "277238" "493410"]
+2022-03-13 17:12:17,962{GMT}	INFO	[jepsen worker 2] jepsen.util: 2	:ok	:read	["254090" "315760" "320971" "428466" "799823" "332177" "407240" "132745" "201274" "277831" "30028" "423034" "750358" "814072" "958055" "326686" "539408" "909131" "945153" "24397" "430524" "501613" "570165" "642648" "67895" "764865" "840138" "144525" "216479" "306554" "404010" "59327" "626184" "317603" "53986" "92255" "957487" "630701" "754311" "91581" "170561" "423663" "446525" "551458" "180840" "261576" "639058" "661606" "839441" "362483" "49817" "744560" "404173" "417553" "55684" "639089" "659234" "690813" "83508" "894932" "911868" "13746" "439671" "954512" "117251" "150931" "202263" "227864" "242869" "746066" "103011" "203052" "235327" "82623" "118823" "334133" "845655" "94078" "130727" "354697" "547901" "553500" "575911" "684899" "135718" "368866" "398672" "3994" "404469" "540118" "678842" "703180" "105251" "289230" "330051" "490773" "956527" "255304" "488056" "491702" "601055" "746765" "919358" "287069" "449487" "546951" "939382" "158197" "404692" "545159" "970591" "136730" "163318" "291211" "565488" "685425" "80919" "170025" "236909" "51075" "668650" "882858" "920576" "958551" "409146" "468286" "731582" "163140" "178919" "179174" "536733" "553769" "869028" "163208" "358310" "40790" "655209" "892952" "209375" "449740" "545190" "794316" "244078" "247734" "462898" "559671" "590458" "621488" "6542" "66172" "860126" "86941" "132301" "216087" "28436" "610375" "960568" "277238" "493410"]
+2022-03-13 17:12:17,962{GMT}	INFO	[jepsen worker 3] jepsen.util: 3	:ok	:read	["254090" "315760" "320971" "428466" "799823" "332177" "407240" "132745" "201274" "277831" "30028" "423034" "750358" "814072" "958055" "326686" "539408" "909131" "945153" "24397" "430524" "501613" "570165" "642648" "67895" "764865" "840138" "144525" "216479" "306554" "404010" "59327" "626184" "317603" "53986" "92255" "957487" "630701" "754311" "91581" "170561" "423663" "446525" "551458" "180840" "261576" "639058" "661606" "839441" "362483" "49817" "744560" "404173" "417553" "55684" "639089" "659234" "690813" "83508" "894932" "911868" "13746" "439671" "954512" "117251" "150931" "202263" "227864" "242869" "746066" "103011" "203052" "235327" "82623" "118823" "334133" "845655" "94078" "130727" "354697" "547901" "553500" "575911" "684899" "135718" "368866" "398672" "3994" "404469" "540118" "678842" "703180" "105251" "289230" "330051" "490773" "956527" "255304" "488056" "491702" "601055" "746765" "919358" "287069" "449487" "546951" "939382" "158197" "404692" "545159" "970591" "136730" "163318" "291211" "565488" "685425" "80919" "170025" "236909" "51075" "668650" "882858" "920576" "958551" "409146" "468286" "731582" "163140" "178919" "179174" "536733" "553769" "869028" "163208" "358310" "40790" "655209" "892952" "209375" "449740" "545190" "794316" "244078" "247734" "462898" "559671" "590458" "621488" "6542" "66172" "860126" "86941" "132301" "216087" "28436" "610375" "960568" "277238" "493410"]
+2022-03-13 17:12:17,967{GMT}	INFO	[jepsen worker 1] jepsen.util: 1	:ok	:read	["254090" "315760" "320971" "428466" "799823" "332177" "407240" "132745" "201274" "277831" "30028" "423034" "750358" "814072" "958055" "326686" "539408" "909131" "945153" "24397" "430524" "501613" "570165" "642648" "67895" "764865" "840138" "144525" "216479" "306554" "404010" "59327" "626184" "317603" "53986" "92255" "957487" "630701" "754311" "91581" "170561" "423663" "446525" "551458" "180840" "261576" "639058" "661606" "839441" "362483" "49817" "744560" "404173" "417553" "55684" "639089" "659234" "690813" "83508" "894932" "911868" "13746" "439671" "954512" "117251" "150931" "202263" "227864" "242869" "746066" "103011" "203052" "235327" "82623" "118823" "334133" "845655" "94078" "130727" "354697" "547901" "553500" "575911" "684899" "135718" "368866" "398672" "3994" "404469" "540118" "678842" "703180" "105251" "289230" "330051" "490773" "956527" "255304" "488056" "491702" "601055" "746765" "919358" "287069" "449487" "546951" "939382" "158197" "404692" "545159" "970591" "136730" "163318" "291211" "565488" "685425" "80919" "170025" "236909" "51075" "668650" "882858" "920576" "958551" "409146" "468286" "731582" "163140" "178919" "179174" "536733" "553769" "869028" "163208" "358310" "40790" "655209" "892952" "209375" "449740" "545190" "794316" "244078" "247734" "462898" "559671" "590458" "621488" "6542" "66172" "860126" "86941" "132301" "216087" "28436" "610375" "960568" "277238" "493410"]
+2022-03-13 17:12:18,180{GMT}	INFO	[jepsen test runner] jepsen.core: Run complete, writing
+2022-03-13 17:12:18,264{GMT}	INFO	[jepsen test runner] jepsen.core: Snarfing log files
+2022-03-13 17:12:18,367{GMT}	INFO	[jepsen node n5] jepsen.core: downloading /root/fuzz_dist/tmp/log to fuzz_dist_log
+2022-03-13 17:12:18,367{GMT}	INFO	[jepsen node n2] jepsen.core: downloading /root/fuzz_dist/tmp/log to fuzz_dist_log
+2022-03-13 17:12:18,367{GMT}	INFO	[jepsen node n1] jepsen.core: downloading /root/fuzz_dist/tmp/log to fuzz_dist_log
+2022-03-13 17:12:18,367{GMT}	INFO	[jepsen node n3] jepsen.core: downloading /root/fuzz_dist/tmp/log to fuzz_dist_log
+2022-03-13 17:12:18,367{GMT}	INFO	[jepsen node n4] jepsen.core: downloading /root/fuzz_dist/tmp/log to fuzz_dist_log
+2022-03-13 17:12:18,647{GMT}	INFO	[jepsen node n2] jepsen.core: downloading /root/antidote/logger_logs to antidote_logger_logs
+2022-03-13 17:12:18,658{GMT}	INFO	[jepsen node n4] jepsen.core: downloading /root/antidote/logger_logs to antidote_logger_logs
+2022-03-13 17:12:18,666{GMT}	INFO	[jepsen node n1] jepsen.core: downloading /root/antidote/logger_logs to antidote_logger_logs
+2022-03-13 17:12:18,672{GMT}	INFO	[jepsen node n3] jepsen.core: downloading /root/antidote/logger_logs to antidote_logger_logs
+2022-03-13 17:12:18,673{GMT}	INFO	[jepsen node n5] jepsen.core: downloading /root/antidote/logger_logs to antidote_logger_logs
+2022-03-13 17:12:19,026{GMT}	INFO	[jepsen node n4] jepsen.core: downloading /root/antidote/log to antidote_log
+2022-03-13 17:12:19,030{GMT}	INFO	[jepsen node n1] jepsen.core: downloading /root/antidote/log to antidote_log
+2022-03-13 17:12:19,033{GMT}	INFO	[jepsen node n2] jepsen.core: downloading /root/antidote/log to antidote_log
+2022-03-13 17:12:19,066{GMT}	INFO	[jepsen node n5] jepsen.core: downloading /root/antidote/log to antidote_log
+2022-03-13 17:12:19,073{GMT}	INFO	[jepsen node n3] jepsen.core: downloading /root/antidote/log to antidote_log
+2022-03-13 17:12:19,243{GMT}	INFO	[jepsen test runner] jepsen.core: Snarfing log files
+2022-03-13 17:12:19,346{GMT}	INFO	[jepsen node n1] jepsen.core: downloading /root/fuzz_dist/tmp/log to fuzz_dist_log
+2022-03-13 17:12:19,346{GMT}	INFO	[jepsen node n2] jepsen.core: downloading /root/fuzz_dist/tmp/log to fuzz_dist_log
+2022-03-13 17:12:19,346{GMT}	INFO	[jepsen node n5] jepsen.core: downloading /root/fuzz_dist/tmp/log to fuzz_dist_log
+2022-03-13 17:12:19,346{GMT}	INFO	[jepsen node n3] jepsen.core: downloading /root/fuzz_dist/tmp/log to fuzz_dist_log
+2022-03-13 17:12:19,346{GMT}	INFO	[jepsen node n4] jepsen.core: downloading /root/fuzz_dist/tmp/log to fuzz_dist_log
+2022-03-13 17:12:19,625{GMT}	INFO	[jepsen node n4] jepsen.core: downloading /root/antidote/logger_logs to antidote_logger_logs
+2022-03-13 17:12:19,625{GMT}	INFO	[jepsen node n2] jepsen.core: downloading /root/antidote/logger_logs to antidote_logger_logs
+2022-03-13 17:12:19,626{GMT}	INFO	[jepsen node n1] jepsen.core: downloading /root/antidote/logger_logs to antidote_logger_logs
+2022-03-13 17:12:19,633{GMT}	INFO	[jepsen node n3] jepsen.core: downloading /root/antidote/logger_logs to antidote_logger_logs
+2022-03-13 17:12:19,643{GMT}	INFO	[jepsen node n5] jepsen.core: downloading /root/antidote/logger_logs to antidote_logger_logs
+2022-03-13 17:12:19,989{GMT}	INFO	[jepsen node n2] jepsen.core: downloading /root/antidote/log to antidote_log
+2022-03-13 17:12:20,003{GMT}	INFO	[jepsen node n1] jepsen.core: downloading /root/antidote/log to antidote_log
+2022-03-13 17:12:20,011{GMT}	INFO	[jepsen node n4] jepsen.core: downloading /root/antidote/log to antidote_log
+2022-03-13 17:12:20,024{GMT}	INFO	[jepsen node n5] jepsen.core: downloading /root/antidote/log to antidote_log
+2022-03-13 17:12:20,028{GMT}	INFO	[jepsen node n3] jepsen.core: downloading /root/antidote/log to antidote_log
+2022-03-13 17:12:28,618{GMT}	INFO	[jepsen test runner] jepsen.core: Analyzing...
+2022-03-13 17:12:28,889{GMT}	INFO	[jepsen test runner] jepsen.core: Analysis complete
+2022-03-13 17:12:28,920{GMT}	INFO	[jepsen results] jepsen.store: Wrote /home/jsuttor/projects/fuzz_dist/jepsen.fuzz_dist/store/fuzz-dist/20220313T171046.000-0700/results.edn
+2022-03-13 17:12:28,975{GMT}	INFO	[jepsen test runner] jepsen.core: {:perf {:latency-graph {:valid? true},
+        :rate-graph {:valid? true},
+        :valid? true},
+ :set-full {:worst-stale ({:element "439671",
+                           :outcome :stable,
+                           :stable-latency 7851,
+                           :lost-latency nil,
+                           :known {:type :ok,
+                                   :f :add,
+                                   :value "439671",
+                                   :time 4881781382,
+                                   :process 0,
+                                   :index 81},
+                           :last-absent {:type :invoke,
+                                         :f :read,
+                                         :value nil,
+                                         :time 12733780171,
+                                         :process 2,
+                                         :index 254}}
+                          {:element "118823",
+                           :outcome :stable,
+                           :stable-latency 7715,
+                           :lost-latency nil,
+                           :known {:type :ok,
+                                   :f :add,
+                                   :value "118823",
+                                   :time 5018487139,
+                                   :process 0,
+                                   :index 85},
+                           :last-absent {:type :invoke,
+                                         :f :read,
+                                         :value nil,
+                                         :time 12733780171,
+                                         :process 2,
+                                         :index 254}}
+                          {:element "163140",
+                           :outcome :stable,
+                           :stable-latency 7349,
+                           :lost-latency nil,
+                           :known {:type :ok,
+                                   :f :add,
+                                   :value "163140",
+                                   :time 5383785509,
+                                   :process 0,
+                                   :index 90},
+                           :last-absent {:type :invoke,
+                                         :f :read,
+                                         :value nil,
+                                         :time 12733780171,
+                                         :process 2,
+                                         :index 254}}
+                          {:element "170025",
+                           :outcome :stable,
+                           :stable-latency 7348,
+                           :lost-latency nil,
+                           :known {:type :ok,
+                                   :f :add,
+                                   :value "170025",
+                                   :time 5222225616,
+                                   :process 3,
+                                   :index 87},
+                           :last-absent {:type :invoke,
+                                         :f :read,
+                                         :value nil,
+                                         :time 12571084560,
+                                         :process 4,
+                                         :index 252}}
+                          {:element "132745",
+                           :outcome :stable,
+                           :stable-latency 7309,
+                           :lost-latency nil,
+                           :known {:type :ok,
+                                   :f :add,
+                                   :value "132745",
+                                   :time 15863360916,
+                                   :process 1,
+                                   :index 317},
+                           :last-absent {:type :invoke,
+                                         :f :read,
+                                         :value nil,
+                                         :time 23173252388,
+                                         :process 3,
+                                         :index 490}}
+                          {:element "845655",
+                           :outcome :stable,
+                           :stable-latency 7275,
+                           :lost-latency nil,
+                           :known {:type :ok,
+                                   :f :add,
+                                   :value "845655",
+                                   :time 16094875602,
+                                   :process 3,
+                                   :index 324},
+                           :last-absent {:type :invoke,
+                                         :f :read,
+                                         :value nil,
+                                         :time 23370019155,
+                                         :process 4,
+                                         :index 499}}
+                          {:element "332177",
+                           :outcome :stable,
+                           :stable-latency 7223,
+                           :lost-latency nil,
+                           :known {:type :ok,
+                                   :f :add,
+                                   :value "332177",
+                                   :time 15949870869,
+                                   :process 1,
+                                   :index 319},
+                           :last-absent {:type :invoke,
+                                         :f :read,
+                                         :value nil,
+                                         :time 23173252388,
+                                         :process 3,
+                                         :index 490}}
+                          {:element "28436",
+                           :outcome :stable,
+                           :stable-latency 7171,
+                           :lost-latency nil,
+                           :known {:type :ok,
+                                   :f :add,
+                                   :value "28436",
+                                   :time 17057416528,
+                                   :process 2,
+                                   :index 343},
+                           :last-absent {:type :invoke,
+                                         :f :read,
+                                         :value nil,
+                                         :time 24229191958,
+                                         :process 4,
+                                         :index 512}}),
+            :duplicated-count 0,
+            :valid? true,
+            :lost-count 0,
+            :lost (),
+            :stable-count 159,
+            :stale-count 159,
+            :stale ("103011"
+                    "105251"
+                    "117251"
+                    "118823"
+                    "130727"
+                    "132301"
+                    "132745"
+                    "135718"
+                    "136730"
+                    "13746"
+                    "144525"
+                    "150931"
+                    "158197"
+                    "163140"
+                    "163208"
+                    "163318"
+                    "170025"
+                    "170561"
+                    "178919"
+                    "179174"
+                    "180840"
+                    "201274"
+                    "202263"
+                    "203052"
+                    "209375"
+                    "216087"
+                    "216479"
+                    "227864"
+                    "235327"
+                    "236909"
+                    "242869"
+                    "24397"
+                    "244078"
+                    "247734"
+                    "254090"
+                    "255304"
+                    "261576"
+                    "277238"
+                    "277831"
+                    "28436"
+                    "287069"
+                    "289230"
+                    "291211"
+                    "30028"
+                    "306554"
+                    "315760"
+                    "317603"
+                    "320971"
+                    "326686"
+                    "330051"
+                    "332177"
+                    "334133"
+                    "354697"
+                    "358310"
+                    "362483"
+                    "368866"
+                    "398672"
+                    "3994"
+                    "404010"
+                    "404173"
+                    "404469"
+                    "404692"
+                    "407240"
+                    "40790"
+                    "409146"
+                    "417553"
+                    "423034"
+                    "423663"
+                    "428466"
+                    "430524"
+                    "439671"
+                    "446525"
+                    "449487"
+                    "449740"
+                    "462898"
+                    "468286"
+                    "488056"
+                    "490773"
+                    "491702"
+                    "493410"
+                    "49817"
+                    "501613"
+                    "51075"
+                    "536733"
+                    "539408"
+                    "53986"
+                    "540118"
+                    "545159"
+                    "545190"
+                    "546951"
+                    "547901"
+                    "551458"
+                    "553500"
+                    "553769"
+                    "55684"
+                    "559671"
+                    "565488"
+                    "570165"
+                    "575911"
+                    "590458"
+                    "59327"
+                    "601055"
+                    "610375"
+                    "621488"
+                    "626184"
+                    "630701"
+                    "639058"
+                    "639089"
+                    "642648"
+                    "6542"
+                    "655209"
+                    "659234"
+                    "661606"
+                    "66172"
+                    "668650"
+                    "678842"
+                    "67895"
+                    "684899"
+                    "685425"
+                    "690813"
+                    "703180"
+                    "731582"
+                    "744560"
+                    "746066"
+                    "746765"
+                    "750358"
+                    "754311"
+                    "764865"
+                    "794316"
+                    "799823"
+                    "80919"
+                    "814072"
+                    "82623"
+                    "83508"
+                    "839441"
+                    "840138"
+                    "845655"
+                    "860126"
+                    "869028"
+                    "86941"
+                    "882858"
+                    "892952"
+                    "894932"
+                    "909131"
+                    "911868"
+                    "91581"
+                    "919358"
+                    "920576"
+                    "92255"
+                    "939382"
+                    "94078"
+                    "945153"
+                    "954512"
+                    "956527"
+                    "957487"
+                    "958055"
+                    "958551"
+                    "960568"
+                    "970591"),
+            :never-read-count 0,
+            :stable-latencies {0 178,
+                               0.5 2671,
+                               0.95 7171,
+                               0.99 7715,
+                               1 7851},
+            :attempt-count 159,
+            :never-read (),
+            :duplicated {}},
+ :timeline {:valid? true},
+ :exceptions {:valid? true},
+ :stats {:valid? true,
+         :count 313,
+         :ok-count 313,
+         :fail-count 0,
+         :info-count 0,
+         :by-f {:add {:valid? true,
+                      :count 159,
+                      :ok-count 159,
+                      :fail-count 0,
+                      :info-count 0},
+                :read {:valid? true,
+                       :count 154,
+                       :ok-count 154,
+                       :fail-count 0,
+                       :info-count 0}}},
+ :valid? true}
+
+
+Everything looks good! ヽ(‘ー`)ノ
