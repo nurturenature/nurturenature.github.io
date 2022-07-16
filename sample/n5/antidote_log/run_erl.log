@@ -1,8 +1,0 @@
-run_erl [13284] Mon Mar 14 00:11:02 2022
-Args before exec of shell:
-run_erl [13284] Mon Mar 14 00:11:02 2022
-argv[0] = sh
-run_erl [13284] Mon Mar 14 00:11:02 2022
-argv[1] = -c
-run_erl [13284] Mon Mar 14 00:11:02 2022
-argv[2] = exec "/root/antidote/bin/antidote" "console" ''  --relx-disable-hooks
