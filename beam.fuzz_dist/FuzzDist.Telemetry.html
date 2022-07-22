@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="generator" content="ExDoc v0.28.2">
+    <meta name="project" content="fuzz_dist v0.0.1-scrappy">
+
+    <title>FuzzDist.Telemetry — fuzz_dist v0.0.1-scrappy</title>
+    <link rel="stylesheet" href="dist/elixir-69d615db1d0fc8b2ce48.css" />
+
+    <script src="dist/sidebar_items-007c2b7ced.js"></script>
+
+      <script src="docs_config.js"></script>
+
+    <script async src="dist/app-073abeeda7b7e6d5d7e9.js"></script>
+
+
+  </head>
+  <body data-type="modules">
+    <script>
+
+      try {
+        if (localStorage.getItem('night-mode') === 'true') {
+          document.body.classList.add('night-mode');
+        }
+      } catch (error) { }
+    </script>
+
+<div class="main">
+
+
+<section class="sidebar">
+  <button class="sidebar-button sidebar-toggle" aria-label="toggle sidebar">
+    <i class="ri-menu-line ri-lg" title="Collapse/expand sidebar"></i>
+  </button>
+
+  <form class="sidebar-search" action="search.html">
+    <button type="submit" class="search-button" aria-label="Submit Search">
+      <i class="ri-search-2-line" aria-hidden="true" title="Submit search"></i>
+    </button>
+    <button type="button" tabindex="-1" class="search-close-button" aria-label="Cancel Search">
+      <i class="ri-close-line ri-lg" aria-hidden="true" title="Cancel search"></i>
+    </button>
+    <label class="search-label">
+      <p class="sr-only">Search</p>
+      <input name="q" type="text" class="search-input" placeholder="Search..." aria-label="Input your search terms" autocomplete="off" />
+    </label>
+  </form>
+
+  <div class="autocomplete">
+    <div class="autocomplete-results">
+    </div>
+  </div>
+
+  <div class="sidebar-header">
+
+    <div class="sidebar-projectDetails">
+      <a href="api-reference.html" class="sidebar-projectName" translate="no">
+fuzz_dist
+      </a>
+      <strong class="sidebar-projectVersion" translate="no">
+        v0.0.1-scrappy
+      </strong>
+    </div>
+    <ul class="sidebar-listNav">
+      <li><a id="extras-list-link" href="#full-list">Pages</a></li>
+
+        <li><a id="modules-list-link" href="#full-list">Modules</a></li>
+
+
+    </ul>
+  </div>
+
+  <div class="gradient"></div>
+  <ul id="full-list" class="sidebar-fullList"></ul>
+</section>
+
+<section class="content">
+  <div class="content-outer">
+    <div id="content" class="content-inner">
+
+<h1>
+<button class="settings display-settings">
+  <i class="ri-settings-3-line"></i>
+  <span class="sr-only">Settings</span>
+</button>
+
+
+  <span translate="no">FuzzDist.Telemetry</span> 
+  <small class="app-vsn" translate="no">(fuzz_dist v0.0.1-scrappy)</small>
+
+</h1>
+
+
+  <section id="moduledoc">
+<p>Telemetry integration.</p><p>Match <code class="inline">:ok = :telemetry/all</code> as telemetry is expected as part of test.</p><p><a href="FuzzDist.html"><code class="inline">FuzzDist</code></a> executes the following events:</p><ul><li><p><code class="inline">[:fuzz_dist, :beam]</code> - Executed on receipt of BEAM monitored message/signal.</p><h4>Measurements</h4><ul><li><code class="inline">%{}</code></li></ul><h4>Metadata:</h4><ul><li><code class="inline">:event</code> - The BEAM event</li></ul></li><li><p><code class="inline">[:fuzz_dist, :client]</code> - Executed on connection of Jepsen client ws connection</p><h4>Measurements</h4><ul><li><code class="inline">%{}</code></li></ul><h4>Metadata:</h4><ul><li><code class="inline">:antidote_conn</code> - AntidoteDB connection that client will use for all transactions</li></ul></li><li><p><code class="inline">[:fuzz_dist, :g_set_read, :start]</code> - Executed on receipt of Jepsen :read operation.</p><h4>Measurements</h4><ul><li><code class="inline">:system_time</code> - The system time</li></ul><h4>Metadata:</h4><ul><li><code class="inline">%{}</code></li></ul></li><li><p><code class="inline">[:fuzz_dist, :g_set_read, :stop]</code> - Executed on completion of read before return to Jepsen.</p><h4>Measurements</h4><ul><li><code class="inline">:duration</code> - Duration of the read.</li></ul><h4>Metadata:</h4><ul><li>reply returned by read, may contain keys:</li><li>:type  - :ok, :fail, :info.</li><li>:value - Value returned by read.</li><li>:error - Supplemental error information.</li></ul></li><li><p><code class="inline">[:fuzz_dist, :g_set_add, :start]</code> - Executed on receipt of Jepsen :add operation.</p><h4>Measurements</h4><ul><li><code class="inline">:system_time</code> - The system time</li></ul><h4>Metadata:</h4><ul><li><code class="inline">value</code>: - The value to be added</li></ul></li><li><p><code class="inline">[:fuzz_dist, :g_set_add, :stop]</code> - Executed on completion of add before return to Jepsen.</p><h4>Measurements</h4><ul><li><code class="inline">:duration</code> - Duration of the add.</li></ul><h4>Metadata:</h4><ul><li>reply returned by add, may contain keys:</li><li>:type  - :ok, :fail, :info.</li><li>:error - Supplemental error information.</li></ul></li><li><p><code class="inline">[:fuzz_dist, :pn_counter_read, :start]</code> - Executed on receipt of Jepsen :read operation.</p><h4>Measurements</h4><ul><li><code class="inline">:system_time</code> - The system time</li></ul><h4>Metadata:</h4><ul><li><code class="inline">%{}</code></li></ul></li><li><p><code class="inline">[:fuzz_dist, :pn_counter_read, :stop]</code> - Executed on completion of read before return to Jepsen.</p><h4>Measurements</h4><ul><li><code class="inline">:duration</code> - Duration of the read.</li></ul><h4>Metadata:</h4><ul><li>reply returned by read, may contain keys:</li><li>:type  - :ok, :fail, :info.</li><li>:value - Value returned by read.</li><li>:error - Supplemental error information.</li></ul></li><li><p><code class="inline">[:fuzz_dist, :pn_counter_increment, :start]</code> - Executed on receipt of Jepsen :increment operation.</p><h4>Measurements</h4><ul><li><code class="inline">:system_time</code> - The system time</li></ul><h4>Metadata:</h4><ul><li><code class="inline">value</code>: - The [key value] to be incremented</li></ul></li><li><p><code class="inline">[:fuzz_dist, :pn_counter_increment, :stop]</code> - Executed on completion of :increment before return to Jepsen.</p><h4>Measurements</h4><ul><li><code class="inline">:duration</code> - Duration of the increment.</li></ul><h4>Metadata:</h4><ul><li>reply returned by increment, may contain keys:</li><li>:type  - :ok, :fail, :info.</li><li>:error - Supplemental error information.</li></ul></li><li><p><code class="inline">[:fuzz_dist, :pn_counter_decrement, :start]</code> - Executed on receipt of Jepsen :decrement operation.</p><h4>Measurements</h4><ul><li><code class="inline">:system_time</code> - The system time</li></ul><h4>Metadata:</h4><ul><li><code class="inline">value</code>: - The [key value] to be decremented</li></ul></li><li><p><code class="inline">[:fuzz_dist, :pn_counter_decrement, :stop]</code> - Executed on completion of :decrement before return to Jepsen.</p><h4>Measurements</h4><ul><li><code class="inline">:duration</code> - Duration of the decrement.</li></ul><h4>Metadata:</h4><ul><li>reply returned by decrement, may contain keys:</li><li>:type  - :ok, :fail, :info.</li><li>:error - Supplemental error information.</li></ul></li><li><p><code class="inline">[:fuzz_dist, :setup_primary, :start]</code> - Executed on receipt of Jepsen :setup_primary operation.</p><h4>Measurements</h4><ul><li><code class="inline">:system_time</code> - The system time</li></ul><h4>Metadata:</h4><ul><li><code class="inline">nodes</code> - List of (long) node names</li></ul></li><li><p><code class="inline">[:fuzz_dist, :setup_primary, :stop]</code> - Executed on completion of <code class="inline">setup_primary/1</code> before return to Jepsen.</p><h4>Measurements</h4><ul><li><code class="inline">:duration</code> - Duration of the cluster configuration</li></ul><h4>Metadata:</h4><ul><li><code class="inline">%{}</code></li></ul></li></ul><p>TODO: add Prometheus collector.</p>
+  </section>
+
+
+  <section id="summary" class="details-list">
+    <h1 class="section-heading">
+      <a class="hover-link" href="#summary">
+        <i class="ri-link-m" aria-hidden="true"></i>
+        <span class="sr-only">Link to this section</span>
+      </a>
+      Summary
+    </h1>
+
+  <div class="summary-functions summary">
+    <h2>
+      <a href="#functions">Functions</a>
+    </h2>
+
+      <div class="summary-row">
+        <div class="summary-signature">
+          <a href="#child_spec/1" translate="no">child_spec(init_arg)</a>
+
+        </div>
+
+          <div class="summary-synopsis"><p>Returns a specification to start this module under a supervisor.</p></div>
+
+      </div>
+
+      <div class="summary-row">
+        <div class="summary-signature">
+          <a href="#log_handler/4" translate="no">log_handler(event, measurements, meta, config)</a>
+
+        </div>
+
+      </div>
+
+      <div class="summary-row">
+        <div class="summary-signature">
+          <a href="#start_link/1" translate="no">start_link(opts)</a>
+
+        </div>
+
+      </div>
+
+  </div>
+
+  </section>
+
+
+  <section id="functions" class="details-list">
+    <h1 class="section-heading">
+      <a class="hover-link" href="#functions">
+        <i class="ri-link-m" aria-hidden="true"></i>
+        <span class="sr-only">Link to this section</span>
+      </a>
+Functions
+    </h1>
+    <div class="functions-list">
+<section class="detail" id="child_spec/1">
+
+  <div class="detail-header">
+    <a href="#child_spec/1" class="detail-link" title="Link to this function">
+      <i class="ri-link-m" aria-hidden="true"></i>
+      <span class="sr-only">Link to this function</span>
+    </a>
+    <h1 class="signature" translate="no">child_spec(init_arg)</h1>
+
+
+  </div>
+
+  <section class="docstring">
+
+<p>Returns a specification to start this module under a supervisor.</p><p>See <a href="https://hexdocs.pm/elixir/Supervisor.html"><code class="inline">Supervisor</code></a>.</p>
+  </section>
+</section>
+<section class="detail" id="log_handler/4">
+
+  <div class="detail-header">
+    <a href="#log_handler/4" class="detail-link" title="Link to this function">
+      <i class="ri-link-m" aria-hidden="true"></i>
+      <span class="sr-only">Link to this function</span>
+    </a>
+    <h1 class="signature" translate="no">log_handler(event, measurements, meta, config)</h1>
+
+
+  </div>
+
+  <section class="docstring">
+
+
+  </section>
+</section>
+<section class="detail" id="start_link/1">
+
+  <div class="detail-header">
+    <a href="#start_link/1" class="detail-link" title="Link to this function">
+      <i class="ri-link-m" aria-hidden="true"></i>
+      <span class="sr-only">Link to this function</span>
+    </a>
+    <h1 class="signature" translate="no">start_link(opts)</h1>
+
+
+  </div>
+
+  <section class="docstring">
+
+
+  </section>
+</section>
+
+    </div>
+  </section>
+
+      <footer class="footer">
+
+        <p>
+          Built using
+          <a href="https://github.com/elixir-lang/ex_doc" title="ExDoc" target="_blank" rel="help noopener" translate="no">ExDoc</a> (v0.28.2) for the
+          <a href="https://elixir-lang.org" title="Elixir" target="_blank" translate="no">Elixir programming language</a>
+        </p>
+      </footer>
+    </div>
+  </div>
+</section>
+</div>
+
+
+  </body>
+</html>
